@@ -24,20 +24,20 @@ const RegisterForm = () => {
         const data = new FormData(e.currentTarget);
         const formData = {
             email: data.get("email"),
-            username: data.get("name"),
-            password,
+            username: data.get("username"),
             last_name: data.get("lastName"),
             first_name: data.get("firstName"),
             get_email: true,
+            password,
         };
 
         try {
             const response = await axios.post(
               "http://195.35.56.202:8080/register",
               formData,
-              {
-                mode: "no-cors",
-              }
+            //   {
+            //     mode: "no-cors",
+            //   }
             );
             navigate("/signin");
             return response;

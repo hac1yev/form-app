@@ -6,15 +6,17 @@ import Profile from "./pages/Profile/Profile"
 import { Box } from "@mui/material"
 import Login from "./pages/Login/Login"
 import Register from "./pages/Register/Register"
-import { useSelector } from "react-redux"
 import Popular from "./pages/Popular/Popular"
+import { useSelector } from "react-redux"
 
 function App() {
-  const isAuth = useSelector(state => state.authReducer.userIsExist);
+  const token = useSelector((state) => state.authReducer.userInfo?.token);
+
+  console.log(token);
 
   return (
     <>
-      {!isAuth ? ( 
+      {!token ? ( 
         <Routes>
           <Route path="*" element={<Navigate to="/login" />} />
           <Route path="/login" element={<Login />} />

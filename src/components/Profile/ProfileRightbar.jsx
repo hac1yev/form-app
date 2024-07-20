@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { Avatar, Box, Button, Chip, Divider, Grid, Input, Stack, Typography } from '@mui/material';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const profile_community_data = [
     {
@@ -28,6 +29,7 @@ const profile_community_data = [
 ];
 
 const ProfileRightbar = () => {
+  const userInfo = useSelector(state => state.authReducer.userInfo);
   const [profilePicture, setProfilePicture] = useState('https://avatars.githubusercontent.com/u/99089581?v=4');
   const fileInputRef = useRef(null);
 
@@ -65,8 +67,8 @@ const ProfileRightbar = () => {
             </Box>
           </Box>
           <Box>
-            <Typography variant="h4">İlkin Hacıyev</Typography>
-            <Typography variant="subtitle1">ilkinhaciyev@gmail.com</Typography>
+            <Typography variant="h4">{`${userInfo.first_name} ${userInfo.last_name}`}</Typography>
+            <Typography variant="subtitle1">{userInfo.email}</Typography>
           </Box>
         </Box>
 

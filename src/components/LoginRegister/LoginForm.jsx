@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -9,13 +9,17 @@ import dipnot_logo from "../../assets/dipnote-logo.svg";
 import PasswordInput from './PasswordInput';
 import { useState } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { authSliceActions } from '../../store/auth-slice';
 
 export default function LoginForm() {
     const [password,setPassword] = useState("");
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = new FormData(event.currentTarget);
+        const data = new FormData(e.currentTarget);
 
         const formData = {
             username: data.get("username"),
@@ -34,10 +38,15 @@ export default function LoginForm() {
               formData,
               config
             );
-            console.log(response.data);
-          } catch (error) {
+
+            if(response.status === 200) {
+                window.localStorage.setItem("userInfo", JSON.stringify(response.data));
+                dispatch(authSliceActions.getUser(response.data));
+                navigate("/");
+            }
+        } catch (error) {
             console.error("Sign-in failed!", error.response.data);
-          }
+        }
     };
 
     const handlePassword = (e) => {

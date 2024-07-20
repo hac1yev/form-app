@@ -1,16 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const getUserInfo = () => {
+    const userInfo = window.localStorage.getItem("userInfo");
+
+    if(userInfo) {
+        return JSON.parse(userInfo);
+    }else{
+        return {};
+    }
+};
+
 const initialAuthState = {
-    userIsExist: false, 
+    userInfo: getUserInfo(),
 };
 
 const authSlice = createSlice({
     name: 'authSlice',
     initialState: initialAuthState,
     reducers: {
-        loginDipnot(state) {
-            state.userIsExist = true;
-        }
+        getUser(state,action) {
+            state.userInfo = { ...action.payload }
+        },
     }
 });
 
