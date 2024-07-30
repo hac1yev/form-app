@@ -19,10 +19,10 @@ const Popular = () => {
         >
             <Toolbar />
             <Grid container sx={{ py: 6, px: 1 }}>
-                <Grid container lg={8} sx={{ px: 1 }}>
-                    <Posts />
+                <Grid item lg={8} sx={{ px: 1 }} className="home-grid">
+                    <Posts endpoint={"popular"} />
                 </Grid>
-                <Grid container lg={4} sx={{ px: 1 }} className='home-grid'>
+                <Grid item lg={4} sx={{ px: 1 }} className="home-grid" >
                     <Community />
                 </Grid>
             </Grid>

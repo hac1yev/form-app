@@ -18,10 +18,10 @@ const Post = () => {
         >
             <Toolbar />
             <Grid container sx={{ py: 6, px: 1 }}>
-                <Grid container lg={8} sx={{ px: 1 }}>
+                <Grid item lg={8} sx={{ px: 1 }}>
                     <PostComponent />
                 </Grid>
-                <Grid container lg={4} sx={{ px: 1 }} className="post-grid">
+                <Grid item lg={4} sx={{ px: 1 }} className="post-grid">
                     <PostRightbar />
                 </Grid>
             </Grid>

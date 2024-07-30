@@ -45,7 +45,7 @@ export default function LoginForm() {
                 navigate("/");
             }
         } catch (error) {
-            console.error("Sign-in failed!", error.response.data);
+            console.error("Sign-in failed!", error);
         }
     };
 

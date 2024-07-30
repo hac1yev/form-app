@@ -12,8 +12,6 @@ import { useSelector } from "react-redux"
 function App() {
   const token = useSelector((state) => state.authReducer.userInfo?.token);
 
-  console.log(token);
-
   return (
     <>
       {!token ? ( 

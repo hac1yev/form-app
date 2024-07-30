@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Community = () => {
   return (
     <Grid item className="community-list">
-      <Box sx={{ background: '#fff', py: 4, height: 'fit-content', position: 'sticky', top: '112px' }} className="community-box">
+      <Box sx={{ background: '#fff', py: 4 }} className="community-box">
         <Typography sx={{ fontSize: '22px', px: 5, pb: 2, fontWeight: '600', lineHeight: '30px' }}>Community</Typography>
         <Container>
           <Grid container>

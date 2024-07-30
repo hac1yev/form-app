@@ -35,9 +35,9 @@ const RegisterForm = () => {
             const response = await axios.post(
               "http://195.35.56.202:8080/register",
               formData,
-            //   {
-            //     mode: "no-cors",
-            //   }
+              {
+                mode: "no-cors",
+              }
             );
             navigate("/signin");
             return response;

@@ -19,10 +19,10 @@ const Profile = () => {
         >
             <Toolbar />
             <Grid container sx={{ py: 6, px: 1 }}>
-                <Grid container lg={8} sx={{ px: 1 }}>
+                <Grid item lg={8} sx={{ px: 1 }}>
                     <ProfileComponent />
                 </Grid>
-                <Grid container lg={4} sx={{ px: 1 }} className="profile-grid">
+                <Grid item lg={4} sx={{ px: 1 }} className="profile-grid">
                     <ProfileRightbar />
                 </Grid>
             </Grid>

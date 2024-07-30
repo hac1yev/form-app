@@ -1,5 +1,5 @@
 import { Grid, OutlinedInput, styled } from "@mui/material";
-import { useState } from 'react';
+import PropTypes from 'prop-types';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -8,16 +8,12 @@ const FormGrid = styled(Grid)(() => ({
     flexDirection: 'column',
 }));
 
-const CreatePostForm = () => {
-    const [value, setValue] = useState('');
-    const [textContent, setTextContent] = useState('');
+const CreatePostForm = ({ postFormValue,setPostFormValue,setTextContent,setHeading }) => {
 
-    const handleChange = (content, delta, source, editor) => {
-        setValue(content);
+    const handlePostFormChange = (content, delta, source, editor) => {
+        setPostFormValue(content);
         setTextContent(editor.getText());
     };
-
-    console.log(textContent);
 
     return (
         <>
@@ -30,17 +26,24 @@ const CreatePostForm = () => {
                     placeholder={`Başlıq*`}
                     autoComplete="first name"
                     required
+                    onChange={(e) => setHeading(e.target.value)}
                 />
-                {/* <Box component={"span"} sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>0/100</Box> */}
             </FormGrid>
             <ReactQuill
                 theme="snow"
                 style={{ height: '150px', margin: '20px 0' }}
-                value={value}
-                onChange={handleChange}
+                value={postFormValue}
+                onChange={handlePostFormChange}
             />
         </>
     );
+};
+
+CreatePostForm.propTypes = {
+    setPostFormValue: PropTypes.func.isRequired,
+    setTextContent: PropTypes.func.isRequired,
+    setHeading: PropTypes.func.isRequired,
+    postFormValue: PropTypes.string.isRequired,
 };
 
 export default CreatePostForm;

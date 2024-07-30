@@ -3,7 +3,9 @@ import Community from '../../components/Home/Community';
 import Posts from '../../components/Home/Posts';
 import './Home.scss';
 
+
 const Home = () => {
+
   return (
     <Box
         component="main"
@@ -19,10 +21,10 @@ const Home = () => {
     >
         <Toolbar />
         <Grid container sx={{ py: 6, px: 1 }}>
-          <Grid container lg={8} sx={{ px: 1 }}>
-              <Posts />
+          <Grid item lg={8} sx={{ px: 1 }} className='home-grid'>
+              <Posts endpoint={"post"} />
           </Grid>
-          <Grid container lg={4} sx={{ px: 1 }} className='home-grid'>
+          <Grid item lg={4} sx={{ px: 1 }} className='home-grid'>
             <Community />
           </Grid>
         </Grid>
