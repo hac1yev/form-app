@@ -14,8 +14,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadingSliceActions } from "../../store/loading-slice";
 import PropTypes from 'prop-types';
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 const sliderSettings = {
   dots: true,
