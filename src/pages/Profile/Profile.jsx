@@ -7,8 +7,6 @@ import useGetAxios from '../../hooks/useGetAxios';
 const Profile = () => {
     const myInfo = useGetAxios(`users/me`);
 
-    console.log(myInfo);
-
     return (
         <Box
             component="main"
