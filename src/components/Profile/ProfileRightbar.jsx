@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { Avatar, Box, Button, Chip, Divider, Grid, Input, Stack, Typography } from '@mui/material';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
 const profile_community_data = [
     {
@@ -28,9 +28,8 @@ const profile_community_data = [
     },
 ];
 
-const ProfileRightbar = () => {
-  const userInfo = useSelector(state => state.authReducer.userInfo);
-  const [profilePicture, setProfilePicture] = useState('https://avatars.githubusercontent.com/u/99089581?v=4');
+const ProfileRightbar = ({ userInfo }) => {
+  const [profilePicture, setProfilePicture] = useState(`http://195.35.56.202:8080/${userInfo?.picture}`);
   const fileInputRef = useRef(null);
 
   const handleClick = () => {
@@ -67,8 +66,8 @@ const ProfileRightbar = () => {
             </Box>
           </Box>
           <Box>
-            <Typography variant="h4">{`${userInfo.first_name} ${userInfo.last_name}`}</Typography>
-            <Typography variant="subtitle1">{userInfo.email}</Typography>
+            <Typography variant="h4">{`${userInfo?.first_name} ${userInfo?.last_name}`}</Typography>
+            <Typography variant="subtitle1">{userInfo?.email}</Typography>
           </Box>
         </Box>
 
@@ -120,6 +119,10 @@ const ProfileRightbar = () => {
       </Box>
     </Grid>
   );
+};
+
+ProfileRightbar.propTypes = {
+  userInfo: PropTypes.object.isRequired
 };
 
 export default ProfileRightbar;

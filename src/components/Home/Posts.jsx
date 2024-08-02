@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Grid, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Popover, Typography } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -9,11 +9,10 @@ import IosShareIcon from "@mui/icons-material/IosShare";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
-import { getAxios } from "../../api/getRequests";
-import { useDispatch, useSelector } from "react-redux";
-import { loadingSliceActions } from "../../store/loading-slice";
 import PropTypes from 'prop-types';
 import Slider from "react-slick";
+import useGetAxios from "../../hooks/useGetAxios";
+import { useSelector } from "react-redux";
 
 const sliderSettings = {
   dots: true,
@@ -27,33 +26,13 @@ const sliderSettings = {
   center: true,
 };
 
-
 const Posts = ({ endpoint }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  const token = useSelector((state) => state.authReducer.userInfo?.token);
   const isLoading = useSelector((state) => state.loadingReducer.isLoading);
-  const [myInterestPosts, setMyInterestPosts] = useState([]);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    (async function getPosts() {
-      dispatch(loadingSliceActions.isItLoading(true));
-      try {
-        const response = await getAxios(
-          `http://195.35.56.202:8080/${endpoint}`,
-          token
-        );
-        setMyInterestPosts(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-      dispatch(loadingSliceActions.isItLoading(false));
-    })();
-  }, [token, dispatch, endpoint]);
+  const data = useGetAxios(endpoint);
 
   if (isLoading) {
     return (
@@ -63,7 +42,7 @@ const Posts = ({ endpoint }) => {
     );
   }
 
-  if(!isLoading && myInterestPosts.length === 0) {
+  if(!isLoading && !data) {
     return (
       <Box className="flex-column">
         <Typography>There is no post!</Typography>
@@ -73,7 +52,7 @@ const Posts = ({ endpoint }) => {
 
   return (
     <Box className="post-wrapper" sx={{ gap: "20px", display: "flex", flexDirection: "column" }}>
-      {myInterestPosts.map((item) => (
+      {data.map((item) => (
         <Grid item key={item.id} sx={{ width: '100%' }} className="asdasa">
           <Card
             sx={{
@@ -154,7 +133,7 @@ const Posts = ({ endpoint }) => {
               }
               subheader={`${item.cdate.slice(0,10)}`}
             />
-            <Link to="/posts/37264" className="post-link">
+            <Link to={`/posts/${item.id}`} className="post-link">
               <CardContent>
                 <Typography variant="h6">{item.heading}</Typography>
                 <Typography variant="subtitle1" sx={{ mt: 2 }}>

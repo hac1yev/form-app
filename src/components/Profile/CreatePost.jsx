@@ -44,7 +44,7 @@ const CreatePost = () => {
     const [textContent, setTextContent] = useState('');
     const [heading, setHeading] = useState('');
     const [selectedCategory, setSelectedCategory] = useState("");
-    const [images, setImages] = useState(null);
+    const [images, setImages] = useState("");
     const [value, setValue] = useState(0);
     const [open, setOpen] = useState(false);
     const isDisabled = (textContent && images && postFormValue && selectedCategory) ? false : true;

@@ -33,7 +33,7 @@ function a11yProps(index) {
   };
 }
 
-const ProfileComponent = () => {
+const ProfileComponent = ({ myPosts }) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -55,7 +55,7 @@ const ProfileComponent = () => {
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0} className="profile-posts-tabpanel">
-          <MyPosts />
+          <MyPosts myPosts={myPosts} />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           Item Two
@@ -76,5 +76,9 @@ const ProfileComponent = () => {
     </>
   )
 }
+
+ProfileComponent.propTypes = {
+  myPosts: PropTypes.array.isRequired
+};
 
 export default ProfileComponent

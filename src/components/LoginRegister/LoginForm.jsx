@@ -86,7 +86,6 @@ export default function LoginForm() {
                         fullWidth
                         id="username"
                         label="username"
-                        placeholder='admin@gmail.com'
                         name="username"
                         autoComplete="username"
                         autoFocus

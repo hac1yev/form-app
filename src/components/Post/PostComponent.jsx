@@ -10,7 +10,22 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 import SendIcon from '@mui/icons-material/Send';
 import '../../pages/Post/Post.scss';
 import PostComments from "./PostComments";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import Slider from "react-slick";
+
+const sliderSettings = {
+  dots: true,
+  infinite: true,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  adaptiveHeight: true,
+  accessibility: false,
+  focusOnSelect: false,
+  focusOnChange: false,
+  center: true,
+};
 
 const Search = styled("form")(({ theme }) => ({
   position: "relative",
@@ -61,6 +76,33 @@ const PostComponent = () => {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
+  const { postId } = useParams();
+  const [postData,setPostData] = useState();
+  const [comments,setComments] = useState([]);
+
+  useEffect(() => {
+    (async function getPostData() {
+      try {
+        const response = await axios.get(`http://195.35.56.202:8080/post/${postId}`);
+
+        setPostData(response.data.post);
+        setComments(response.data.comments);
+      } catch (error) {
+        console.log(error);
+      }
+    })()
+  }, [postId]);
+
+  console.log(postData);
+
+  if(!postData) {
+    return (
+      <Typography className="flex-column">
+        Loading...
+      </Typography>
+    )
+  }
+
   return (
     <Grid item>
       <Card
@@ -71,9 +113,7 @@ const PostComponent = () => {
       >
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
-              Ə
-            </Avatar>
+            <Avatar src={`http://195.35.56.202:8080/${postData.picture}`} sx={{ bgcolor: "red" }} aria-label="recipe" />
           }
           action={
             <>
@@ -142,31 +182,43 @@ const PostComponent = () => {
           }
           title={
             <div style={{ display: 'flex', gap: '5px' }}>
-              <span>Əli Cəfərli</span>
+              <span>{postData.username}</span>
               {`>`}
-              <span style={{ color: '#999' }}>Web Dizayn</span>
+              <span style={{ color: '#999' }}>{postData.community_name}</span>
             </div>
           }
           subheader="01.04.2024"
         />
         <CardContent>
           <Typography variant="h6">
-            Top GitHub repositories
+            {postData.heading}
           </Typography>
-          <Typography variant="subtitle1" sx={{ mt: 2 }}>
-            This impressive paella is a perfect party dish and a fun meal to
-            cook together with your guests. Add 1 cup of frozen peas along with
-            the mussels, if you like.
-          </Typography>
+          <Typography 
+            variant="subtitle1" 
+            sx={{ mt: 2 }}       
+            dangerouslySetInnerHTML={{ __html: postData.content }}
+          ></Typography>
         </CardContent>
         <Box sx={{ px: 2, borderRadius: "19px" }}>
-          <CardMedia
-            sx={{ borderRadius: "19px" }}
-            component="img"
-            height="194"
-            image="https://carsguide-res.cloudinary.com/image/upload/f_auto,fl_lossy,q_auto,t_default/v1/editorial/2023-Ford-Mustang-Dark-Horse-red-press-image-1001x565p-(1).jpg"
-            alt="Paella dish"
-          />
+          {postData.images.split(", ").length === 1 ? (
+            <CardMedia
+              component={"img"}
+              className="post-image"
+              image={`http://195.35.56.202:8080/${postData.images}`}
+            />
+          ) : (
+            <Slider {...sliderSettings} className="post-slick-slider">
+              {postData.images.split(", ").map((image, idx) => (
+                <CardMedia
+                  component={"img"}
+                  key={idx}
+                  className="post-image"
+                  image={`http://195.35.56.202:8080/${image}`}
+                  alt={`Post image ${idx + 1}`}
+                />
+              ))}
+            </Slider>
+          )}
         </Box>
         <CardActions
           disableSpacing
@@ -175,11 +227,11 @@ const PostComponent = () => {
         >
           <Box>
             <IconButton aria-label="add to favorites" sx={{ bgcolor: 'rgba(51, 51, 51, 0.08)', borderRadius: '19px', p: '5px 15px'  }}>
-              <Typography variant="subtitle2" sx={{ mr: '3px' }}>40</Typography>
+              <Typography variant="subtitle2" sx={{ mr: '3px' }}>{postData.likes}</Typography>
               <FavoriteBorderIcon sx={{ fontSize: '20px', color: 'rgba(2, 66, 137, 1)' }} />
             </IconButton>
             <IconButton aria-label="share" sx={{ bgcolor: 'rgba(51, 51, 51, 0.08)', ml: 1, borderRadius: '19px', p: '5px 15px' }}>
-              <Typography variant="subtitle2" sx={{ mr: '3px' }}>21</Typography>
+              <Typography variant="subtitle2" sx={{ mr: '3px' }}>{comments.length}</Typography>
               <ChatBubbleOutlineIcon sx={{ fontSize: '20px', color: 'rgba(2, 66, 137, 1)' }} />
             </IconButton>
           </Box>
@@ -198,16 +250,14 @@ const PostComponent = () => {
               type="submit"              
               sx={{ ml: 1, height: "100%", p: '0 3px' }}
             >
-              <IconButton>
-                <SendIcon sx={{ color: 'primary.main' }} />
-              </IconButton>
+            
+              <SendIcon sx={{ color: 'primary.main' }} />
             </Button>
           </Search>
         </Box>
         <Typography variant="h5" sx={{ px: 2 }}>Commentlər:</Typography>
         <PostComments />
       </Card>
-
     </Grid>
   );
 };
