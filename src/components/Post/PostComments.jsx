@@ -17,7 +17,7 @@ const PostComments = ({ comments }) => {
     
     return (
         <List sx={{ p: 2 }}>
-            {comments.map((comment) => (
+            {comments.sort((a,b) => new Date(b.cdate) - new Date(a.cdate)).map((comment) => (
                 <ListItem sx={{ p: 0, mb: 2 }} className='comment-list-item' key={comment.id}>
                 <Paper className='comment-paper'>
                     <ListItemAvatar>
