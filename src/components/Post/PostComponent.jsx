@@ -287,7 +287,7 @@ const PostComponent = () => {
           </Search>
         </Box>
         <Typography variant="h5" sx={{ px: 2 }}>Commentlər:</Typography>
-        <PostComments comments={comments} />
+        <PostComments comments={comments} setComments={setComments} />
       </Card>
     </Grid>
   );
