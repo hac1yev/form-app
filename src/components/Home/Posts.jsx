@@ -42,7 +42,7 @@ const Posts = ({ endpoint }) => {
     );
   }
 
-  if(!isLoading && !data) {
+  if(!isLoading && (!data || data.length === 0)) {
     return (
       <Box className="flex-column">
         <Typography>There is no post!</Typography>

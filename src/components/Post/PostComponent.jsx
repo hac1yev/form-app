@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Slider from "react-slick";
+import { useSelector } from "react-redux";
 
 const sliderSettings = {
   dots: true,
@@ -76,9 +77,11 @@ const PostComponent = () => {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
+  const token = useSelector((state) => state.authReducer.userInfo?.token);
   const { postId } = useParams();
   const [postData,setPostData] = useState();
   const [comments,setComments] = useState([]);
+  const [commentText,setCommentText] = useState("");
 
   useEffect(() => {
     (async function getPostData() {
@@ -87,13 +90,38 @@ const PostComponent = () => {
 
         setPostData(response.data.post);
         setComments(response.data.comments);
+        console.log(response);
+        
       } catch (error) {
         console.log(error);
       }
     })()
   }, [postId]);
+  
+  const handleAddComment = async (e) => {
+    e.preventDefault();
 
-  console.log(postData);
+    try {
+      const response = await axios.post("http://195.35.56.202:8080/comment", 
+        { post_id: postId, content: commentText },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        }
+      );
+
+      const comment = { ...response.data }
+
+      const allComments = [...comments, comment];
+      
+      console.log(allComments);
+      
+    } catch (error) {
+      console.log(error);
+    }
+    
+  };
 
   if(!postData) {
     return (
@@ -240,11 +268,12 @@ const PostComponent = () => {
           </IconButton>
         </CardActions>
         <Box className="comment-box" sx={{ my: 2 }}>
-          <Search sx={{ height: "100%" }}>
+          <Search sx={{ height: "100%" }} onSubmit={handleAddComment}>
             <StyledInputBase
               placeholder="Comment yaz..."
               sx={{ width: "100%" }}
               inputProps={{ "aria-label": "search" }}
+              onChange={(e) => setCommentText(e.target.value)}
             />
             <Button
               type="submit"              
@@ -256,7 +285,7 @@ const PostComponent = () => {
           </Search>
         </Box>
         <Typography variant="h5" sx={{ px: 2 }}>Commentlər:</Typography>
-        <PostComments />
+        <PostComments comments={comments} />
       </Card>
     </Grid>
   );

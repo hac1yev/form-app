@@ -5,26 +5,36 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import PropTypes from 'prop-types';
+import moment from 'moment';
 
-const PostComments = () => {
+const PostComments = ({ comments }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const response = 1;
     const [expand,setExpand] = useState(false);
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
-
+    
     return (
         <List sx={{ p: 2 }}>
-            <ListItem sx={{ p: 0 }} className='comment-list-item'>
+            {comments.map((comment) => (
+                <ListItem sx={{ p: 0, mb: 2 }} className='comment-list-item' key={comment.id}>
                 <Paper className='comment-paper'>
                     <ListItemAvatar>
-                        <Avatar alt="User Name" src="https://carsguide-res.cloudinary.com/image/upload/f_auto,fl_lossy,q_auto,t_default/v1/editorial/2023-Ford-Mustang-Dark-Horse-red-press-image-1001x565p-(1).jpg" />
+                        <Avatar alt="User Name" src={`http://195.35.56.202:8080/${comment.picture}`} />
                     </ListItemAvatar>
                     <Box className="comment-content">
-                        <ListItemText primary="Elvin Cabbarlı" secondary="5 saat öncə" sx={{ mb: 0 }} className='comment-header-text' />
-                        <Typography variant='subtitle1'>Yaxşı fikir! böyük işə davam edin!Yaxşı fikir! böyük işə davam edin!Yaxşı fikir! böyük işə davam edin!Yaxşı fikir! böyük işə davam edin!Yaxşı fikir! böyük işə davam edin!Yaxşı fikir! böyük işə davam edin!Yaxşı fikir! böyük işə davam edin!</Typography>
+                        <ListItemText 
+                            secondary={`${moment(comment.cdate).from(moment(new Date()))}`} 
+                            primary={`${comment.username}`} 
+                            className='comment-header-text' 
+                            sx={{ mb: 0 }} 
+                        />
+                        <Typography variant='subtitle1'>
+                            {comment.content}
+                        </Typography>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', mt: '8px' }}>
-                            <Typography variant='subtitle3' sx={{ cursor: 'pointer' }}>32 Bəyənmə</Typography>
+                            <Typography variant='subtitle3' sx={{ cursor: 'pointer' }}>{comment.likes} Bəyənmə</Typography>
                             <Typography variant='subtitle3' sx={{ cursor: 'pointer' }}>Cavab yaz</Typography>
                         </Box>
                         <Box className="expand-replies" onClick={() => setExpand(prev => !prev)}>
@@ -126,8 +136,13 @@ const PostComments = () => {
                     </Popover>
                 </Paper>}
             </ListItem>
+            ))}
         </List>
     );
+};
+
+PostComments.propTypes = {
+    comments: PropTypes.array.isRequired
 };
 
 export default PostComments;
