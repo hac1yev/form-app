@@ -7,14 +7,44 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
-const PostComments = ({ comments }) => {
+const PostComments = ({ comments,setComments }) => {
+    const token = useSelector((state) => state.authReducer.userInfo?.token);
     const [anchorEl, setAnchorEl] = useState(null);
     const response = 1;
     const [expand,setExpand] = useState(false);
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
     
+    const handleLikeComment = async (commentId) => {
+        try {
+            const response = await axios.post(
+                "http://195.35.56.202:8080/like/comment",
+                { comment_id: commentId },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            if(response.status === 201) {
+                const updatedComments = comments.map((comment) => {
+                    if(comment.id === commentId) {
+                        comment.likes += 1; 
+                        return comment;
+                    }
+                        
+                    return comment;
+                    
+                });
+
+                setComments(updatedComments);
+            }
+            
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <List sx={{ p: 2 }}>
             {comments.sort((a,b) => new Date(b.cdate) - new Date(a.cdate)).map((comment) => (
@@ -34,7 +64,13 @@ const PostComments = ({ comments }) => {
                             {comment.content}
                         </Typography>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', mt: '8px' }}>
-                            <Typography variant='subtitle3' sx={{ cursor: 'pointer' }}>{comment.likes} Bəyənmə</Typography>
+                            <Typography 
+                                variant='subtitle3' 
+                                sx={{ cursor: 'pointer' }}
+                                onClick={() => handleLikeComment(comment.id)}
+                            >
+                                {comment.likes === 0 ? 'Bəyən' : `${comment.likes} Bəyənmə`} 
+                            </Typography>
                             <Typography variant='subtitle3' sx={{ cursor: 'pointer' }}>Cavab yaz</Typography>
                         </Box>
                         <Box className="expand-replies" onClick={() => setExpand(prev => !prev)}>
@@ -91,7 +127,12 @@ const PostComments = ({ comments }) => {
                         <ListItemText primary="İlkin Hacıyev" secondary="1 saat öncə" sx={{ mb: 0 }} className='comment-header-text' />
                         <Typography variant='subtitle1'>Təşəkkürlər</Typography>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', mt: '8px' }}>
-                            <Typography variant='subtitle3' sx={{ cursor: 'pointer' }}>Bəyən</Typography>
+                            <Typography 
+                                variant='subtitle3' 
+                                sx={{ cursor: 'pointer' }} 
+                            >
+                                Bəyən
+                            </Typography>
                             <Typography variant='subtitle3' sx={{ cursor: 'pointer' }}>Cavab yaz</Typography>
                         </Box>
                     </Box>
@@ -142,7 +183,8 @@ const PostComments = ({ comments }) => {
 };
 
 PostComments.propTypes = {
-    comments: PropTypes.array.isRequired
+    comments: PropTypes.array.isRequired,
+    setComments: PropTypes.func.isRequired
 };
 
 export default PostComments;
