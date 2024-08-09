@@ -59,7 +59,7 @@ const CreatePost = () => {
         formData.append("images", images);
 
         try {
-            const response = await axios.post("http://195.35.56.202:8080/post", formData, {
+            const response = await axios.post("/api/post", formData, {
                 headers: {
                     "Authorization": `Bearer ${token}`,
                     "Content-Type": "multipart/form-data",

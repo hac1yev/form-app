@@ -29,7 +29,7 @@ const profile_community_data = [
 ];
 
 const ProfileRightbar = ({ userInfo }) => {
-  const [profilePicture, setProfilePicture] = useState(`http://195.35.56.202:8080/${userInfo?.picture}`);
+  const [profilePicture, setProfilePicture] = useState(`/api/${userInfo?.picture}`);
   const fileInputRef = useRef(null);
 
   const handleClick = () => {
