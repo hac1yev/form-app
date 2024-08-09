@@ -116,11 +116,12 @@ const PostComponent = () => {
       const allComments = [...comments, comment];
       
       console.log(allComments);
-      
+
     } catch (error) {
       console.log(error);
     }
     
+    setCommentText("")
   };
 
   if(!postData) {
@@ -274,6 +275,7 @@ const PostComponent = () => {
               sx={{ width: "100%" }}
               inputProps={{ "aria-label": "search" }}
               onChange={(e) => setCommentText(e.target.value)}
+              value={commentText}
             />
             <Button
               type="submit"              
