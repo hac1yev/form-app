@@ -52,6 +52,9 @@ const Posts = ({ endpoint }) => {
 
   return (
     <Box className="post-wrapper" sx={{ gap: "20px", display: "flex", flexDirection: "column" }}>
+      {endpoint.includes("search?key") && (
+        <Typography variant="h2">AXTARIŞ NƏTİCƏSİ</Typography>
+      )}
       {data.map((item) => (
         <Grid item key={item.id} sx={{ width: '100%' }} className="asdasa">
           <Card

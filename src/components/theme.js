@@ -22,14 +22,10 @@ const theme = createTheme({
       },
     },
     h2: {
-      fontSize: '48px',
-      color: '#B8926A',
-      fontWeight: '700',
-      lineHeight: '44px',
-      '@media (max-width:900px)': {
-        fontSize: '34px',
-        lineHeight: '38px',
-      },
+      fontSize: '30px',
+      color: '#000',
+      fontWeight: '600',
+      lineHeight: '36px',
     },
     h3: {
       fontSize: '26px',
