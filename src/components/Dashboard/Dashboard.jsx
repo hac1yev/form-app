@@ -11,7 +11,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import dipnot_logo from "../../assets/dipnote-logo.svg";
 import SidebarMenu from "../SidebarMenu/SidebarMenu";
 import "./Dashboard.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const drawerWidth = 340;
 
@@ -36,7 +37,7 @@ const AppBar = styled(MuiAppBar, {
   },
 }));
 
-const Search = styled("div")(({ theme }) => ({
+const Search = styled("form")(({ theme }) => ({
   position: "relative",
   border: "1px solid #ccc",
   borderRadius: "20px",
@@ -108,6 +109,7 @@ const Drawer = styled(MuiDrawer, {
 export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
   const matches = useMediaQuery("(min-width:769px)");
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     if (window.innerWidth <= 768) {
@@ -127,6 +129,15 @@ export default function Dashboard() {
 
   const toggleDrawer = () => {
     setOpen(!open);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = new FormData(e.currentTarget);
+    const searchText = data.get("searchText");
+    
+    navigate(`/search?key=${searchText}`);
   };
 
   return (
@@ -183,11 +194,12 @@ export default function Dashboard() {
                   }}
                 />
               </IconButton>
-              <Search sx={{ height: "100%" }}>
+              <Search sx={{ height: "100%" }} onSubmit={handleSubmit}>
                 <SearchIconWrapper>
                   <SearchIcon />
                 </SearchIconWrapper>
                 <StyledInputBase
+                  name="searchText"
                   placeholder="Axtar…"
                   sx={{ width: "100%" }}
                   inputProps={{ "aria-label": "search" }}
