@@ -8,9 +8,11 @@ import BeachAccessIcon from "@mui/icons-material/BeachAccess";
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import BuildOutlinedIcon from '@mui/icons-material/BuildOutlined';
 import "./SidebarMenu.scss";
+import useGetAxios from "../../hooks/useGetAxios";
 
 const SidebarMenu = () => {
   const { pathname } = useLocation();
+  const categories = useGetAxios("category");
 
   return (
     <Box className="sidebar-wrapper">
@@ -107,15 +109,11 @@ const SidebarMenu = () => {
       </Box>
 
       <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: '12px' }} className="sidebar-menu-category">
-        <Link to="/">
-          <Typography variant="subtitle1">Dizayn</Typography>
-        </Link>
-        <Link to="/">
-          <Typography variant="subtitle1">Texnologiya</Typography>
-        </Link>
-        <Link to="/">
-          <Typography variant="subtitle1">Proqramlaşdırma</Typography>
-        </Link>
+        {categories?.slice(0,3).map((category) => (
+          <Link to="/" key={category?.id}>
+            <Typography variant="subtitle1">{category?.name}</Typography>
+          </Link>
+        ))}
       </Box>
       
       <Link to="/">

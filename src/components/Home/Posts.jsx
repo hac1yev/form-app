@@ -63,7 +63,7 @@ const Posts = ({ endpoint }) => {
           >
             <CardHeader
               avatar={
-                <Avatar sx={{ bgcolor: "red" }} src={`/api/${item.picture}`} aria-label="recipe">
+                <Avatar sx={{ bgcolor: "red" }} src={`http://195.35.56.202:8080/${item.picture}`} aria-label="recipe">
                   {item.username[0].toUpperCase()}
                 </Avatar>
               }
@@ -148,7 +148,7 @@ const Posts = ({ endpoint }) => {
                   <CardMedia
                     component={"img"}
                     className="post-image"
-                    image={`/api/${item.images}`}
+                    image={`http://195.35.56.202:8080/${item.images}`}
                   />
                 ) : (
                   <Slider {...sliderSettings} className="post-slick-slider">
@@ -157,7 +157,7 @@ const Posts = ({ endpoint }) => {
                           component={"img"}
                           key={idx}
                           className="post-image"
-                          image={`/api/${image}`}
+                          image={`http://195.35.56.202:8080/${image}`}
                           alt={`Post image ${idx + 1}`}
                         />
                     ))}

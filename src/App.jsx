@@ -8,6 +8,7 @@ import Login from "./pages/Login/Login"
 import Register from "./pages/Register/Register"
 import Popular from "./pages/Popular/Popular"
 import { useSelector } from "react-redux"
+import Search from "./pages/Search/Search"
 
 function App() {
   const token = useSelector((state) => state.authReducer.userInfo?.token);
@@ -29,6 +30,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/login" element={<Navigate to="/" />} />
             <Route path="/popular" element={<Popular />} />
+            <Route path="/search" element={<Search />} />
           </Routes>
         </Box>
       )}  
