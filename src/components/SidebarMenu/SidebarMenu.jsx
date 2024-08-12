@@ -35,11 +35,11 @@ const SidebarMenu = () => {
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link to="/popular">
+        <Link to="/posts/popular">
           <ListItem
             disablePadding
             className={
-              pathname === "/popular"
+              pathname === "/posts/popular"
                 ? "sidebar-list-item active"
                 : "sidebar-list-item"
             }
@@ -110,7 +110,7 @@ const SidebarMenu = () => {
 
       <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: '12px' }} className="sidebar-menu-category">
         {categories?.slice(0,3).map((category) => (
-          <Link to="/" key={category?.id}>
+          <Link to={`/category-posts?category_id=${category?.id}`} key={category?.id}>
             <Typography variant="subtitle1">{category?.name}</Typography>
           </Link>
         ))}
