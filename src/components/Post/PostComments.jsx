@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 const PostComments = ({ comments,setComments }) => {
     const token = useSelector((state) => state.authReducer.userInfo?.token);
     const [anchorEl, setAnchorEl] = useState(null);
+    const [selectedPopover, setSelectedPopover] = useState("");
     const response = 1;
     const [expand,setExpand] = useState(false);
     const open = Boolean(anchorEl);
@@ -32,9 +33,7 @@ const PostComments = ({ comments,setComments }) => {
                         comment.likes += 1; 
                         return comment;
                     }
-                        
                     return comment;
-                    
                 });
 
                 setComments(updatedComments);
@@ -47,136 +46,148 @@ const PostComments = ({ comments,setComments }) => {
 
     return (
         <List sx={{ p: 2 }}>
-            {comments.sort((a,b) => new Date(b.cdate) - new Date(a.cdate)).map((comment) => (
+            {comments.toSorted((a,b) => new Date(b.cdate).getTime() - new Date(a.cdate).getTime()).map((comment) => (
                 <ListItem sx={{ p: 0, mb: 2 }} className='comment-list-item' key={comment.id}>
-                <Paper className='comment-paper'>
-                    <ListItemAvatar>
-                        <Avatar alt="User Name" src={`http://195.35.56.202:8080/${comment.picture}`} />
-                    </ListItemAvatar>
-                    <Box className="comment-content">
-                        <ListItemText 
-                            secondary={`${moment(comment.cdate).from(moment(new Date()))}`} 
-                            primary={`${comment.username}`} 
-                            className='comment-header-text' 
-                            sx={{ mb: 0 }} 
-                        />
-                        <Typography variant='subtitle1'>
-                            {comment.content}
-                        </Typography>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', mt: '8px' }}>
-                            <Typography 
-                                variant='subtitle3' 
-                                sx={{ cursor: 'pointer' }}
-                                onClick={() => handleLikeComment(comment.id)}
-                            >
-                                {comment.likes === 0 ? 'Bəyən' : `${comment.likes} Bəyənmə`} 
+                    <Paper className='comment-paper'>
+                        <ListItemAvatar>
+                            <Avatar alt="User Name" src={`http://195.35.56.202:8080/${comment.picture}`} />
+                        </ListItemAvatar>
+                        <Box className="comment-content">
+                            <ListItemText 
+                                secondary={`${moment(comment.cdate).from(moment(new Date()))}`} 
+                                primary={`${comment.username}`} 
+                                className='comment-header-text' 
+                                sx={{ mb: 0 }} 
+                            />
+                            <Typography variant='subtitle1'>
+                                {comment.content}
                             </Typography>
-                            <Typography variant='subtitle3' sx={{ cursor: 'pointer' }}>Cavab yaz</Typography>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', mt: '8px' }}>
+                                <Typography 
+                                    variant='subtitle3' 
+                                    sx={{ cursor: 'pointer' }}
+                                    onClick={() => handleLikeComment(comment.id)}
+                                >
+                                    {comment.likes === 0 ? 'Bəyən' : `${comment.likes} Bəyənmə`} 
+                                </Typography>
+                                <Typography variant='subtitle3' sx={{ cursor: 'pointer' }}>Cavab yaz</Typography>
+                            </Box>
+                            <Box className="expand-replies" onClick={() => setExpand(prev => !prev)}>
+                                {!expand && <ExpandMoreIcon sx={{ color: 'rgb(2, 66, 137)' }} />}
+                                {expand && <ExpandLessIcon sx={{ color: 'rgb(2, 66, 137)' }} />}
+                                {response} yanıt
+                            </Box>
                         </Box>
-                        <Box className="expand-replies" onClick={() => setExpand(prev => !prev)}>
-                            {!expand && <ExpandMoreIcon sx={{ color: 'rgb(2, 66, 137)' }} />}
-                            {expand && <ExpandLessIcon sx={{ color: 'rgb(2, 66, 137)' }} />}
-                            {response} yanıt
+                        <IconButton className='more-icon' aria-describedby={id} onClick={(e) => {
+                            setAnchorEl(e.currentTarget);
+                            setSelectedPopover(comment.id);
+                        }}>
+                            <MoreHorizIcon />
+                        </IconButton>
+                        <Popover
+                            className='comment-popover'
+                            id={id}
+                            open={selectedPopover === comment.id}
+                            anchorEl={anchorEl}
+                            onClose={() => {
+                                setAnchorEl(null);
+                                setSelectedPopover("");
+                            }}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                        >
+                            <List sx={{ pb: '10px', width: '130px' }}>
+                                <ListItem
+                                    disablePadding
+                                    className="sidebar-list-item"
+                                >
+                                    <ListItemButton sx={{ py: 0 }}>
+                                        <ListItemIcon sx={{ minWidth: '40px' }}>
+                                            <VisibilityOffOutlinedIcon />
+                                        </ListItemIcon>
+                                        <ListItemText primary="Gizlət" />
+                                    </ListItemButton>
+                                </ListItem>
+                                <ListItem
+                                    disablePadding
+                                    className="sidebar-list-item"
+                                >
+                                    <ListItemButton sx={{ py: 0 }}>
+                                        <ListItemIcon sx={{ minWidth: '40px' }}>
+                                            <DeleteIcon />
+                                        </ListItemIcon>
+                                        <ListItemText primary="Sil" />
+                                    </ListItemButton>
+                                </ListItem>
+                            </List>
+                        </Popover>
+                    </Paper>
+                    {response > 0 && expand && <Paper className='reply-paper'>
+                        <ListItemAvatar>
+                            <Avatar alt="User Name" src="https://avatars.githubusercontent.com/u/99089581?v=4" />
+                        </ListItemAvatar>
+                        <Box className="comment-content">
+                            <ListItemText primary="İlkin Hacıyev" secondary="1 saat öncə" sx={{ mb: 0 }} className='comment-header-text' />
+                            <Typography variant='subtitle1'>Təşəkkürlər</Typography>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', mt: '8px' }}>
+                                <Typography 
+                                    variant='subtitle3' 
+                                    sx={{ cursor: 'pointer' }} 
+                                >
+                                    Bəyən
+                                </Typography>
+                                <Typography variant='subtitle3' sx={{ cursor: 'pointer' }}>Cavab yaz</Typography>
+                            </Box>
                         </Box>
-                    </Box>
-                    <IconButton className='more-icon' aria-describedby={id} onClick={(e) => setAnchorEl(e.currentTarget)}>
-                        <MoreHorizIcon />
-                    </IconButton>
-                    <Popover
-                        className='comment-popover'
-                        id={id}
-                        open={open}
-                        anchorEl={anchorEl}
-                        onClose={() => setAnchorEl(null)}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'left',
-                        }}
-                    >
-                        <List sx={{ pb: '10px', width: '130px' }}>
-                            <ListItem
-                                disablePadding
-                                className="sidebar-list-item"
-                            >
-                                <ListItemButton sx={{ py: 0 }}>
-                                    <ListItemIcon sx={{ minWidth: '40px' }}>
-                                        <VisibilityOffOutlinedIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Gizlət" />
-                                </ListItemButton>
-                            </ListItem>
-                            <ListItem
-                                disablePadding
-                                className="sidebar-list-item"
-                            >
-                                <ListItemButton sx={{ py: 0 }}>
-                                    <ListItemIcon sx={{ minWidth: '40px' }}>
-                                        <DeleteIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Sil" />
-                                </ListItemButton>
-                            </ListItem>
-                        </List>
-                    </Popover>
-                </Paper>
-                {response > 0 && expand && <Paper className='reply-paper'>
-                    <ListItemAvatar>
-                        <Avatar alt="User Name" src="https://avatars.githubusercontent.com/u/99089581?v=4" />
-                    </ListItemAvatar>
-                    <Box className="comment-content">
-                        <ListItemText primary="İlkin Hacıyev" secondary="1 saat öncə" sx={{ mb: 0 }} className='comment-header-text' />
-                        <Typography variant='subtitle1'>Təşəkkürlər</Typography>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', mt: '8px' }}>
-                            <Typography 
-                                variant='subtitle3' 
-                                sx={{ cursor: 'pointer' }} 
-                            >
-                                Bəyən
-                            </Typography>
-                            <Typography variant='subtitle3' sx={{ cursor: 'pointer' }}>Cavab yaz</Typography>
-                        </Box>
-                    </Box>
-                    <IconButton className='more-icon' aria-describedby={id} onClick={(e) => setAnchorEl(e.currentTarget)}>
-                        <MoreHorizIcon />
-                    </IconButton>
-                    <Popover
-                        className='comment-popover'
-                        id={id}
-                        open={open}
-                        anchorEl={anchorEl}
-                        onClose={() => setAnchorEl(null)}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'left',
-                        }}
-                    >
-                        <List sx={{ pb: '10px', width: '130px' }}>
-                            <ListItem
-                                disablePadding
-                                className="sidebar-list-item"
-                            >
-                                <ListItemButton sx={{ py: 0 }}>
-                                    <ListItemIcon sx={{ minWidth: '40px' }}>
-                                        <VisibilityOffOutlinedIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Gizlət" />
-                                </ListItemButton>
-                            </ListItem>
-                            <ListItem
-                                disablePadding
-                                className="sidebar-list-item"
-                            >
-                                <ListItemButton sx={{ py: 0 }}>
-                                    <ListItemIcon sx={{ minWidth: '40px' }}>
-                                        <DeleteIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Sil" />
-                                </ListItemButton>
-                            </ListItem>
-                        </List>
-                    </Popover>
-                </Paper>}
-            </ListItem>
+                        <IconButton className='more-icon' aria-describedby={id} onClick={(e) => {
+                            setAnchorEl(e.currentTarget);
+                            setSelectedPopover(comment.id);
+                        }}>
+                            <MoreHorizIcon />
+                        </IconButton>
+                        <Popover
+                            className='comment-popover'
+                            id={id}
+                            open={selectedPopover === comment.id}
+                            anchorEl={anchorEl}
+                            onClose={() => {
+                                setAnchorEl(null);
+                                setSelectedPopover("");
+                            }}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                        >
+                            <List sx={{ pb: '10px', width: '130px' }}>
+                                <ListItem
+                                    disablePadding
+                                    className="sidebar-list-item"
+                                >
+                                    <ListItemButton sx={{ py: 0 }}>
+                                        <ListItemIcon sx={{ minWidth: '40px' }}>
+                                            <VisibilityOffOutlinedIcon />
+                                        </ListItemIcon>
+                                        <ListItemText primary="Gizlət" />
+                                    </ListItemButton>
+                                </ListItem>
+                                <ListItem
+                                    disablePadding
+                                    className="sidebar-list-item"
+                                >
+                                    <ListItemButton sx={{ py: 0 }}>
+                                        <ListItemIcon sx={{ minWidth: '40px' }}>
+                                            <DeleteIcon />
+                                        </ListItemIcon>
+                                        <ListItemText primary="Sil" />
+                                    </ListItemButton>
+                                </ListItem>
+                            </List>
+                        </Popover>
+                    </Paper>}
+                </ListItem>
             ))}
         </List>
     );

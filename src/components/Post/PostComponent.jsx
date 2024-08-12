@@ -110,10 +110,12 @@ const PostComponent = () => {
       );
 
       const comment = { ...response.data }
-
-      const allComments = [...comments, comment];
+      console.log(comment);
       
-      console.log(allComments);
+
+      const allComments = [comment, ...comments].toSorted((a,b) => new Date(b.cdate).getTime() - new Date(a.cdate).getTime());
+      
+      setComments(allComments);
 
     } catch (error) {
       console.log(error);
@@ -131,7 +133,7 @@ const PostComponent = () => {
   }
 
   return (
-    <Grid item>
+    <Grid item >
       <Card
         sx={{
           width: "100%",
@@ -284,7 +286,7 @@ const PostComponent = () => {
             </Button>
           </Search>
         </Box>
-        <Typography variant="h5" sx={{ px: 2 }}>Commentlər:</Typography>
+        <Typography variant="h5" sx={{ px: 2 }}>{comments.length} Comment</Typography>
         <PostComments comments={comments} setComments={setComments} />
       </Card>
     </Grid>
