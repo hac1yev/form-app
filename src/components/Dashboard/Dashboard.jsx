@@ -12,7 +12,6 @@ import dipnot_logo from "../../assets/dipnote-logo.svg";
 import SidebarMenu from "../SidebarMenu/SidebarMenu";
 import "./Dashboard.scss";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 
 const drawerWidth = 340;
 
