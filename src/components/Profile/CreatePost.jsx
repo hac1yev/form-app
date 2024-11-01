@@ -51,34 +51,35 @@ const CreatePost = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+    
         const formData = new FormData();
         formData.append("heading", heading);
         formData.append("content", textContent);
         formData.append("community_id", 1);
-
-        // Handle single or multiple images
-        if (images) {
-            if (Array.isArray(images)) {
-                images.forEach((image, i) => formData.append(`images[${i}]`, image));
-            } else {
-                formData.append("images", images);
-            }
+    
+        // Debug: Check if images contain the expected File objects
+        console.log("Images to upload:", images);
+    
+        // Append each file as a separate entry in formData
+        if (images && images.length > 0) {
+            images.forEach((image, i) => {
+                formData.append("images", image); // Append each file directly
+            });
         }
-
+    
         try {
             const response = await axios.post("http://209.38.241.78:8080/post", formData, {
                 headers: {
                     "Authorization": `Bearer ${token}`,
-                    "Content-Type": "multipart/form-data",
                 }
             });
-
-            console.log(response);
+    
+            console.log("Server response:", response);
         } catch (error) {
-            console.log(error);
+            console.error("Upload error:", error);
         }
     };
+    
 
     return (
         <>

@@ -149,7 +149,7 @@ const MyPosts = ({ myPosts }) => {
                   />
                 ) : (
                   <Slider {...sliderSettings} className="post-slick-slider">
-                    {item.picture.split(", ").map((image, idx) => (
+                    {item.images.split(", ").map((image, idx) => (
                         <CardMedia
                           component={"img"}
                           key={idx}
