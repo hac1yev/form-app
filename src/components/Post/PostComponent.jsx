@@ -86,7 +86,7 @@ const PostComponent = () => {
   useEffect(() => {
     (async function getPostData() {
       try {
-        const response = await axios.get(`http://195.35.56.202:8080/post/${postId}`);
+        const response = await axios.get(`https://209.38.241.78:8080/post/${postId}`);
 
         setPostData(response.data.post);
         setComments(response.data.comments);        
@@ -100,7 +100,7 @@ const PostComponent = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://195.35.56.202:8080/comment", 
+      const response = await axios.post("https://209.38.241.78:8080/comment", 
         { post_id: postId, content: commentText },
         {
           headers: {
@@ -142,7 +142,7 @@ const PostComponent = () => {
       >
         <CardHeader
           avatar={
-            <Avatar src={`http://195.35.56.202:8080/${postData.picture}`} sx={{ bgcolor: "red" }} aria-label="recipe" />
+            <Avatar src={`https://209.38.241.78:8080/${postData.picture}`} sx={{ bgcolor: "red" }} aria-label="recipe" />
           }
           action={
             <>
@@ -233,7 +233,7 @@ const PostComponent = () => {
             <CardMedia
               component={"img"}
               className="post-image"
-              image={`http://195.35.56.202:8080/${postData.images}`}
+              image={`https://209.38.241.78:8080/${postData.images}`}
             />
           ) : (
             <Slider {...sliderSettings} className="post-slick-slider">
@@ -242,7 +242,7 @@ const PostComponent = () => {
                   component={"img"}
                   key={idx}
                   className="post-image"
-                  image={`http://195.35.56.202:8080/${image}`}
+                  image={`https://209.38.241.78:8080/${image}`}
                   alt={`Post image ${idx + 1}`}
                 />
               ))}
