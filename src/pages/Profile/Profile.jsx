@@ -5,8 +5,8 @@ import ProfileRightbar from '../../components/Profile/ProfileRightbar';
 import useGetAxios from '../../hooks/useGetAxios';
 
 const Profile = () => {
-    const myInfo = useGetAxios(`users/me`);
-
+    const myInfo = useGetAxios(`users/me`);    
+    
     return (
         <Box
             component="main"

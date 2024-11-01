@@ -55,7 +55,7 @@ const ProfileComponent = ({ myPosts }) => {
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0} className="profile-posts-tabpanel">
-          <MyPosts myPosts={myPosts} />
+          <MyPosts myPosts={myPosts || []} />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           Item Two
