@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 const InputFile = styled(Input)(() => ({
     display: 'none',
 }));
-  
-  const Label = styled('label')(({ theme }) => ({
+
+const Label = styled('label')(({ theme }) => ({
     display: 'inline-block',
     marginTop: theme.spacing(1),
     cursor: 'pointer',
@@ -14,25 +14,18 @@ const InputFile = styled(Input)(() => ({
     borderRadius: theme.shape.borderRadius,
     backgroundColor: theme.palette.background.paper,
     '&:hover': {
-      backgroundColor: theme.palette.action.hover,
+        backgroundColor: theme.palette.action.hover,
     },
-  }));
+}));
 
-const AddImageToPost = ({ setImages,images }) => {
+const AddImageToPost = ({ setImages, images }) => {
 
     const onChange = (event) => {
         if (event.target.files.length > 0) {
-            const imgs = [];
-            const file = event.target.files;
-
-            Array.from(file).forEach((item) => {
-                imgs.push(item.name)
-            });
-
-            setImages(imgs);
+            const fileArray = Array.from(event.target.files); // Store actual files
+            setImages(fileArray); // Pass the File objects to `setImages`
         }
     };
-
 
     return (
         <>
@@ -46,9 +39,11 @@ const AddImageToPost = ({ setImages,images }) => {
                 <Label htmlFor="upload-file">
                     <Button component="span">Şəkil və ya şəkilləri yüklə</Button>
                 </Label>
-                {images && (
+                {images && images.length > 0 && (
                     <Box>
-                        {images.toString()}
+                        {images.map((img, index) => (
+                            <span key={index}>{img.name}{index < images.length - 1 ? ', ' : ''}</span>
+                        ))}
                     </Box>
                 )}
             </Box>
@@ -58,7 +53,7 @@ const AddImageToPost = ({ setImages,images }) => {
 
 AddImageToPost.propTypes = {
     setImages: PropTypes.func.isRequired,
-    images: PropTypes.string.isRequired,
+    images: PropTypes.array.isRequired, // `images` should be an array of `File` objects
 };
 
-export default AddImageToPost
+export default AddImageToPost;

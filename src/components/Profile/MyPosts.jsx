@@ -46,7 +46,7 @@ const MyPosts = ({ myPosts }) => {
         </Box>
       )
     }
-
+    
   return (
     <Box sx={{ gap: '20px', display: 'flex', flexDirection: 'column', }}>
       {myPosts.map((item) => (
@@ -145,11 +145,11 @@ const MyPosts = ({ myPosts }) => {
                   <CardMedia
                     component={"img"}
                     className="post-image"
-                    image={`http://209.38.241.78:8080/${item.images}`}
+                    image={`http://209.38.241.78:8080/${item.picture}`}
                   />
                 ) : (
                   <Slider {...sliderSettings} className="post-slick-slider">
-                    {item.images.split(", ").map((image, idx) => (
+                    {item.picture.split(", ").map((image, idx) => (
                         <CardMedia
                           component={"img"}
                           key={idx}
