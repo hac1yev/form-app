@@ -29,7 +29,7 @@ const profile_community_data = [
 ];
 
 const ProfileRightbar = ({ userInfo }) => {
-  const [profilePicture, setProfilePicture] = useState(`https://209.38.241.78:8080/${userInfo?.picture}`);
+  const [profilePicture, setProfilePicture] = useState(`http://209.38.241.78:8080/${userInfo?.picture}`);
   const fileInputRef = useRef(null);
 
   const handleClick = () => {

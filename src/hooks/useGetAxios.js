@@ -12,7 +12,7 @@ const useGetAxios = (endpoint) => {
         (async function fetchData() {
             dispatch(loadingSliceActions.isItLoading(true));
             try {
-                const response = await axios.get(`https://209.38.241.78:8080/${endpoint}`, {
+                const response = await axios.get(`http://209.38.241.78:8080/${endpoint}`, {
                     headers: {
                         "Authorization": `Bearer ${token}`,
                         "Content-Type": "application/json",

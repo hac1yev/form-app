@@ -22,7 +22,7 @@ const PostComments = ({ comments,setComments }) => {
     const handleLikeComment = async (commentId) => {
         try {
             const response = await axios.post(
-                "https://209.38.241.78:8080/like/comment",
+                "http://209.38.241.78:8080/like/comment",
                 { comment_id: commentId },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -50,7 +50,7 @@ const PostComments = ({ comments,setComments }) => {
                 <ListItem sx={{ p: 0, mb: 2 }} className='comment-list-item' key={comment.id}>
                     <Paper className='comment-paper'>
                         <ListItemAvatar>
-                            <Avatar alt="User Name" src={`https://209.38.241.78:8080/${comment.picture}`} />
+                            <Avatar alt="User Name" src={`http://209.38.241.78:8080/${comment.picture}`} />
                         </ListItemAvatar>
                         <Box className="comment-content">
                             <ListItemText 
