@@ -1,21 +1,23 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useState } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import useGetAxios from "../../hooks/useGetAxios";
 
-const AddCategoryToPost = ({ setSelectedCategory,selectedCategory }) => {
-  const [open,setOpen] = useState(false);
-  const categoryNames = useGetAxios("category")
+const AddCategoryToPost = ({ setSelectedCategory, selectedCategory }) => {
+  const [open, setOpen] = useState(false);
+  const categoryNames = useGetAxios("category");
 
   const handleChange = (event) => {
     setSelectedCategory(event.target.value);
-    setOpen(false);    
+    setOpen(false);
   };
 
   return (
     <div>
-      <FormControl sx={{ width: "100%" }}>
-        <InputLabel id="demo-controlled-open-select-label">Category Name</InputLabel>
+      <FormControl sx={{ width: "100%", margin: "40px 0 10px 0" }}>
+        <InputLabel id="demo-controlled-open-select-label">
+          Category Name
+        </InputLabel>
         <Select
           labelId="demo-controlled-open-select-label"
           id="demo-controlled-open-select"
@@ -26,9 +28,9 @@ const AddCategoryToPost = ({ setSelectedCategory,selectedCategory }) => {
           onChange={handleChange}
           label="Category Name"
         >
-          {categoryNames.map((nameObj) => (
+          {categoryNames?.map((nameObj) => (
             <MenuItem key={nameObj?.id} value={nameObj?.id}>
-                {nameObj?.name}
+              {nameObj?.name}
             </MenuItem>
           ))}
         </Select>
@@ -38,8 +40,8 @@ const AddCategoryToPost = ({ setSelectedCategory,selectedCategory }) => {
 };
 
 AddCategoryToPost.propTypes = {
-    setSelectedCategory: PropTypes.func.isRequired,
-    selectedCategory: PropTypes.string.isRequired
-}
+  setSelectedCategory: PropTypes.func.isRequired,
+  selectedCategory: PropTypes.string.isRequired,
+};
 
 export default AddCategoryToPost;

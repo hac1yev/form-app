@@ -145,7 +145,7 @@ const MyPosts = ({ myPosts }) => {
                   <CardMedia
                     component={"img"}
                     className="post-image"
-                    image={`http://209.38.241.78:8080/${item.picture}`}
+                    image={`http://209.38.241.78:8080/${item.images}`}
                   />
                 ) : (
                   <Slider {...sliderSettings} className="post-slick-slider">
