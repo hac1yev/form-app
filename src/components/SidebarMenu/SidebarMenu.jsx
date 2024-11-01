@@ -9,10 +9,18 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import BuildOutlinedIcon from '@mui/icons-material/BuildOutlined';
 import "./SidebarMenu.scss";
 import useGetAxios from "../../hooks/useGetAxios";
+import { useEffect } from "react";
+import PropTypes from "prop-types";
 
-const SidebarMenu = () => {
+const SidebarMenu = ({ setOpen }) => {
   const { pathname } = useLocation();
   const categories = useGetAxios("category");
+
+  useEffect(() => {
+    if(window.innerWidth <= 768) {
+      setOpen(false)
+    }    
+  }, [pathname,setOpen]);
 
   return (
     <Box className="sidebar-wrapper">
@@ -153,6 +161,10 @@ const SidebarMenu = () => {
       
     </Box>
   );
+};
+
+SidebarMenu.propTypes = {
+  setOpen: PropTypes.func.isRequired
 };
 
 export default SidebarMenu;

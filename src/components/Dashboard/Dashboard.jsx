@@ -1,8 +1,5 @@
 import * as React from "react";
-import { Avatar, InputBase, Stack, useMediaQuery, CssBaseline, Box, Typography, Divider, IconButton, Toolbar } from "@mui/material";
-import { styled, alpha } from "@mui/material/styles";
-import MuiDrawer from "@mui/material/Drawer";
-import MuiAppBar from "@mui/material/AppBar";
+import { Avatar, Stack, useMediaQuery, CssBaseline, Box, Typography, Divider, IconButton, Toolbar } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
@@ -12,98 +9,7 @@ import dipnot_logo from "../../assets/dipnote-logo.svg";
 import SidebarMenu from "../SidebarMenu/SidebarMenu";
 import "./Dashboard.scss";
 import { Link, useNavigate } from "react-router-dom";
-
-const drawerWidth = 340;
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(["width", "margin"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...{
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  [theme.breakpoints.down("769")]: {
-    width: "100%",
-  },
-}));
-
-const Search = styled("form")(({ theme }) => ({
-  position: "relative",
-  border: "1px solid #ccc",
-  borderRadius: "20px",
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "90%",
-  [theme.breakpoints.up("md")]: {
-    marginLeft: theme.spacing(3),
-    width: "70%",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-  },
-}));
-
-const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  "& .MuiDrawer-paper": {
-    position: "relative",
-    whiteSpace: "nowrap",
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    boxSizing: "border-box",
-    ...(!open && {
-      overflowX: "hidden",
-      transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      width: 0,
-      [theme.breakpoints.up("sm")]: {
-        width: 0,
-      },
-    }),
-    [theme.breakpoints.down("769")]: {
-      ...(open && {
-        width: "100vw",
-        zIndex: 2000,
-      }),
-    },
-  },
-}));
+import { AppBar, Drawer, Search, SearchIconWrapper, StyledInputBase } from "../CustomMaterialComponents/CustomMaterialComponents";
 
 export default function Dashboard() {
   const [open, setOpen] = React.useState(false);
@@ -267,7 +173,7 @@ export default function Dashboard() {
             </IconButton>
           </Toolbar>
           <Divider/>
-          <SidebarMenu />
+          <SidebarMenu setOpen={setOpen} />
         </Drawer>
       </>
   );
