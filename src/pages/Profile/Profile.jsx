@@ -22,7 +22,7 @@ const Profile = () => {
         >
             <Toolbar />
             <Grid container sx={{ py: 6, px: 1 }}>
-                <Grid item lg={8} sx={{ px: 1 }}>
+                <Grid item lg={8} sx={{ px: 1, width: '100%' }}>
                     <ProfileComponent myPosts={myInfo?.posts} />
                 </Grid>
                 <Grid item lg={4} sx={{ px: 1 }} className="profile-grid">

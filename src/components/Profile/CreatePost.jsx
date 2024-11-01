@@ -10,7 +10,6 @@ import {
 import { useState } from "react";
 import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
 import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
-import PropTypes from "prop-types";
 import CreatePostForm from "./CreatePostForm";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -39,7 +38,7 @@ const CreatePost = () => {
 
     // Append each file as a separate entry in formData
     if (images && images.length > 0) {
-      images.forEach((image, i) => {
+      images.forEach((image) => {
         formData.append("images", image); // Append each file directly
       });
     }

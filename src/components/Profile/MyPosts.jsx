@@ -26,26 +26,26 @@ const sliderSettings = {
 };
 
 const MyPosts = ({ myPosts }) => {
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
-    const isLoading = useSelector((state) => state.loadingReducer.isLoading);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+  const isLoading = useSelector((state) => state.loadingReducer.isLoading);
 
-    if (isLoading) {
-      return (
-        <Box className="flex-column">
-          <Typography>Yüklənir...</Typography>
-        </Box>
-      );
-    }
-  
-    if(!isLoading && !myPosts) {
-      return (
-        <Box className="flex-column">
-          <Typography>There is no post!</Typography>
-        </Box>
-      )
-    }
+  if (isLoading) {
+    return (
+      <Box className="flex-column">
+        <Typography>Yüklənir...</Typography>
+      </Box>
+    );
+  }
+
+  if(!isLoading && myPosts.length === 0) {
+    return (
+      <Box className="flex-column">
+        <Typography>There is no post!</Typography>
+      </Box>
+    )
+  }
     
   return (
     <Box sx={{ gap: '20px', display: 'flex', flexDirection: 'column', }}>

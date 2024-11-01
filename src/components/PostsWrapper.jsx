@@ -1,9 +1,11 @@
-import { Box, Grid, Toolbar } from '@mui/material';
+import { Box, Grid, Toolbar, useMediaQuery } from '@mui/material';
 import '../pages/Home/Home.scss';
 import { Outlet } from 'react-router-dom';
 import Community from './Home/Community';
 
 const Home = () => {
+  const matches = useMediaQuery("(min-width:769px)");
+
   return (
     <Box
         component="main"
@@ -15,6 +17,7 @@ const Home = () => {
           flexGrow: 1,
           height: "100vh",
           overflow: "auto",
+          mt: !matches ? 2 : 0
         }}  
     >
         <Toolbar />

@@ -45,7 +45,7 @@ const ProfileComponent = ({ myPosts }) => {
       <CreatePost />
       <Box sx={{ width: '100%', my: 2 }}>
         <Box>
-          <Tabs value={value} onChange={handleChange} className="tabs-ul"  variant="scrollable" scrollButtons="auto" aria-label="basic tabs example" >
+          <Tabs value={value} onChange={handleChange} className="tabs-ul" aria-label="basic tabs example" >
             <Tab label="Postlar" {...a11yProps(0)} className={value === 0 ? "active tab-li" : "tab-li"} />
             <Tab label="Bəyənilənlər" {...a11yProps(1)} className={value === 1 ? "active tab-li" : "tab-li"} />
             <Tab label="Commentlər" {...a11yProps(2)} className={value === 2 ? "active tab-li" : "tab-li"} />
