@@ -171,7 +171,7 @@ const SidebarMenu = ({ setOpen }) => {
       <Divider sx={{ py: 1 }} />
 
       <List sx={{ pb: "10px" }}>
-        <Link to="/">
+        {/* <Link to="/">
           <ListItem disablePadding className="sidebar-list-item">
             <ListItemButton>
               <ListItemIcon sx={{ minWidth: "40px" }}>
@@ -180,8 +180,8 @@ const SidebarMenu = ({ setOpen }) => {
               <ListItemText primary="Kömək" />
             </ListItemButton>
           </ListItem>
-        </Link>
-        <Link to="/">
+        </Link> */}
+        {/* <Link to="/">
           <ListItem disablePadding className="sidebar-list-item">
             <ListItemButton>
               <ListItemIcon sx={{ minWidth: "40px" }}>
@@ -190,7 +190,7 @@ const SidebarMenu = ({ setOpen }) => {
               <ListItemText primary="App & Tools" />
             </ListItemButton>
           </ListItem>
-        </Link>
+        </Link> */}
         <Link  onClick={handleLogout}>
           <ListItem disablePadding className="sidebar-list-item">
             <ListItemButton>
