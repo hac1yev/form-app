@@ -1,12 +1,25 @@
 import { Link, useLocation } from "react-router-dom";
-import { Avatar, Box, Button, Divider, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Divider,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import StarIcon from "@mui/icons-material/Star";
 import ImageIcon from "@mui/icons-material/Image";
 import WorkIcon from "@mui/icons-material/Work";
 import BeachAccessIcon from "@mui/icons-material/BeachAccess";
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
-import BuildOutlinedIcon from '@mui/icons-material/BuildOutlined';
+import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
+import LogoutIcon from "@mui/icons-material/Logout";
+import BuildOutlinedIcon from "@mui/icons-material/BuildOutlined";
 import "./SidebarMenu.scss";
 import useGetAxios from "../../hooks/useGetAxios";
 import { useEffect } from "react";
@@ -16,16 +29,20 @@ const SidebarMenu = ({ setOpen }) => {
   const { pathname } = useLocation();
   const categories = useGetAxios("category");
 
+  const handleLogout = () => {
+    localStorage.removeItem("userInfo");
+    window.location.reload()
+  };
+
   useEffect(() => {
-    if(window.innerWidth <= 768) {
-      setOpen(false)
-    }    
-  }, [pathname,setOpen]);
+    if (window.innerWidth <= 768) {
+      setOpen(false);
+    }
+  }, [pathname, setOpen]);
 
   return (
     <Box className="sidebar-wrapper">
-
-      <List sx={{ pb: '10px' }}>
+      <List sx={{ pb: "10px" }}>
         <Link to="/">
           <ListItem
             disablePadding
@@ -36,7 +53,7 @@ const SidebarMenu = ({ setOpen }) => {
             }
           >
             <ListItemButton>
-              <ListItemIcon sx={{ minWidth: '40px' }}>
+              <ListItemIcon sx={{ minWidth: "40px" }}>
                 <HomeIcon />
               </ListItemIcon>
               <ListItemText primary="Ana səhifə" />
@@ -53,7 +70,7 @@ const SidebarMenu = ({ setOpen }) => {
             }
           >
             <ListItemButton>
-              <ListItemIcon sx={{ minWidth: '40px' }}>
+              <ListItemIcon sx={{ minWidth: "40px" }}>
                 <StarIcon />
               </ListItemIcon>
               <ListItemText primary="Populyar" />
@@ -64,22 +81,32 @@ const SidebarMenu = ({ setOpen }) => {
 
       <Divider />
 
-      <Box sx={{ pt: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <Box
+        sx={{
+          pt: 2,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <Typography variant="h4">Qruplar</Typography>
-        <Box 
-          component={"span"} 
-          sx={{ 
-            borderRadius: '14.59px', 
-            bgcolor: 'rgba(0, 32, 67, 1)', 
-            padding: '1px 12px', 
-            color: '#fff' 
+        <Box
+          component={"span"}
+          sx={{
+            borderRadius: "14.59px",
+            bgcolor: "rgba(0, 32, 67, 1)",
+            padding: "1px 12px",
+            color: "#fff",
           }}
         >
           19
         </Box>
       </Box>
 
-      <List className="sidebar-menu-groups" sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+      <List
+        className="sidebar-menu-groups"
+        sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+      >
         <ListItem>
           <ListItemAvatar>
             <Avatar>
@@ -112,32 +139,42 @@ const SidebarMenu = ({ setOpen }) => {
 
       <Divider sx={{ py: 1 }} />
 
-      <Box sx={{ pt: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <Box
+        sx={{
+          pt: 2,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <Typography variant="h4">Kategoriyalar</Typography>
       </Box>
 
-      <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: '12px' }} className="sidebar-menu-category">
-        {categories?.slice(0,3).map((category) => (
-          <Link to={`/category-posts?category_id=${category?.id}`} key={category?.id}>
+      <Box
+        sx={{ p: 2, display: "flex", flexDirection: "column", gap: "12px" }}
+        className="sidebar-menu-category"
+      >
+        {categories?.slice(0, 3).map((category) => (
+          <Link
+            to={`/category-posts?category_id=${category?.id}`}
+            key={category?.id}
+          >
             <Typography variant="subtitle1">{category?.name}</Typography>
           </Link>
         ))}
       </Box>
-      
+
       <Link to="/">
         <Button variant="outlined">Hamısına bax</Button>
       </Link>
 
       <Divider sx={{ py: 1 }} />
 
-      <List sx={{ pb: '10px' }}>
+      <List sx={{ pb: "10px" }}>
         <Link to="/">
-          <ListItem
-            disablePadding
-            className="sidebar-list-item"
-          >
+          <ListItem disablePadding className="sidebar-list-item">
             <ListItemButton>
-              <ListItemIcon sx={{ minWidth: '40px' }}>
+              <ListItemIcon sx={{ minWidth: "40px" }}>
                 <HelpOutlineOutlinedIcon />
               </ListItemIcon>
               <ListItemText primary="Kömək" />
@@ -145,26 +182,32 @@ const SidebarMenu = ({ setOpen }) => {
           </ListItem>
         </Link>
         <Link to="/">
-          <ListItem
-            disablePadding
-            className="sidebar-list-item"
-          >
+          <ListItem disablePadding className="sidebar-list-item">
             <ListItemButton>
-              <ListItemIcon sx={{ minWidth: '40px' }}>
+              <ListItemIcon sx={{ minWidth: "40px" }}>
                 <BuildOutlinedIcon />
               </ListItemIcon>
               <ListItemText primary="App & Tools" />
             </ListItemButton>
           </ListItem>
         </Link>
+        <Link  onClick={handleLogout}>
+          <ListItem disablePadding className="sidebar-list-item">
+            <ListItemButton>
+              <ListItemIcon sx={{ minWidth: "40px" }}>
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary="Profildən Çıx" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
       </List>
-      
     </Box>
   );
 };
 
 SidebarMenu.propTypes = {
-  setOpen: PropTypes.func.isRequired
+  setOpen: PropTypes.func.isRequired,
 };
 
 export default SidebarMenu;

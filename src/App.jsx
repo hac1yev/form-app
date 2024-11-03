@@ -11,9 +11,11 @@ import { useSelector } from "react-redux"
 import Search from "./pages/Search/Search"
 import CategoryPosts from "./pages/CategoryPosts/CategoryPosts"
 import PostsWrapper from "./components/PostsWrapper"
+import useGetAxios from "./hooks/useGetAxios"
 
 function App() {
   const token = useSelector((state) => state.authReducer.userInfo?.token);
+  const myInfo = useGetAxios(`users/me`);    
 
   return (
     <>
@@ -25,7 +27,7 @@ function App() {
         </Routes>
       ) : (
         <Box sx={{ display: "flex" }}>
-          <Dashboard />
+          <Dashboard myInfo={myInfo} />
           <Routes>
             <Route element={<PostsWrapper />}>
               <Route path="" element={<Home />} />
