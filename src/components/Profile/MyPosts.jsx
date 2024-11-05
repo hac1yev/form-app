@@ -1,17 +1,35 @@
-import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Grid, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Popover, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Popover,
+  Typography,
+} from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import LoopIcon from '@mui/icons-material/Loop';
-import IosShareIcon from '@mui/icons-material/IosShare';
-import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
-import DeleteIcon from '@mui/icons-material/Delete';
+import LoopIcon from "@mui/icons-material/Loop";
+import IosShareIcon from "@mui/icons-material/IosShare";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import Slider from "react-slick";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const sliderSettings = {
   dots: true,
@@ -28,8 +46,29 @@ const sliderSettings = {
 const MyPosts = ({ myPosts }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  const id = open ? "simple-popover" : undefined;
   const isLoading = useSelector((state) => state.loadingReducer.isLoading);
+  const token = useSelector((state) => state.authReducer.userInfo?.token);
+  const handleDelete = async (postId) => {
+    console.log("🚀 ~ handleDelete ~ postId:", postId)
+    // try {
+    //   await axios.delete("http://209.38.241.78:8080/post", {
+    //     data: { post_id: postId },
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //       "Content-Type": "application/json",
+    //     },
+    //   });
+
+      // // Filter the personalPosts array to remove the deleted post
+      // const updatedPosts = personalPosts.filter((post) => post.id !== postId);
+
+      // // Dispatch an action to update the state with the filtered array
+      // dispatch(postSuccess(updatedPosts));
+    // } catch (error) {
+    //   console.log(error); // Handle error properly
+    // }
+  };
 
   if (isLoading) {
     return (
@@ -39,18 +78,18 @@ const MyPosts = ({ myPosts }) => {
     );
   }
 
-  if(!isLoading && myPosts.length === 0) {
+  if (!isLoading && myPosts.length === 0) {
     return (
       <Box className="flex-column">
         <Typography>There is no post!</Typography>
       </Box>
-    )
+    );
   }
-    
+
   return (
-    <Box sx={{ gap: '20px', display: 'flex', flexDirection: 'column', }}>
+    <Box sx={{ gap: "20px", display: "flex", flexDirection: "column" }}>
       {myPosts.map((item) => (
-        <Grid item key={item.id} sx={{ width: '100%' }} className="asdasa">
+        <Grid item key={item.id} sx={{ width: "100%" }} className="asdasa">
           <Card
             sx={{
               width: "100%",
@@ -60,7 +99,11 @@ const MyPosts = ({ myPosts }) => {
           >
             <CardHeader
               avatar={
-                <Avatar sx={{ bgcolor: "red" }} src={`http://209.38.241.78:8080/${item.picture}`} aria-label="recipe">
+                <Avatar
+                  sx={{ bgcolor: "red" }}
+                  src={`http://209.38.241.78:8080/${item.picture}`}
+                  aria-label="recipe"
+                >
                   {item.username[0].toUpperCase()}
                 </Avatar>
               }
@@ -109,7 +152,12 @@ const MyPosts = ({ myPosts }) => {
                           <ListItemText primary="Gizlət" />
                         </ListItemButton>
                       </ListItem>
-                      <ListItem disablePadding className="sidebar-list-item">
+                      <ListItem
+                      
+                        onClick={() => handleDelete(item.id)}
+                        disablePadding
+                        className="sidebar-list-item"
+                      >
                         <ListItemButton sx={{ py: 0 }}>
                           <ListItemIcon sx={{ minWidth: "40px" }}>
                             <DeleteIcon />
@@ -128,19 +176,20 @@ const MyPosts = ({ myPosts }) => {
                   <span style={{ color: "#999" }}>{item.community_name}</span>
                 </div>
               }
-              subheader={`${item.cdate.slice(0,10)}`}
+              subheader={`${item.cdate.slice(0, 10)}`}
             />
             <Link to={`/posts/${item.id}`} className="post-link">
               <CardContent>
                 <Typography variant="h6">{item.heading}</Typography>
                 <Typography variant="subtitle1" sx={{ mt: 2 }}>
-                  <p dangerouslySetInnerHTML={{
-                    __html: item.content
-                  }}></p>
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: item.content,
+                    }}
+                  ></p>
                 </Typography>
               </CardContent>
               <Box sx={{ px: 2, borderRadius: "19px" }}>
-                
                 {item.images.split(", ").length === 1 ? (
                   <CardMedia
                     component={"img"}
@@ -150,13 +199,13 @@ const MyPosts = ({ myPosts }) => {
                 ) : (
                   <Slider {...sliderSettings} className="post-slick-slider">
                     {item.images.split(", ").map((image, idx) => (
-                        <CardMedia
-                          component={"img"}
-                          key={idx}
-                          className="post-image"
-                          image={`http://209.38.241.78:8080/${image}`}
-                          alt={`Post image ${idx + 1}`}
-                        />
+                      <CardMedia
+                        component={"img"}
+                        key={idx}
+                        className="post-image"
+                        image={`http://209.38.241.78:8080/${image}`}
+                        alt={`Post image ${idx + 1}`}
+                      />
                     ))}
                   </Slider>
                 )}
@@ -187,7 +236,7 @@ const MyPosts = ({ myPosts }) => {
 };
 
 MyPosts.propTypes = {
-  myPosts: PropTypes.array.isRequired
+  myPosts: PropTypes.array.isRequired,
 };
 
 export default MyPosts;
