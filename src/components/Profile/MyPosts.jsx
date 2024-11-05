@@ -45,8 +45,7 @@ const sliderSettings = {
 
 const MyPosts = ({ myPosts }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
+  const [openPopoverId,setOpenPopoverId] = useState("")
   const isLoading = useSelector((state) => state.loadingReducer.isLoading);
   const token = useSelector((state) => state.authReducer.userInfo?.token);
   const handleDelete = async (postId) => {
@@ -85,7 +84,7 @@ const MyPosts = ({ myPosts }) => {
       </Box>
     );
   }
-
+  
   return (
     <Box sx={{ gap: "20px", display: "flex", flexDirection: "column" }}>
       {myPosts.map((item) => (
@@ -111,17 +110,23 @@ const MyPosts = ({ myPosts }) => {
                 <>
                   <IconButton
                     aria-label="settings"
-                    aria-describedby={id}
-                    onClick={(e) => setAnchorEl(e.currentTarget)}
+                    aria-describedby={item.id}
+                    onClick={(e) => {
+                      setAnchorEl(e.currentTarget);
+                      setOpenPopoverId(item.id);
+                    }}
                   >
                     <MoreVertIcon />
                   </IconButton>
                   <Popover
                     className="comment-popover"
-                    id={id}
-                    open={open}
+                    id={item.id}
+                    open={openPopoverId === item.id ? true : false}
                     anchorEl={anchorEl}
-                    onClose={() => setAnchorEl(null)}
+                    onClose={() => {
+                      setAnchorEl(null);
+                      setOpenPopoverId("");
+                    }}
                     anchorOrigin={{
                       vertical: "bottom",
                       horizontal: "left",
