@@ -110,7 +110,7 @@ const PostComponent = () => {
       );
 
       const comment = { ...response.data }
-      console.log(comment);
+
       
 
       const allComments = [comment, ...comments].toSorted((a,b) => new Date(b.cdate).getTime() - new Date(a.cdate).getTime());

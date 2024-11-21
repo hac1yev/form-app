@@ -12,19 +12,19 @@ import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
 import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
 import CreatePostForm from "./CreatePostForm";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMyPosts } from "../../store/postSlice";
 
 const CreatePost = () => {
   const token = useSelector((state) => state.authReducer.userInfo?.token);
   const [postFormValue, setPostFormValue] = useState("");
+
   const [textContent, setTextContent] = useState("");
   const [heading, setHeading] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [images, setImages] = useState(null); // Initialize as null to hold File object
+  const [images, setImages] = useState(null); 
   const [open, setOpen] = useState(false);
-  const isDisabled =
-    textContent && images && postFormValue && selectedCategory ? false : true;
-
+  const dispatch = useDispatch();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,13 +33,9 @@ const CreatePost = () => {
     formData.append("content", textContent);
     formData.append("community_id", 1);
 
-    // Debug: Check if images contain the expected File objects
-    console.log("Images to upload:", images);
-
-    // Append each file as a separate entry in formData
     if (images && images.length > 0) {
       images.forEach((image) => {
-        formData.append("images", image); // Append each file directly
+        formData.append("images", image);
       });
     }
 
@@ -53,8 +49,8 @@ const CreatePost = () => {
           },
         }
       );
-
-      console.log("Server response:", response);
+      setOpen(false);
+      dispatch(fetchMyPosts());
     } catch (error) {
       console.error("Upload error:", error);
     }

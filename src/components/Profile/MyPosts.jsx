@@ -25,11 +25,12 @@ import IosShareIcon from "@mui/icons-material/IosShare";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Slider from "react-slick";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { fetchMyPosts, postSuccess } from "../../store/postSlice";
 
 const sliderSettings = {
   dots: true,
@@ -45,29 +46,32 @@ const sliderSettings = {
 
 const MyPosts = ({ myPosts }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [openPopoverId,setOpenPopoverId] = useState("")
+  const [openPopoverId, setOpenPopoverId] = useState("");
   const isLoading = useSelector((state) => state.loadingReducer.isLoading);
   const token = useSelector((state) => state.authReducer.userInfo?.token);
+  const { personalPosts } = useSelector((state) => state.post);
+  const dispatch = useDispatch();
   const handleDelete = async (postId) => {
-    console.log("🚀 ~ handleDelete ~ postId:", postId)
-    // try {
-    //   await axios.delete("http://209.38.241.78:8080/post", {
-    //     data: { post_id: postId },
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //       "Content-Type": "application/json",
-    //     },
-    //   });
-
-      // // Filter the personalPosts array to remove the deleted post
-      // const updatedPosts = personalPosts.filter((post) => post.id !== postId);
-
-      // // Dispatch an action to update the state with the filtered array
-      // dispatch(postSuccess(updatedPosts));
-    // } catch (error) {
-    //   console.log(error); // Handle error properly
-    // }
+    try {
+      await axios.delete("http://209.38.241.78:8080/post", {
+        data: { post_id: postId },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const updatedPosts = personalPosts?.posts.filter(
+        (post) => post.id !== postId
+      );
+      dispatch(postSuccess(updatedPosts));
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    dispatch(fetchMyPosts());
+  }, [dispatch]);
 
   if (isLoading) {
     return (
@@ -77,17 +81,17 @@ const MyPosts = ({ myPosts }) => {
     );
   }
 
-  if (!isLoading && myPosts.length === 0) {
+  if (!isLoading && personalPosts.posts?.length === 0) {
     return (
       <Box className="flex-column">
         <Typography>There is no post!</Typography>
       </Box>
     );
   }
-  
+
   return (
     <Box sx={{ gap: "20px", display: "flex", flexDirection: "column" }}>
-      {myPosts.map((item) => (
+      {personalPosts?.posts?.map((item) => (
         <Grid item key={item.id} sx={{ width: "100%" }} className="asdasa">
           <Card
             sx={{
@@ -158,7 +162,6 @@ const MyPosts = ({ myPosts }) => {
                         </ListItemButton>
                       </ListItem>
                       <ListItem
-                      
                         onClick={() => handleDelete(item.id)}
                         disablePadding
                         className="sidebar-list-item"
