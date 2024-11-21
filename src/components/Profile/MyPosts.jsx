@@ -69,6 +69,7 @@ const MyPosts = ({ myPosts }) => {
     }
   };
 
+  // THIS IS ONE IS USELESS BUT I WILL KEEP IT FOR NOW AND THIS ONE CAUSE USELESS RERENDER
   useEffect(() => {
     dispatch(fetchMyPosts());
   }, [dispatch]);
