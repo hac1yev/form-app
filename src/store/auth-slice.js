@@ -12,7 +12,9 @@ const getUserInfo = () => {
 
 const initialAuthState = {
     userInfo: getUserInfo(),
+    userMainInfos: {}
 };
+
 
 const authSlice = createSlice({
     name: 'authSlice',
@@ -20,6 +22,10 @@ const authSlice = createSlice({
     reducers: {
         getUser(state,action) {
             state.userInfo = { ...action.payload }
+        },
+        getUserMainInfos(state,action) {
+            state.userMainInfos = { ...action.payload }
+            console.log("🚀 ~ getUserMainInfos ~ userMainInfos:", state.userMainInfos)
         },
     }
 });

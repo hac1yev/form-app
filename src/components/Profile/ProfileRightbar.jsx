@@ -40,9 +40,10 @@ const profile_community_data = [
   },
 ];
 
-const ProfileRightbar = ({ userInfo }) => {
+const ProfileRightbar = () => {
   const [profilePicture, setProfilePicture] = useState();
   const fileInputRef = useRef(null);
+  const myInfo = useSelector((state) => state.authReducer.userMainInfos);
   const token = useSelector((state) => state.authReducer.userInfo?.token);
   const handleClick = (event) => {
     fileInputRef.current.click();
@@ -122,7 +123,7 @@ const ProfileRightbar = ({ userInfo }) => {
               />
             ) : (
               <img
-                src={`http://209.38.241.78:8080/${userInfo?.picture}`}
+                src={`http://209.38.241.78:8080/${myInfo?.user?.picture}`}
                 width="100"
                 height="100"
                 style={{ borderRadius: "50%", objectFit: "cover" }}
@@ -137,8 +138,8 @@ const ProfileRightbar = ({ userInfo }) => {
             </Box>
           </Box>
           <Box>
-            <Typography variant="h4">{`${userInfo?.first_name} ${userInfo?.last_name}`}</Typography>
-            <Typography variant="subtitle1">{userInfo?.email}</Typography>
+            <Typography variant="h4">{`${myInfo?.user?.first_name} ${myInfo?.user?.last_name}`}</Typography>
+            <Typography variant="subtitle1">{myInfo?.user?.email}</Typography>
             {profilePicture ? (
               <button className="upload-pic" onClick={handleSaveProf}>
                 Yadda Saxla
@@ -159,7 +160,7 @@ const ProfileRightbar = ({ userInfo }) => {
             </Typography>
           </Box>
           <Box className="flex-column" gap="7px">
-            <Typography variant="h4">230</Typography>
+            <Typography variant="h4">{myInfo?.posts?.length}</Typography>
             <Typography variant="subtitle2" sx={{ color: "#000" }}>
               Post
             </Typography>
@@ -244,10 +245,6 @@ const ProfileRightbar = ({ userInfo }) => {
       </Box>
     </Grid>
   );
-};
-
-ProfileRightbar.propTypes = {
-  userInfo: PropTypes.object.isRequired,
 };
 
 export default ProfileRightbar;

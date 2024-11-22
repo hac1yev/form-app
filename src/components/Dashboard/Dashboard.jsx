@@ -26,12 +26,13 @@ import {
   SearchIconWrapper,
   StyledInputBase,
 } from "../CustomMaterialComponents/CustomMaterialComponents";
+import { useSelector } from "react-redux";
 
-export default function Dashboard({ myInfo }) {
+export default function Dashboard() {
   const [open, setOpen] = React.useState(false);
   const matches = useMediaQuery("(min-width:769px)");
   const navigate = useNavigate();
-
+  const userMainInfos = useSelector((state) => state.authReducer.userMainInfos);
   React.useEffect(() => {
     if (window.innerWidth <= 768) {
       setOpen(false);
@@ -138,8 +139,8 @@ export default function Dashboard({ myInfo }) {
             </IconButton>
             <Link to="/profile">
               <Avatar
-                alt={`${myInfo?.user?.username}`}
-                src={`http://209.38.241.78:8080/${myInfo?.user?.picture}`}
+                alt={`${userMainInfos?.user?.username}`}
+                src={`http://209.38.241.78:8080/${userMainInfos?.user?.picture}`}
               />
             </Link>
           </Stack>
