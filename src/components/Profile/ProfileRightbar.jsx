@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import GetAxios from "../../hooks/GetAxios";
 
 const profile_community_data = [
   {
@@ -61,24 +62,33 @@ const ProfileRightbar = ({ userInfo }) => {
           },
         }
       );
-
       if (response.status === 201) {
-        fetchPersonalInteredtData();
+        console.log("Profile picture uploaded successfully");
+        setProfilePicture(null);
+        // fetchPersonalInteredtData()
+        //   .then(() => console.log("Data fetched successfully"))
+        //   .catch((error) => console.error("Error in fetchPersonalInteredtData:", error));
       }
     } catch (error) {
       console.error("Error uploading profile picture:", error);
     }
   };
 
+  const fetchPersonalInteredtData = async () => {
+    try {
+      const response = await GetAxios(
+        "http://209.38.241.78:8080/users/me",
+        token
+      );
+      setUserdata(response.data);
+      // dispatch(fetchPersonalInterests(response.data.interests))
+      setSelectedFile(null);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   const handleFileChange = (event) => {
-    // const file = event.target.files[0];
-    // if (file) {
-    //   const reader = new FileReader();
-    //   reader.onloadend = () => {
-    //     setProfilePicture(reader.result);
-    //   };
-    //   reader.readAsDataURL(file);
-    // }
     if (event.target.files[0]) {
       setProfilePicture(event.target.files[0]);
     } else {
@@ -106,7 +116,7 @@ const ProfileRightbar = ({ userInfo }) => {
               <img
                 src={profilePicture}
                 width="100"
-                style={{ borderRadius: "50%" , objectFit: "cover" }}
+                style={{ borderRadius: "50%", objectFit: "cover" }}
                 height="100"
                 alt="Selected"
               />
@@ -115,7 +125,7 @@ const ProfileRightbar = ({ userInfo }) => {
                 src={`http://209.38.241.78:8080/${userInfo?.picture}`}
                 width="100"
                 height="100"
-                style={{ borderRadius: "50%" , objectFit: "cover" }}
+                style={{ borderRadius: "50%", objectFit: "cover" }}
                 alt="Default"
               />
             )}

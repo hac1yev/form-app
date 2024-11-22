@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const GetAxios = async (baseUrl, token) => {
+ const GetAxios = async (baseUrl, token) => {
   try {
     const response = await axios.get(`${baseUrl}`, {
       headers: {
@@ -15,3 +15,5 @@ export const GetAxios = async (baseUrl, token) => {
     throw new error();
   }
 };
+
+export default GetAxios;
