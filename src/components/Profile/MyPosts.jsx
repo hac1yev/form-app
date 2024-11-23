@@ -30,7 +30,8 @@ import PropTypes from "prop-types";
 import Slider from "react-slick";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { fetchMyPosts, postSuccess } from "../../store/postSlice";
+import { fetchMyPosts, removedPost } from "../../store/postSlice";
+ 
 
 const sliderSettings = {
   dots: true,
@@ -44,7 +45,7 @@ const sliderSettings = {
   center: true,
 };
 
-const MyPosts = ({ myPosts }) => {
+const MyPosts = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openPopoverId, setOpenPopoverId] = useState("");
   const isLoading = useSelector((state) => state.loadingReducer.isLoading);
@@ -60,10 +61,7 @@ const MyPosts = ({ myPosts }) => {
           "Content-Type": "application/json",
         },
       });
-      const updatedPosts = personalPosts?.posts.filter(
-        (post) => post.id !== postId
-      );
-      dispatch(postSuccess(updatedPosts));
+      dispatch(removedPost(postId));
     } catch (error) {
       console.log(error);
     }
@@ -104,7 +102,6 @@ const MyPosts = ({ myPosts }) => {
             <CardHeader
               avatar={
                 <Avatar
-                  sx={{ bgcolor: "red" }}
                   src={`http://209.38.241.78:8080/${item.picture}`}
                   aria-label="recipe"
                 >

@@ -43,6 +43,7 @@ function App() {
             <Route path="/login" element={<Navigate to="/" />} />
             <Route path="/register" element={<Navigate to="/" />} />
             <Route path="*" element={<Navigate to="/" />} />
+            <Route path="/user/:user_id" element={<h1>Salam</h1>} />
           </Routes>
         </Box>
       )}

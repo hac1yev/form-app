@@ -142,7 +142,7 @@ const PostComponent = () => {
       >
         <CardHeader
           avatar={
-            <Avatar src={`http://209.38.241.78:8080/${postData.picture}`} sx={{ bgcolor: "red" }} aria-label="recipe" />
+            <Avatar src={`http://209.38.241.78:8080/${postData.picture}`}  aria-label="recipe" />
           }
           action={
             <>

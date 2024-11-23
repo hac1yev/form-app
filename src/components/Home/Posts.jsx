@@ -1,5 +1,22 @@
 import { useState } from "react";
-import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Grid, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Popover, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Popover,
+  Typography,
+} from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
@@ -9,7 +26,7 @@ import IosShareIcon from "@mui/icons-material/IosShare";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import Slider from "react-slick";
 import useGetAxios from "../../hooks/useGetAxios";
 import { useSelector } from "react-redux";
@@ -32,7 +49,7 @@ const Posts = ({ endpoint }) => {
   const id = open ? "simple-popover" : undefined;
 
   const isLoading = useSelector((state) => state.loadingReducer.isLoading);
-  const data = useGetAxios(endpoint);  
+  const data = useGetAxios(endpoint);
 
   if (isLoading) {
     return (
@@ -42,21 +59,24 @@ const Posts = ({ endpoint }) => {
     );
   }
 
-  if(!isLoading && (!data || data.length === 0)) {
+  if (!isLoading && (!data || data.length === 0)) {
     return (
       <Box className="flex-column">
         <Typography>There is no post!</Typography>
       </Box>
-    )
+    );
   }
 
   return (
-    <Box className="post-wrapper" sx={{ gap: "20px", display: "flex", flexDirection: "column" }}>
+    <Box
+      className="post-wrapper"
+      sx={{ gap: "20px", display: "flex", flexDirection: "column" }}
+    >
       {endpoint.includes("search?key") && (
         <Typography variant="h2">AXTARIŞ NƏTİCƏSİ</Typography>
       )}
       {data.map((item) => (
-        <Grid item key={item.id} sx={{ width: '100%' }} className="asdasa">
+        <Grid item key={item.id} sx={{ width: "100%" }} className="asdasa">
           <Card
             sx={{
               width: "100%",
@@ -66,9 +86,14 @@ const Posts = ({ endpoint }) => {
           >
             <CardHeader
               avatar={
-                <Avatar sx={{ bgcolor: "red" }} src={`http://209.38.241.78:8080/${item.picture}`} aria-label="recipe">
-                  {item.username[0].toUpperCase()}
-                </Avatar>
+                <Link to={`/user/${item.user_id}`}>
+                  <Avatar
+                    src={`http://209.38.241.78:8080/${item.picture}`}
+                    aria-label="recipe"
+                  >
+                    {item.username[0].toUpperCase()}
+                  </Avatar>
+                </Link>
               }
               action={
                 <>
@@ -129,24 +154,29 @@ const Posts = ({ endpoint }) => {
               }
               title={
                 <div style={{ display: "flex", gap: "5px" }}>
-                  <span>{item.username}</span>
+                  <Link to={`/user/${item.user_id}`}>
+                    <span>{item.username}</span>
+                  </Link>
                   {`>`}
-                  <span style={{ color: "#999" }}>{item.community_name}</span>
+                  <Link to={`/community/${item.community_id}`}>
+                    <span style={{ color: "#999" }}>{item.community_name}</span>
+                  </Link>
                 </div>
               }
-              subheader={`${item.cdate.slice(0,10)}`}
+              subheader={`${item.cdate.slice(0, 10)}`}
             />
             <Link to={`/posts/${item.id}`} className="post-link">
               <CardContent>
                 <Typography variant="h6">{item.heading}</Typography>
                 <Typography variant="subtitle1" sx={{ mt: 2 }}>
-                  <p dangerouslySetInnerHTML={{
-                    __html: item.content
-                  }}></p>
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: item.content,
+                    }}
+                  ></p>
                 </Typography>
               </CardContent>
               <Box sx={{ px: 2, borderRadius: "19px" }}>
-                
                 {item.images.split(", ").length === 1 ? (
                   <CardMedia
                     component={"img"}
@@ -156,13 +186,13 @@ const Posts = ({ endpoint }) => {
                 ) : (
                   <Slider {...sliderSettings} className="post-slick-slider">
                     {item.images.split(", ").map((image, idx) => (
-                        <CardMedia
-                          component={"img"}
-                          key={idx}
-                          className="post-image"
-                          image={`http://209.38.241.78:8080/${image}`}
-                          alt={`Post image ${idx + 1}`}
-                        />
+                      <CardMedia
+                        component={"img"}
+                        key={idx}
+                        className="post-image"
+                        image={`http://209.38.241.78:8080/${image}`}
+                        alt={`Post image ${idx + 1}`}
+                      />
                     ))}
                   </Slider>
                 )}
@@ -193,7 +223,7 @@ const Posts = ({ endpoint }) => {
 };
 
 Posts.propTypes = {
-  endpoint: PropTypes.string.isRequired
+  endpoint: PropTypes.string.isRequired,
 };
 
 export default Posts;

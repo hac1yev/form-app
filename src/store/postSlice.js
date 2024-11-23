@@ -58,6 +58,11 @@ const postSlice = createSlice({
     postSuccess: (state, action) => {
       state.personalPosts = action.payload;
     },
+    removedPost: (state, action) => {
+      state.personalPosts.posts = state.personalPosts.posts.filter(
+        (post) => post.id !== action.payload
+      );
+    },
     addCommentNot: (state) => {
       state.commentNot = true;
     },
@@ -113,6 +118,7 @@ export const {
   singlePostSuccess,
   addCommentNot,
   addLikeNot,
+  removedPost
 } = postSlice.actions;
 
 export default postSlice.reducer;
