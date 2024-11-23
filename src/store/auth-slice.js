@@ -25,7 +25,6 @@ const authSlice = createSlice({
         },
         getUserMainInfos(state,action) {
             state.userMainInfos = { ...action.payload }
-            console.log("🚀 ~ getUserMainInfos ~ userMainInfos:", state.userMainInfos)
         },
     }
 });

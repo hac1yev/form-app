@@ -31,7 +31,6 @@ import Slider from "react-slick";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { fetchMyPosts, removedPost } from "../../store/postSlice";
- 
 
 const sliderSettings = {
   dots: true,
@@ -45,13 +44,13 @@ const sliderSettings = {
   center: true,
 };
 
-const MyPosts = () => {
+const MyPosts = ({ myPosts }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openPopoverId, setOpenPopoverId] = useState("");
   const isLoading = useSelector((state) => state.loadingReducer.isLoading);
   const token = useSelector((state) => state.authReducer.userInfo?.token);
-  const { personalPosts } = useSelector((state) => state.post);
   const dispatch = useDispatch();
+  const loginedUserId = JSON.parse(localStorage.getItem("userInfo"))?.user_id;
   const handleDelete = async (postId) => {
     try {
       await axios.delete("http://209.38.241.78:8080/post", {
@@ -80,7 +79,7 @@ const MyPosts = () => {
     );
   }
 
-  if (!isLoading && personalPosts.posts?.length === 0) {
+  if (!isLoading && myPosts.posts?.length === 0) {
     return (
       <Box className="flex-column">
         <Typography>There is no post!</Typography>
@@ -90,7 +89,7 @@ const MyPosts = () => {
 
   return (
     <Box sx={{ gap: "20px", display: "flex", flexDirection: "column" }}>
-      {personalPosts?.posts?.map((item) => (
+      {myPosts?.posts?.map((item) => (
         <Grid item key={item.id} sx={{ width: "100%" }} className="asdasa">
           <Card
             sx={{
@@ -151,26 +150,33 @@ const MyPosts = () => {
                           <ListItemText primary="Göndər" />
                         </ListItemButton>
                       </ListItem>
-                      <ListItem disablePadding className="sidebar-list-item">
-                        <ListItemButton sx={{ py: 0 }}>
-                          <ListItemIcon sx={{ minWidth: "40px" }}>
-                            <VisibilityOffOutlinedIcon />
-                          </ListItemIcon>
-                          <ListItemText primary="Gizlət" />
-                        </ListItemButton>
-                      </ListItem>
-                      <ListItem
-                        onClick={() => handleDelete(item.id)}
-                        disablePadding
-                        className="sidebar-list-item"
-                      >
-                        <ListItemButton sx={{ py: 0 }}>
-                          <ListItemIcon sx={{ minWidth: "40px" }}>
-                            <DeleteIcon />
-                          </ListItemIcon>
-                          <ListItemText primary="Sil" />
-                        </ListItemButton>
-                      </ListItem>
+                      {myPosts.user.id === loginedUserId && (
+                        <>
+                          <ListItem
+                            disablePadding
+                            className="sidebar-list-item"
+                          >
+                            <ListItemButton sx={{ py: 0 }}>
+                              <ListItemIcon sx={{ minWidth: "40px" }}>
+                                <VisibilityOffOutlinedIcon />
+                              </ListItemIcon>
+                              <ListItemText primary="Gizlət" />
+                            </ListItemButton>
+                          </ListItem>
+                          <ListItem
+                            onClick={() => handleDelete(item.id)}
+                            disablePadding
+                            className="sidebar-list-item"
+                          >
+                            <ListItemButton sx={{ py: 0 }}>
+                              <ListItemIcon sx={{ minWidth: "40px" }}>
+                                <DeleteIcon />
+                              </ListItemIcon>
+                              <ListItemText primary="Sil" />
+                            </ListItemButton>
+                          </ListItem>
+                        </>
+                      )}
                     </List>
                   </Popover>
                 </>

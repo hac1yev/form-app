@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Avatar,
   Box,
@@ -40,10 +40,11 @@ const profile_community_data = [
   },
 ];
 
-const ProfileRightbar = () => {
+// ctrl alt l
+const ProfileRightbar = ({ userInfo }) => {
   const [profilePicture, setProfilePicture] = useState();
   const fileInputRef = useRef(null);
-  const myInfo = useSelector((state) => state.authReducer.userMainInfos);
+  const loginedUserId = JSON.parse(localStorage.getItem("userInfo"))?.user_id;
   const token = useSelector((state) => state.authReducer.userInfo?.token);
   const handleClick = (event) => {
     fileInputRef.current.click();
@@ -66,28 +67,23 @@ const ProfileRightbar = () => {
       if (response.status === 201) {
         console.log("Profile picture uploaded successfully");
         setProfilePicture(null);
-        // fetchPersonalInteredtData()
-        //   .then(() => console.log("Data fetched successfully"))
-        //   .catch((error) => console.error("Error in fetchPersonalInteredtData:", error));
       }
     } catch (error) {
       console.error("Error uploading profile picture:", error);
     }
   };
 
-  const fetchPersonalInteredtData = async () => {
-    try {
-      const response = await GetAxios(
-        "http://209.38.241.78:8080/users/me",
-        token
-      );
-      setUserdata(response.data);
-      // dispatch(fetchPersonalInterests(response.data.interests))
-      setSelectedFile(null);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  // const fetchPersonalInteredtData = async () => {
+  //   try {
+  //     const response = await GetAxios(
+  //       "http://209.38.241.78:8080/users/me",
+  //       token
+  //     );
+  //     setSelectedFile(null);
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
 
   const handleFileChange = (event) => {
     if (event.target.files[0]) {
@@ -123,7 +119,7 @@ const ProfileRightbar = () => {
               />
             ) : (
               <img
-                src={`http://209.38.241.78:8080/${myInfo?.user?.picture}`}
+                src={`http://209.38.241.78:8080/${userInfo?.user?.picture}`}
                 width="100"
                 height="100"
                 style={{ borderRadius: "50%", objectFit: "cover" }}
@@ -138,8 +134,8 @@ const ProfileRightbar = () => {
             </Box>
           </Box>
           <Box>
-            <Typography variant="h4">{`${myInfo?.user?.first_name} ${myInfo?.user?.last_name}`}</Typography>
-            <Typography variant="subtitle1">{myInfo?.user?.email}</Typography>
+            <Typography variant="h4">{`${userInfo?.user?.first_name} ${userInfo?.user?.last_name}`}</Typography>
+            <Typography variant="subtitle1">{userInfo?.user?.email}</Typography>
             {profilePicture ? (
               <button className="upload-pic" onClick={handleSaveProf}>
                 Yadda Saxla
@@ -160,7 +156,7 @@ const ProfileRightbar = () => {
             </Typography>
           </Box>
           <Box className="flex-column" gap="7px">
-            <Typography variant="h4">{myInfo?.posts?.length}</Typography>
+            <Typography variant="h4">{userInfo?.posts?.length}</Typography>
             <Typography variant="subtitle2" sx={{ color: "#000" }}>
               Post
             </Typography>
@@ -183,14 +179,17 @@ const ProfileRightbar = () => {
             <Chip label="#Proqramlaşdırma" sx={{ fontSize: "16px", mt: 1 }} />
             <Chip label="#3D" sx={{ fontSize: "16px", mt: 1 }} />
           </Stack>
-          <Button
-            variant="contained"
-            color="inherit"
-            sx={{ my: 2 }}
-            className="profile-interest-add-button"
-          >
-            Əlavə et
-          </Button>
+
+          {userInfo?.user?.id === loginedUserId && (
+            <Button
+              variant="contained"
+              color="inherit"
+              sx={{ my: 2 }}
+              className="profile-interest-add-button"
+            >
+              Əlavə et
+            </Button>
+          )}
         </Box>
 
         <Divider sx={{ mt: 2 }} />
@@ -235,13 +234,16 @@ const ProfileRightbar = () => {
             </Grid>
           </Box>
         </Grid>
-        <Button
-          variant="contained"
-          color="inherit"
-          className="profile-interest-add-button"
-        >
-          Əlavə et
-        </Button>
+        {userInfo?.user?.id === loginedUserId && (
+          <Button
+            variant="contained"
+            color="inherit"
+            sx={{ my: 2 }}
+            className="profile-interest-add-button"
+          >
+            Əlavə et
+          </Button>
+        )}
       </Box>
     </Grid>
   );
