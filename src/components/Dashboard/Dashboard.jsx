@@ -26,7 +26,8 @@ export default function Dashboard() {
   const [open, setOpen] = React.useState(false);
   const matches = useMediaQuery("(min-width:769px)");
   const navigate = useNavigate();
-  const userMainInfos = useSelector((state) => state.authReducer.userMainInfos);
+  const userInfo = useSelector((state) => state.authReducer.userInfo);
+    
   React.useEffect(() => {
     if (window.innerWidth <= 768) {
       setOpen(false);
@@ -131,11 +132,13 @@ export default function Dashboard() {
             <IconButton color="#000" sx={{ bgcolor: "rgba(231, 231, 231, 1)" }}>
               <NotificationsNoneIcon />
             </IconButton>
-            <Link to="/profile">
+            <Link to="/profile" style={{ textDecoration: 'none' }}>
               <Avatar
-                alt={`${userMainInfos?.user?.username}`}
-                src={`http://209.38.241.78:8080/${userMainInfos?.user?.picture}`}
-              />
+                alt={`${userInfo.username}`}
+                src={userInfo.image}
+              >
+                {userInfo.first_name[0]?.toUpperCase()}{userInfo.last_name[0].toUpperCase()}
+              </Avatar>
             </Link>
           </Stack>
         </Toolbar>

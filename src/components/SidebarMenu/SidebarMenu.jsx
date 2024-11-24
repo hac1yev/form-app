@@ -1,25 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
-import {
-  Avatar,
-  Box,
-  Button,
-  Divider,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Button, Divider, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import StarIcon from "@mui/icons-material/Star";
 import ImageIcon from "@mui/icons-material/Image";
 import WorkIcon from "@mui/icons-material/Work";
 import BeachAccessIcon from "@mui/icons-material/BeachAccess";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
-import BuildOutlinedIcon from "@mui/icons-material/BuildOutlined";
 import "./SidebarMenu.scss";
 import useGetAxios from "../../hooks/useGetAxios";
 import { useEffect } from "react";
@@ -27,7 +13,7 @@ import PropTypes from "prop-types";
 
 const SidebarMenu = ({ setOpen }) => {
   const { pathname } = useLocation();
-  const categories = useGetAxios("category");
+  const categories = useGetAxios() || [];
 
   const handleLogout = () => {
     localStorage.removeItem("userInfo");

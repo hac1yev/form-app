@@ -30,7 +30,8 @@ import PropTypes from "prop-types";
 import Slider from "react-slick";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { fetchMyPosts, removedPost } from "../../store/postSlice";
+import { fetchMyPosts } from "../../store/postSlice";
+import { authSliceActions } from "../../store/auth-slice";
 
 const sliderSettings = {
   dots: true,
@@ -60,7 +61,7 @@ const MyPosts = ({ myPosts }) => {
           "Content-Type": "application/json",
         },
       });
-      dispatch(removedPost(postId));
+      dispatch(authSliceActions.deleteMyPost(postId));
     } catch (error) {
       console.log(error);
     }

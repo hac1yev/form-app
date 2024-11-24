@@ -47,9 +47,12 @@ const Posts = ({ endpoint }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
-
+  
   const isLoading = useSelector((state) => state.loadingReducer.isLoading);
   const data = useGetAxios(endpoint);
+
+  console.log(data);
+  
 
   if (isLoading) {
     return (
