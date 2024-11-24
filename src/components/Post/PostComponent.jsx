@@ -102,7 +102,7 @@ const PostComponent = () => {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
 
-   const getPostData = async () => {
+  const getPostData = async () => {
     try {
       const response = await axios.get(
         `http://209.38.241.78:8080/post/${postId}`
@@ -146,6 +146,19 @@ const PostComponent = () => {
     }
 
     setCommentText("");
+  };
+
+  const handleAddLike = async () => {
+    try {
+      await axios.post(
+        "http://209.38.241.78:8080/like/post",
+        { post_id: postId },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      await getPostData();
+    } catch (error) {
+      console.error("Error adding like:", error);
+    }
   };
 
   if (!postData) {
@@ -275,11 +288,13 @@ const PostComponent = () => {
                 borderRadius: "19px",
                 p: "5px 15px",
               }}
+              disabled={postData.is_user_liked !== 0}
             >
               <Typography variant="subtitle2" sx={{ mr: "3px" }}>
                 {postData.likes}
               </Typography>
               <FavoriteBorderIcon
+                onClick={handleAddLike}
                 sx={{ fontSize: "20px", color: "rgba(2, 66, 137, 1)" }}
               />
             </IconButton>
@@ -291,6 +306,7 @@ const PostComponent = () => {
                 borderRadius: "19px",
                 p: "5px 15px",
               }}
+              disabled
             >
               <Typography variant="subtitle2" sx={{ mr: "3px" }}>
                 {comments.length}
@@ -321,7 +337,11 @@ const PostComponent = () => {
         <Typography variant="h5" sx={{ px: 2 }}>
           {comments.length} Comment
         </Typography>
-        <PostComments getPostData={getPostData} comments={comments} setComments={setComments} />
+        <PostComments
+          getPostData={getPostData}
+          comments={comments}
+          setComments={setComments}
+        />
       </Card>
     </Grid>
   );

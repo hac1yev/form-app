@@ -1,5 +1,5 @@
 import { Box, Grid, Toolbar } from "@mui/material";
-import PostRightbar from "../../components/Post/PostRightbar";
+// import PostRightbar from "../../components/Post/PostRightbar";
 import PostComponent from "../../components/Post/PostComponent";
 
 const Post = () => {
