@@ -1,14 +1,34 @@
-import { alpha, Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Grid, IconButton, InputBase, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Popover, styled, Typography } from "@mui/material";
+import {
+  alpha,
+  Avatar,
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Grid,
+  IconButton,
+  InputBase,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Popover,
+  styled,
+  Typography,
+} from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
-import DeleteIcon from '@mui/icons-material/Delete';
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import DeleteIcon from "@mui/icons-material/Delete";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import LoopIcon from '@mui/icons-material/Loop';
+import LoopIcon from "@mui/icons-material/Loop";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import IosShareIcon from '@mui/icons-material/IosShare';
-import SendIcon from '@mui/icons-material/Send';
-import '../../pages/Post/Post.scss';
+import IosShareIcon from "@mui/icons-material/IosShare";
+import SendIcon from "@mui/icons-material/Send";
+import "../../pages/Post/Post.scss";
 import PostComments from "./PostComments";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -48,10 +68,10 @@ const Search = styled("form")(({ theme }) => ({
 const Button = styled("button")(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: "100%",
-  background: 'transparent',
-  border: 'none',
-  outline: 'none',
-  cursor: 'pointer',
+  background: "transparent",
+  border: "none",
+  outline: "none",
+  cursor: "pointer",
   position: "absolute",
   right: 0,
   top: 0,
@@ -71,160 +91,153 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-
 const PostComponent = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  const id = open ? "simple-popover" : undefined;
 
   const token = useSelector((state) => state.authReducer.userInfo?.token);
   const { postId } = useParams();
-  const [postData,setPostData] = useState();
-  const [comments,setComments] = useState([]);
-  const [commentText,setCommentText] = useState("");
+  const [postData, setPostData] = useState();
+  const [comments, setComments] = useState([]);
+  const [commentText, setCommentText] = useState("");
+
+  const getPostData = async () => {
+    try {
+      const response = await axios.get(
+        `http://209.38.241.78:8080/post/${postId}`
+      );
+
+      setPostData(response.data.post);
+      setComments(response.data.comments);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    (async function getPostData() {
-      try {
-        const response = await axios.get(`http://209.38.241.78:8080/post/${postId}`);
-
-        setPostData(response.data.post);
-        setComments(response.data.comments);        
-      } catch (error) {
-        console.log(error);
-      }
-    })()
+    getPostData();
   }, [postId]);
-  
+
   const handleAddComment = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://209.38.241.78:8080/comment", 
+      const response = await axios.post(
+        "http://209.38.241.78:8080/comment",
         { post_id: postId, content: commentText },
         {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
-      const comment = { ...response.data }
+      const comment = { ...response.data };
 
-      
+      const allComments = [comment, ...comments].toSorted(
+        (a, b) => new Date(b.cdate).getTime() - new Date(a.cdate).getTime()
+      );
 
-      const allComments = [comment, ...comments].toSorted((a,b) => new Date(b.cdate).getTime() - new Date(a.cdate).getTime());
-      
       setComments(allComments);
-
+      getPostData();
     } catch (error) {
       console.log(error);
     }
-    
-    setCommentText("")
+
+    setCommentText("");
   };
 
-  if(!postData) {
-    return (
-      <Typography className="flex-column">
-        Loading...
-      </Typography>
-    )
+  if (!postData) {
+    return <Typography className="flex-column">Loading...</Typography>;
   }
 
   return (
-    <Grid item >
+    <Grid item>
       <Card
         sx={{
           width: "100%",
-          background: 'rgba(4, 118, 168, 0.03)'
+          background: "rgba(4, 118, 168, 0.03)",
         }}
       >
         <CardHeader
           avatar={
-            <Avatar src={`http://209.38.241.78:8080/${postData.picture}`}  aria-label="recipe" />
+            <Avatar
+              src={`http://209.38.241.78:8080/${postData.picture}`}
+              aria-label="recipe"
+            />
           }
           action={
             <>
-              <IconButton aria-label="settings" aria-describedby={id} onClick={(e) => setAnchorEl(e.currentTarget)}>
+              <IconButton
+                aria-label="settings"
+                aria-describedby={id}
+                onClick={(e) => setAnchorEl(e.currentTarget)}
+              >
                 <MoreVertIcon />
               </IconButton>
               <Popover
-                className='comment-popover'
+                className="comment-popover"
                 id={id}
                 open={open}
                 anchorEl={anchorEl}
                 onClose={() => setAnchorEl(null)}
                 anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
+                  vertical: "bottom",
+                  horizontal: "left",
                 }}
               >
-                <List sx={{ pb: '10px', width: '130px' }}>
-                    <ListItem
-                        disablePadding
-                        className="sidebar-list-item"
-                    >
-                        <ListItemButton sx={{ py: 0 }}>
-                            <ListItemIcon sx={{ minWidth: '40px' }}>
-                                <LoopIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Paylaş" />
-                        </ListItemButton>
-                    </ListItem>
-                    <ListItem
-                        disablePadding
-                        className="sidebar-list-item"
-                    >
-                        <ListItemButton sx={{ py: 0 }}>
-                            <ListItemIcon sx={{ minWidth: '40px' }}>
-                                <IosShareIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Göndər" />
-                        </ListItemButton>
-                    </ListItem>
-                    <ListItem
-                        disablePadding
-                        className="sidebar-list-item"
-                    >
-                        <ListItemButton sx={{ py: 0 }}>
-                            <ListItemIcon sx={{ minWidth: '40px' }}>
-                                <VisibilityOffOutlinedIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Gizlət" />
-                        </ListItemButton>
-                    </ListItem>
-                    <ListItem
-                        disablePadding
-                        className="sidebar-list-item"
-                    >
-                        <ListItemButton sx={{ py: 0 }}>
-                            <ListItemIcon sx={{ minWidth: '40px' }}>
-                                <DeleteIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Sil" />
-                        </ListItemButton>
-                    </ListItem>
+                <List sx={{ pb: "10px", width: "130px" }}>
+                  <ListItem disablePadding className="sidebar-list-item">
+                    <ListItemButton sx={{ py: 0 }}>
+                      <ListItemIcon sx={{ minWidth: "40px" }}>
+                        <LoopIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Paylaş" />
+                    </ListItemButton>
+                  </ListItem>
+                  <ListItem disablePadding className="sidebar-list-item">
+                    <ListItemButton sx={{ py: 0 }}>
+                      <ListItemIcon sx={{ minWidth: "40px" }}>
+                        <IosShareIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Göndər" />
+                    </ListItemButton>
+                  </ListItem>
+                  <ListItem disablePadding className="sidebar-list-item">
+                    <ListItemButton sx={{ py: 0 }}>
+                      <ListItemIcon sx={{ minWidth: "40px" }}>
+                        <VisibilityOffOutlinedIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Gizlət" />
+                    </ListItemButton>
+                  </ListItem>
+                  <ListItem disablePadding className="sidebar-list-item">
+                    <ListItemButton sx={{ py: 0 }}>
+                      <ListItemIcon sx={{ minWidth: "40px" }}>
+                        <DeleteIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Sil" />
+                    </ListItemButton>
+                  </ListItem>
                 </List>
               </Popover>
             </>
           }
           title={
-            <div style={{ display: 'flex', gap: '5px' }}>
+            <div style={{ display: "flex", gap: "5px" }}>
               <span>{postData.username}</span>
               {`>`}
-              <span style={{ color: '#999' }}>{postData.community_name}</span>
+              <span style={{ color: "#999" }}>{postData.community_name}</span>
             </div>
           }
           subheader="01.04.2024"
         />
         <CardContent>
-          <Typography variant="h6">
-            {postData.heading}
-          </Typography>
-          <Typography 
-            variant="subtitle1" 
-            sx={{ mt: 2 }}       
+          <Typography variant="h6">{postData.heading}</Typography>
+          <Typography
+            variant="subtitle1"
+            sx={{ mt: 2 }}
             dangerouslySetInnerHTML={{ __html: postData.content }}
           ></Typography>
         </CardContent>
@@ -252,20 +265,43 @@ const PostComponent = () => {
         <CardActions
           disableSpacing
           className="space-between"
-          sx={{ mt: 1, px:2 }}
+          sx={{ mt: 1, px: 2 }}
         >
           <Box>
-            <IconButton aria-label="add to favorites" sx={{ bgcolor: 'rgba(51, 51, 51, 0.08)', borderRadius: '19px', p: '5px 15px'  }}>
-              <Typography variant="subtitle2" sx={{ mr: '3px' }}>{postData.likes}</Typography>
-              <FavoriteBorderIcon sx={{ fontSize: '20px', color: 'rgba(2, 66, 137, 1)' }} />
+            <IconButton
+              aria-label="add to favorites"
+              sx={{
+                bgcolor: "rgba(51, 51, 51, 0.08)",
+                borderRadius: "19px",
+                p: "5px 15px",
+              }}
+            >
+              <Typography variant="subtitle2" sx={{ mr: "3px" }}>
+                {postData.likes}
+              </Typography>
+              <FavoriteBorderIcon
+                sx={{ fontSize: "20px", color: "rgba(2, 66, 137, 1)" }}
+              />
             </IconButton>
-            <IconButton aria-label="share" sx={{ bgcolor: 'rgba(51, 51, 51, 0.08)', ml: 1, borderRadius: '19px', p: '5px 15px' }}>
-              <Typography variant="subtitle2" sx={{ mr: '3px' }}>{comments.length}</Typography>
-              <ChatBubbleOutlineIcon sx={{ fontSize: '20px', color: 'rgba(2, 66, 137, 1)' }} />
+            <IconButton
+              aria-label="share"
+              sx={{
+                bgcolor: "rgba(51, 51, 51, 0.08)",
+                ml: 1,
+                borderRadius: "19px",
+                p: "5px 15px",
+              }}
+            >
+              <Typography variant="subtitle2" sx={{ mr: "3px" }}>
+                {comments.length}
+              </Typography>
+              <ChatBubbleOutlineIcon
+                sx={{ fontSize: "20px", color: "rgba(2, 66, 137, 1)" }}
+              />
             </IconButton>
           </Box>
           <IconButton aria-label="share">
-            <BookmarkBorderIcon sx={{ color: '#000' }} />
+            <BookmarkBorderIcon sx={{ color: "#000" }} />
           </IconButton>
         </CardActions>
         <Box className="comment-box" sx={{ my: 2 }}>
@@ -277,16 +313,14 @@ const PostComponent = () => {
               onChange={(e) => setCommentText(e.target.value)}
               value={commentText}
             />
-            <Button
-              type="submit"              
-              sx={{ ml: 1, height: "100%", p: '0 3px' }}
-            >
-            
-              <SendIcon sx={{ color: 'primary.main' }} />
+            <Button type="submit" sx={{ ml: 1, height: "100%", p: "0 3px" }}>
+              <SendIcon sx={{ color: "primary.main" }} />
             </Button>
           </Search>
         </Box>
-        <Typography variant="h5" sx={{ px: 2 }}>{comments.length} Comment</Typography>
+        <Typography variant="h5" sx={{ px: 2 }}>
+          {comments.length} Comment
+        </Typography>
         <PostComments comments={comments} setComments={setComments} />
       </Card>
     </Grid>
