@@ -14,6 +14,7 @@ import CreatePostForm from "./CreatePostForm";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMyPosts } from "../../store/postSlice";
+import { authSliceActions } from "../../store/auth-slice";
 
 const CreatePost = () => {
   const token = useSelector((state) => state.authReducer.userInfo?.token);
@@ -50,7 +51,17 @@ const CreatePost = () => {
         }
       );
       setOpen(false);
-      dispatch(fetchMyPosts());
+      
+      const myPostsResponse = await axios.get("http://209.38.241.78:8080/users/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const { data } = myPostsResponse;    
+      
+      dispatch(authSliceActions.addPost(data.posts[0]));
+      
+
     } catch (error) {
       console.error("Upload error:", error);
     }

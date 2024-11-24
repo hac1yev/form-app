@@ -3,6 +3,7 @@ import CreatePost from "./CreatePost";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import MyPosts from "./MyPosts";
+import { useSelector } from "react-redux";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -33,7 +34,8 @@ function a11yProps(index) {
   };
 }
 
-const ProfileComponent = ({ myPosts }) => {
+const ProfileComponent = () => {
+  const myPosts = useSelector(state => state.authReducer.userMainInfos);
   const loginedUserId = JSON.parse(localStorage.getItem('userInfo'))?.user_id;
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
@@ -88,7 +90,7 @@ const ProfileComponent = ({ myPosts }) => {
           index={0}
           className="profile-posts-tabpanel"
         >
-          <MyPosts myPosts={myPosts || []} />
+          <MyPosts myPosts={myPosts} />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           Item Two

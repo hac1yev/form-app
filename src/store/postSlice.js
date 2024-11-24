@@ -27,7 +27,7 @@ export const fetchAllPosts = createAsyncThunk("/fetchAllPosts", async () => {
         Authorization: `Bearer ${myToken.token}`,
       },
     });
-    const { data } = response;
+    const { data } = response;    
     return data;
   } catch (error) {
     console.log(error);
@@ -42,8 +42,7 @@ export const fetchMyPosts = createAsyncThunk("/fetchMyPosts", async () => {
         Authorization: `Bearer ${myToken.token}`,
       },
     });
-    const { data } = response;
-    console.log("Isledi");
+    const { data } = response;    
     return data;
   } catch (error) {
     console.log(error);

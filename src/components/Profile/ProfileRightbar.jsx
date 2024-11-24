@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
-  Avatar,
   Box,
   Button,
   Chip,
@@ -12,10 +11,8 @@ import {
 } from "@mui/material";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import GetAxios from "../../hooks/GetAxios";
 
 const profile_community_data = [
   {
@@ -41,12 +38,13 @@ const profile_community_data = [
 ];
 
 // ctrl alt l
-const ProfileRightbar = ({ userInfo }) => {
+const ProfileRightbar = () => {
   const [profilePicture, setProfilePicture] = useState();
+  const userInfo = useSelector(state => state.authReducer.userMainInfos);
   const fileInputRef = useRef(null);
   const loginedUserId = JSON.parse(localStorage.getItem("userInfo"))?.user_id;
   const token = useSelector((state) => state.authReducer.userInfo?.token);
-  const handleClick = (event) => {
+  const handleClick = () => {
     fileInputRef.current.click();
   };
 

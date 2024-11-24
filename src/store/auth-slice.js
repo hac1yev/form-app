@@ -12,7 +12,7 @@ const getUserInfo = () => {
 
 const initialAuthState = {
     userInfo: getUserInfo(),
-    userMainInfos: {}
+    userMainInfos: {},
 };
 
 
@@ -26,6 +26,15 @@ const authSlice = createSlice({
         getUserMainInfos(state,action) {
             state.userMainInfos = { ...action.payload }
         },
+        deleteMyPost(state,action) {
+            state.userMainInfos.posts = state.userMainInfos.posts.filter((post) => post.id !== action.payload)
+        },
+        addPost(state,action) {
+            state.userMainInfos.posts = [
+                action.payload,
+                ...state.userMainInfos.posts
+            ]
+        }
     }
 });
 
