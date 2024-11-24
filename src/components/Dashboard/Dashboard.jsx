@@ -19,13 +19,7 @@ import dipnot_logo from "../../assets/dipnote-logo.svg";
 import SidebarMenu from "../SidebarMenu/SidebarMenu";
 import "./Dashboard.scss";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  AppBar,
-  Drawer,
-  Search,
-  SearchIconWrapper,
-  StyledInputBase,
-} from "../CustomMaterialComponents/CustomMaterialComponents";
+import { AppBar, Drawer, Search, SearchIconWrapper, StyledInputBase } from "../CustomMaterialComponents/CustomMaterialComponents";
 import { useSelector } from "react-redux";
 
 export default function Dashboard() {
@@ -156,16 +150,14 @@ export default function Dashboard() {
             height: "90px",
           }}
         >
-          <Link to="/">
-            <Box
-              component="img"
-              sx={{
-                width: 193,
-                height: 43,
-              }}
-              alt="The house from the offer."
-              src={dipnot_logo}
-            />
+          <Link to={"/"}>
+            <Box>
+              <Box 
+                component={"img"}
+                src={dipnot_logo}
+                alt="dipnot-logo"
+              />
+            </Box>
           </Link>
           <IconButton
             edge="start"

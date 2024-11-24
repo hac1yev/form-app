@@ -14,8 +14,10 @@ const Community = () => {
                 {item.map((obj) => (
                   <Grid item key={obj.id} >
                     <Link to="/" style={{ textDecoration: 'none', color: '#000' }}>
+                      <Box>
                         <Box component="img" src={obj.img} />
-                      <Typography sx={{ fontSize: '14px', fontWeight: '600', lineHeight: '19px' }}>{obj.title}</Typography>
+                        <Typography sx={{ fontSize: '14px', fontWeight: '600', lineHeight: '19px' }}>{obj.title}</Typography>
+                      </Box>
                     </Link>
                   </Grid>
                 ))}
