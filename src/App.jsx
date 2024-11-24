@@ -13,12 +13,16 @@ import CategoryPosts from "./pages/CategoryPosts/CategoryPosts";
 import PostsWrapper from "./components/PostsWrapper";
 import useGetAxios from "./hooks/useGetAxios";
 import { authSliceActions } from "./store/auth-slice";
+import { useEffect } from "react";
 
 function App() {
   const token = useSelector((state) => state.authReducer.userInfo?.token);
   const myInfo = useGetAxios(`users/me`);
   const dispatch = useDispatch();
-  dispatch(authSliceActions.getUserMainInfos(myInfo));
+
+  useEffect(() => {
+    dispatch(authSliceActions.getUserMainInfos(myInfo));
+  }, [dispatch,myInfo]);
 
   return (
     <>
