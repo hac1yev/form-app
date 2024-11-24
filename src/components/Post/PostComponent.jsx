@@ -102,7 +102,7 @@ const PostComponent = () => {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
 
-  const getPostData = async () => {
+   const getPostData = async () => {
     try {
       const response = await axios.get(
         `http://209.38.241.78:8080/post/${postId}`
@@ -321,7 +321,7 @@ const PostComponent = () => {
         <Typography variant="h5" sx={{ px: 2 }}>
           {comments.length} Comment
         </Typography>
-        <PostComments comments={comments} setComments={setComments} />
+        <PostComments getPostData={getPostData} comments={comments} setComments={setComments} />
       </Card>
     </Grid>
   );

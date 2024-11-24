@@ -9,8 +9,10 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { getTimeElapsed } from '../Helpers/Utility';
 
-const PostComments = ({ comments,setComments }) => {
+const PostComments = ({ comments,setComments , getPostData }) => {
+    console.log("🚀 ~ PostComments ~ comments:", comments)
     const token = useSelector((state) => state.authReducer.userInfo?.token);
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedPopover, setSelectedPopover] = useState("");
@@ -28,6 +30,7 @@ const PostComments = ({ comments,setComments }) => {
             );
 
             if(response.status === 201) {
+                getPostData()
                 const updatedComments = comments.map((comment) => {
                     if(comment.id === commentId) {
                         comment.likes += 1; 
@@ -54,7 +57,7 @@ const PostComments = ({ comments,setComments }) => {
                         </ListItemAvatar>
                         <Box className="comment-content">
                             <ListItemText 
-                                secondary={`${moment(comment.cdate).from(moment(new Date()))}`} 
+                                secondary={getTimeElapsed(comment.cdate)} 
                                 primary={`${comment.username}`} 
                                 className='comment-header-text' 
                                 sx={{ mb: 0 }} 
@@ -195,7 +198,8 @@ const PostComments = ({ comments,setComments }) => {
 
 PostComments.propTypes = {
     comments: PropTypes.array.isRequired,
-    setComments: PropTypes.func.isRequired
+    setComments: PropTypes.func.isRequired,
+    getPostData: PropTypes.func.isRequired
 };
 
 export default PostComments;
