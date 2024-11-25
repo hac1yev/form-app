@@ -69,7 +69,7 @@ function App() {
               <Route path="" element={<Home />} />
               <Route path="search" element={<Search />} />
               <Route path="posts/popular" element={<Popular />} />
-              <Route path="category-posts" element={<CategoryPosts />} />
+              <Route path="community/:category_id" element={<CategoryPosts />} />
             </Route>
             <Route path="/posts/:postId" element={<Post />} />
             <Route path="/profile" element={<Profile />} />
