@@ -30,6 +30,7 @@ import PropTypes from "prop-types";
 import Slider from "react-slick";
 import useGetAxios from "../../hooks/useGetAxios";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const sliderSettings = {
   dots: true,
@@ -47,12 +48,22 @@ const Posts = ({ endpoint }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
-  
+  const token = useSelector((state) => state.authReducer.userInfo?.token);
   const isLoading = useSelector((state) => state.loadingReducer.isLoading);
   const data = useGetAxios(endpoint);
 
-  console.log(data);
-  
+  const handleAddLike = async (postId) => {
+    try {
+      await axios.post(
+        "http://209.38.241.78:8080/like/post",
+        { post_id: postId },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      // await getPostData();
+    } catch (error) {
+      console.error("Error adding like:", error);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -206,11 +217,28 @@ const Posts = ({ endpoint }) => {
               className="space-between"
               sx={{ mt: 3 }}
             >
-              <Box>
-                <IconButton aria-label="add to favorites">
-                  <FavoriteBorderIcon />
-                </IconButton>
-                <IconButton aria-label="share">
+              <Box display="flex" alignItems="center" gap="15px">
+                {item.is_user_liked === 0 ? (
+                  <IconButton
+                    onClick={() => handleAddLike(item.id)}
+                    aria-label="add to favorites"
+                  >
+                    <Typography style={{marginRight: '3px'}} variant="h6">{item?.likes}</Typography>
+                    <FavoriteBorderIcon />
+                  </IconButton>
+                ) : (
+                  <Box display="flex" alignItems="center">
+                    <Typography style={{marginRight: '3px'}} variant="h6">{item?.likes}</Typography>
+                    <FavoriteBorderIcon />
+                  </Box>
+                )}
+
+                <IconButton
+                  aria-label="share"
+                  display="flex"
+                  alignItems="center"
+                >
+                  <Typography style={{marginRight: '3px'}} variant="h6">{item?.comment_count}</Typography>
                   <ChatBubbleOutlineIcon />
                 </IconButton>
               </Box>
