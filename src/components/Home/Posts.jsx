@@ -49,8 +49,10 @@ const Posts = ({ endpoint }) => {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
   const token = useSelector((state) => state.authReducer.userInfo?.token);
+  const [refresh, setRefresh] = useState(false);
   const isLoading = useSelector((state) => state.loadingReducer.isLoading);
-  const data = useGetAxios(endpoint);
+  const data = useGetAxios(endpoint, refresh);
+  
 
   const handleAddLike = async (postId) => {
     try {
@@ -59,7 +61,7 @@ const Posts = ({ endpoint }) => {
         { post_id: postId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      // await getPostData();
+      setRefresh((prev) => !prev);
     } catch (error) {
       console.error("Error adding like:", error);
     }

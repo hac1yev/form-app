@@ -105,7 +105,13 @@ const PostComponent = () => {
   const getPostData = async () => {
     try {
       const response = await axios.get(
-        `http://209.38.241.78:8080/post/${postId}`
+        `http://209.38.241.78:8080/post/${postId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
 
       setPostData(response.data.post);
