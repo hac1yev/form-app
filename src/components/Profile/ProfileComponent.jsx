@@ -1,5 +1,6 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import CreatePost from "./CreatePost";
+import Community from "./Community";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import MyPosts from "./MyPosts";
@@ -35,8 +36,8 @@ function a11yProps(index) {
 }
 
 const ProfileComponent = () => {
-  const myPosts = useSelector(state => state.authReducer.userMainInfos);
-  const loginedUserId = JSON.parse(localStorage.getItem('userInfo'))?.user_id;
+  const myPosts = useSelector((state) => state.authReducer.userMainInfos);
+  const loginedUserId = JSON.parse(localStorage.getItem("userInfo"))?.user_id;
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -64,7 +65,7 @@ const ProfileComponent = () => {
               className={value === 1 ? "active tab-li" : "tab-li"}
             />
             <Tab
-              label="Commentlər"
+              label="Communitilər"
               {...a11yProps(2)}
               className={value === 2 ? "active tab-li" : "tab-li"}
             />
@@ -96,7 +97,7 @@ const ProfileComponent = () => {
           Item Two
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
-          Item Three
+          <Community />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={3}>
           Item One

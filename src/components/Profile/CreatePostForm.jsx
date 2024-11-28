@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Box, Grid, OutlinedInput, styled } from "@mui/material";
 import PropTypes from "prop-types";
 import ReactQuill from "react-quill";
