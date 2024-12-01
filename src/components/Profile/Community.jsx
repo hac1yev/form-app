@@ -1,135 +1,79 @@
-import {
-  Box,
-  Button,
-  DialogActions,
-  Grid,
-  OutlinedInput,
-  Typography,
-} from "@mui/material";
-import { useState } from "react";
+import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
+import Typography from "@mui/material/Typography";
+import { Box, Button } from "@mui/material";
+import useGetAxios from "../../hooks/useGetAxios";
+import { getTimeElapsed } from "../Helpers/Utility";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import ReactQuill from "react-quill";
-import AddCategoryToPost from "./AddCategoryToPost";
-import AddImageToPost from "./AddImageToPost";
-import { styled } from "@mui/material";
-import "react-quill/dist/quill.snow.css";
-import { authSliceActions } from "../../store/auth-slice";
+import { useSelector } from "react-redux";
 
 const Community = () => {
+  const communities = useGetAxios("communities");
   const token = useSelector((state) => state.authReducer.userInfo?.token);
-  const [postFormValue, setPostFormValue] = useState("");
-
-  const FormGrid = styled(Grid)(() => ({
-    display: "flex",
-    flexDirection: "column",
-  }));
-
-  const [description, setDescription] = useState("");
-  const [title, setTitle] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [images, setImages] = useState(null);
-  const dispatch = useDispatch();
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("description", description);
-    // formData.append("community_id", 1);
-
-    // if (images && images.length > 0) {
-    //   images.forEach((image) => {
-    //     formData.append("images", image);
-    //   });
-    // }
-    try {
-      const response = await axios.post(
-        "http://209.38.241.78:8080/new-community",
-        formData,
+  const handleJoinCommunity = (id) => {
+    console.log(id);
+    axios
+      .post(
+        "http://209.38.241.78:8080/join-community",
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      const myCommunities = await axios.get(
-        "http://209.38.241.78:8080/user-communities",
+          community_id: id,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
-      );
-      const { data } = myCommunities;
-
-      dispatch(authSliceActions.getUserCommunties(data));
-    } catch (error) {
-      console.error("Upload error:", error);
-    }
+      )
+      .then((response) => {
+        console.log("Community joined successfully:", response.data);
+      })
+      .catch((error) => {
+        console.error(
+          "Error joining community:",
+          error.response ? error.response.data : error.message
+        );
+      });
   };
-
-  const handlePostFormChange = (content, delta, source, editor) => {
-    setPostFormValue(content);
-    setDescription(editor.getText());
-  };
-
   return (
-    <>
-      <Box className="dialog-wrapper">
-        <Typography variant="h4">Community Yarat</Typography>
-        <Box
-          component={"form"}
-          onSubmit={handleSubmit}
-          sx={{ width: "100%", my: 2 }}
-        >
-          <Box>
-            <FormGrid item>
-              <OutlinedInput
-                sx={{ borderRadius: "14px" }}
-                id="first-name"
-                name="first-name"
-                type="name"
-                placeholder={`Başlıq*`}
-                autoComplete="first name"
-                required
-                onChange={(e) => setTitle(e.target.value)}
+    <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
+      {communities?.map((item) => (
+        <>
+          <ListItem alignItems="flex-start">
+            <ListItemAvatar>
+              <Avatar
+                alt="Remy Sharp"
+                src={`http://209.38.241.78:8080/${item.picture}`}
               />
-            </FormGrid>
-            <ReactQuill
-              theme="snow"
-              style={{ height: "100px", margin: "20px 0 " }}
-              value={postFormValue}
-              onChange={handlePostFormChange}
-            />
-          </Box>
-          <Box>
-            <AddCategoryToPost
-              setSelectedCategory={setSelectedCategory}
-              selectedCategory={selectedCategory}
-            />
-          </Box>
-          <Box>
-            <AddImageToPost setImages={setImages} images={images} />
-          </Box>
-
-          <DialogActions sx={{ mt: 2 }}>
-            <Button
-              type="button"
-              sx={{ bgcolor: "secondary.main", color: "rgba(0, 0, 0, 0.55)" }}
-            >
-              Ləğv et
-            </Button>
-            <Button type="submit" variant="contained">
-              Paylaş
-            </Button>
-          </DialogActions>
-        </Box>
-      </Box>
-      {/* I will add my Communities Component in here after getting response */}
-    </>
+              <Typography
+                component="span"
+                variant="body2"
+                sx={{ color: "text.primary", display: "inline" }}
+              ></Typography>
+            </ListItemAvatar>
+            <Box width="100%">
+              <Box
+                width="100%"
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <b>Community Title: {item.title}</b>
+                <i>{getTimeElapsed(item.cdate)}</i>
+                <Button
+                  onClick={() => handleJoinCommunity(item.id)}
+                  variant="contained"
+                >
+                  Qatıl
+                </Button>
+              </Box>
+              <p>Community Desc: {item.description}</p>
+            </Box>
+          </ListItem>
+          <hr />
+        </>
+      ))}
+    </Box>
   );
 };
 
