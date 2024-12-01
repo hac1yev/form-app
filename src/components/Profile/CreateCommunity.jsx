@@ -70,18 +70,6 @@ const CreateCommunity = () => {
       setPostFormValue("");
       setSelectedCategory("");
       setImages(null);
-
-      const myCommunities = await axios.get(
-        "http://209.38.241.78:8080/user-communities",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const { data } = myCommunities;
-
-      dispatch(authSliceActions.getUserCommunties(data));
     } catch (error) {
       console.error("Upload error:", error);
     }

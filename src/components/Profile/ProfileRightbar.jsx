@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Box,
   Button,
@@ -12,31 +12,8 @@ import {
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import useGetAxios from "../../hooks/useGetAxios";
-
-// const profile_community_data = [
-//   {
-//     id: "t1",
-//     img: "/community/c1.svg",
-//     title: "Texnologiya",
-//   },
-//   {
-//     id: "t2",
-//     img: "/community/c2.svg",
-//     title: "Dizayn",
-//   },
-//   {
-//     id: "t3",
-//     img: "/community/c3.svg",
-//     title: "Proqramlaşdırma",
-//   },
-//   {
-//     id: "t4",
-//     img: "/community/c4.svg",
-//     title: "Muhasibatliq",
-//   },
-// ];
+import { useDispatch, useSelector } from "react-redux";
+import { authSliceActions } from "../../store/auth-slice";
 
 // ctrl alt l
 const ProfileRightbar = () => {
@@ -45,10 +22,36 @@ const ProfileRightbar = () => {
   const fileInputRef = useRef(null);
   const loginedUserId = JSON.parse(localStorage.getItem("userInfo"))?.user_id;
   const token = useSelector((state) => state.authReducer.userInfo?.token);
-  const communities = useGetAxios("user-communities");
+  const communities = useSelector(
+    (state) => state.authReducer.userMainCommunities
+  );
+
   const handleClick = () => {
     fileInputRef.current.click();
   };
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getPersonalCommunities = async () => {
+      try {
+        const response = await axios.get(
+          "http://209.38.241.78:8080/user-communities",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        dispatch(authSliceActions.getUserCommunties(response));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPersonalCommunities();
+  }, [token, dispatch]);
 
   const handleSaveProf = async () => {
     try {
@@ -72,18 +75,6 @@ const ProfileRightbar = () => {
       console.error("Error uploading profile picture:", error);
     }
   };
-
-  // const fetchPersonalInteredtData = async () => {
-  //   try {
-  //     const response = await GetAxios(
-  //       "http://209.38.241.78:8080/users/me",
-  //       token
-  //     );
-  //     setSelectedFile(null);
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
 
   const handleFileChange = (event) => {
     if (event.target.files[0]) {
@@ -212,7 +203,7 @@ const ProfileRightbar = () => {
               container
               sx={{ flexWrap: "wrap", justifyContent: "space-around" }}
             >
-              {communities?.map((item) => (
+              {communities?.data?.map((item) => (
                 <Grid item key={item.id} sm={6} sx={{ mt: 2 }}>
                   <Link
                     to="/"
@@ -220,6 +211,7 @@ const ProfileRightbar = () => {
                   >
                     <Box
                       component="img"
+                      style={{ objectFit: "cover" }}
                       src={`http://209.38.241.78:8080/${item.picture}`}
                     />
                     <Typography
