@@ -6,13 +6,31 @@ import { Box, Button } from "@mui/material";
 import useGetAxios from "../../hooks/useGetAxios";
 import { getTimeElapsed } from "../Helpers/Utility";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { authSliceActions } from "../../store/auth-slice";
 
 const Community = () => {
   const communities = useGetAxios("communities");
   const token = useSelector((state) => state.authReducer.userInfo?.token);
+  const dispatch = useDispatch();
+  const getPersonalCommunities = async () => {
+    try {
+      const response = await axios.get(
+        "http://209.38.241.78:8080/user-communities",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      dispatch(authSliceActions.getUserCommunties(response));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleJoinCommunity = (id) => {
-    console.log(id);
     axios
       .post(
         "http://209.38.241.78:8080/join-community",
@@ -26,7 +44,8 @@ const Community = () => {
         }
       )
       .then((response) => {
-        console.log("Community joined successfully:", response.data);
+        getPersonalCommunities();
+        return response;
       })
       .catch((error) => {
         console.error(
@@ -35,11 +54,31 @@ const Community = () => {
         );
       });
   };
+
+  const handleDeleteCommunity = (id) => {
+    axios
+      .delete(
+        "http://209.38.241.78:8080/community",
+        { community_id: id },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        // getPersonalCommunities();
+        return response;
+      })
+      .catch((error) => {
+        console.error(error.response ? error.response.data : error.message);
+      });
+  };
   return (
     <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
       {communities?.map((item) => (
         <>
-          <ListItem alignItems="flex-start">
+          <ListItem className="prof-create" alignItems="flex-start">
             <ListItemAvatar>
               <Avatar
                 alt="Remy Sharp"
@@ -53,13 +92,23 @@ const Community = () => {
             </ListItemAvatar>
             <Box width="100%">
               <Box
+                className="prof-create"
                 width="100%"
                 display="flex"
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <b>Community Title: {item.title}</b>
-                <i>{getTimeElapsed(item.cdate)}</i>
+                <b style={{ flexGrow: "1", textWrap: "wrap" }}>
+                  Title: {item.title}
+                </b>
+                <i style={{ flexGrow: "1" }}>{getTimeElapsed(item.cdate)}</i>
+                <Button
+                  onClick={() => handleDeleteCommunity(item.id)}
+                  variant="contained"
+                  color="error"
+                >
+                  Sil
+                </Button>
                 <Button
                   onClick={() => handleJoinCommunity(item.id)}
                   variant="contained"
@@ -67,7 +116,7 @@ const Community = () => {
                   Qatıl
                 </Button>
               </Box>
-              <p>Community Desc: {item.description}</p>
+              <p>Desc: {item.description}</p>
             </Box>
           </ListItem>
           <hr />
