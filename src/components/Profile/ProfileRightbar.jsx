@@ -13,37 +13,39 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import useGetAxios from "../../hooks/useGetAxios";
 
-const profile_community_data = [
-  {
-    id: "t1",
-    img: "/community/c1.svg",
-    title: "Texnologiya",
-  },
-  {
-    id: "t2",
-    img: "/community/c2.svg",
-    title: "Dizayn",
-  },
-  {
-    id: "t3",
-    img: "/community/c3.svg",
-    title: "Proqramlaşdırma",
-  },
-  {
-    id: "t4",
-    img: "/community/c4.svg",
-    title: "Muhasibatliq",
-  },
-];
+// const profile_community_data = [
+//   {
+//     id: "t1",
+//     img: "/community/c1.svg",
+//     title: "Texnologiya",
+//   },
+//   {
+//     id: "t2",
+//     img: "/community/c2.svg",
+//     title: "Dizayn",
+//   },
+//   {
+//     id: "t3",
+//     img: "/community/c3.svg",
+//     title: "Proqramlaşdırma",
+//   },
+//   {
+//     id: "t4",
+//     img: "/community/c4.svg",
+//     title: "Muhasibatliq",
+//   },
+// ];
 
 // ctrl alt l
 const ProfileRightbar = () => {
   const [profilePicture, setProfilePicture] = useState();
-  const userInfo = useSelector(state => state.authReducer.userMainInfos);
+  const userInfo = useSelector((state) => state.authReducer.userMainInfos);
   const fileInputRef = useRef(null);
   const loginedUserId = JSON.parse(localStorage.getItem("userInfo"))?.user_id;
   const token = useSelector((state) => state.authReducer.userInfo?.token);
+  const communities = useGetAxios("user-communities");
   const handleClick = () => {
     fileInputRef.current.click();
   };
@@ -210,13 +212,16 @@ const ProfileRightbar = () => {
               container
               sx={{ flexWrap: "wrap", justifyContent: "space-around" }}
             >
-              {profile_community_data.map((item) => (
+              {communities?.map((item) => (
                 <Grid item key={item.id} sm={6} sx={{ mt: 2 }}>
                   <Link
                     to="/"
                     style={{ textDecoration: "none", color: "#000" }}
                   >
-                    <Box component="img" src={item.img} />
+                    <Box
+                      component="img"
+                      src={`http://209.38.241.78:8080/${item.picture}`}
+                    />
                     <Typography
                       sx={{
                         fontSize: "14px",

@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import MyPosts from "./MyPosts";
 import { useSelector } from "react-redux";
+import CreateCommunity from "./CreateCommunity";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -45,7 +46,12 @@ const ProfileComponent = () => {
 
   return (
     <>
-      {myPosts?.user?.id === loginedUserId && <CreatePost />}
+      {myPosts?.user?.id === loginedUserId && (
+        <Box className='prof-create' display="flex" gap="10px">
+          <CreatePost />
+          <CreateCommunity />
+        </Box>
+      )}
       <Box sx={{ width: "100%", my: 2 }}>
         <Box>
           <Tabs

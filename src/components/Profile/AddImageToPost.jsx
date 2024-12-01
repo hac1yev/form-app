@@ -18,7 +18,7 @@ const Label = styled("label")(({ theme }) => ({
   },
 }));
 
-const AddImageToPost = ({ setImages, images }) => {
+const AddImageToPost = ({ setImages, images, community }) => {
   const onChange = (event) => {
     if (event.target.files.length > 0) {
       const fileArray = Array.from(event.target.files);
@@ -34,12 +34,16 @@ const AddImageToPost = ({ setImages, images }) => {
         onChange={onChange}
         inputProps={{
           accept: "image/png, image/gif, image/jpeg",
-          multiple: true,
+          multiple: community ? false : true,
         }}
       />
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-        <Label sx={{width: '100%'}} htmlFor="upload-file">
-          <Button component="span">Şəkil və ya şəkilləri yüklə</Button>
+        <Label sx={{ width: "100%" }} htmlFor="upload-file">
+          {community ? (
+            <Button component="span">Şəkil yüklə</Button>
+          ) : (
+            <Button component="span">Şəkil və ya şəkilləri yüklə</Button>
+          )}
         </Label>
         {images && images.length > 0 && (
           <Box>
@@ -58,7 +62,8 @@ const AddImageToPost = ({ setImages, images }) => {
 
 AddImageToPost.propTypes = {
   setImages: PropTypes.func.isRequired,
-  images: PropTypes.array.isRequired, // `images` should be an array of `File` objects
+  images: PropTypes.array.isRequired, 
+  community: PropTypes
 };
 
 export default AddImageToPost;
