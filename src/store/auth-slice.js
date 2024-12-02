@@ -41,9 +41,32 @@ const authSlice = createSlice({
     getUserCommunties(state, action) {
       state.userMainCommunities = { ...action.payload };
     },
-    getAllCommunities(state, action){
+    getAllCommunities(state, action) {
       state.allCommunities = { ...action.payload };
-    }
+    },
+    addCommunities(state, action) {
+      state.allCommunities.data = [
+        action.payload,
+        ...state.allCommunities.data,
+      ];
+    },
+    addPersonalCummunites(state, action) {
+      let selectedCommunity = state.allCommunities.data.find(
+        (community) => community.id === action.payload
+      );
+      state.userMainCommunities.data = [
+        ...state.userMainCommunities.data,
+        selectedCommunity,
+      ];
+    },
+    deleteCommunity(state, action) {
+      state.userMainCommunities.data = state.userMainCommunities.data.filter(
+        (community) => community.id !== action.payload
+      );
+      state.allCommunities.data = state.allCommunities.data.filter(
+        (community) => community.id !== action.payload
+      );
+    },
   },
 });
 
