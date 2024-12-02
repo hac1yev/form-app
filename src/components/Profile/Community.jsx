@@ -13,6 +13,7 @@ const Community = () => {
   const communities = useSelector(
     (state) => state.authReducer.allCommunities.data
   );
+  console.log("🚀 ~ Community ~ communities:", communities);
   const token = useSelector((state) => state.authReducer.userInfo?.token);
   const dispatch = useDispatch();
 
@@ -37,22 +38,22 @@ const Community = () => {
     getAllCommunities();
   }, []);
 
-  const getPersonalCommunities = async () => {
-    try {
-      const response = await axios.get(
-        "http://209.38.241.78:8080/user-communities",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      dispatch(authSliceActions.getUserCommunties(response));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getPersonalCommunities = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       "http://209.38.241.78:8080/user-communities",
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     dispatch(authSliceActions.getUserCommunties(response));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const handleJoinCommunity = (id) => {
     axios
@@ -68,7 +69,8 @@ const Community = () => {
         }
       )
       .then((response) => {
-        getPersonalCommunities();
+        dispatch(authSliceActions.addPersonalCummunites(id));
+        // getPersonalCommunities();
         return response;
       })
       .catch((error) => {
@@ -91,7 +93,7 @@ const Community = () => {
         },
       })
       .then((response) => {
-        // getPersonalCommunities(); // Uncomment if needed
+        dispatch(authSliceActions.deleteCommunity(id));
         return response;
       })
       .catch((error) => {

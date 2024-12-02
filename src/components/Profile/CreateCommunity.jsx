@@ -7,21 +7,17 @@ import {
   DialogTitle,
   Grid,
   Input,
-  OutlinedInput,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import ReactQuill from "react-quill";
-import AddCategoryToPost from "./AddCategoryToPost";
-import AddImageToPost from "./AddImageToPost";
 import { styled } from "@mui/material";
 import "react-quill/dist/quill.snow.css";
-import { authSliceActions } from "../../store/auth-slice";
 import CreatePostForm from "./CreatePostForm";
 import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
 import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
+import { authSliceActions } from "../../store/auth-slice";
 const CreateCommunity = () => {
   const token = useSelector((state) => state.authReducer.userInfo?.token);
   const [postFormValue, setPostFormValue] = useState("");
@@ -45,12 +41,15 @@ const CreateCommunity = () => {
     formData.append("title", title);
     formData.append("description", description);
     formData.append("category_id", selectedCategory);
-
+    formData.append("cdate", new Date().toISOString());
     if (images && images.length > 0) {
       images.forEach((image) => {
         formData.append("image", image);
       });
     }
+
+    let form = Array.from(formData);
+    let formObejct = Object.fromEntries(form);
 
     try {
       const response = await axios.post(
@@ -64,6 +63,7 @@ const CreateCommunity = () => {
         }
       );
 
+      dispatch(authSliceActions.addCommunities(formObejct));
       setTitle("");
       setDescription("");
       setPostFormValue("");
