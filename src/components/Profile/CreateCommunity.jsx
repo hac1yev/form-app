@@ -36,7 +36,6 @@ const CreateCommunity = () => {
   const [title, setTitle] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [images, setImages] = useState(null);
-  console.log("🚀 ~ Community ~ images:", images);
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
@@ -70,6 +69,7 @@ const CreateCommunity = () => {
       setPostFormValue("");
       setSelectedCategory("");
       setImages(null);
+      setOpen(false);
     } catch (error) {
       console.error("Upload error:", error);
     }

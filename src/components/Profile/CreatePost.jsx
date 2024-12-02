@@ -24,6 +24,7 @@ const CreatePost = () => {
   const [textContent, setTextContent] = useState("");
   const [heading, setHeading] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  console.log("🚀 ~ CreatePost ~ selectedCategory:", selectedCategory)
   const [images, setImages] = useState(null); 
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();

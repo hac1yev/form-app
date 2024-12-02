@@ -14,6 +14,7 @@ const initialAuthState = {
   userInfo: getUserInfo(),
   userMainInfos: {},
   userMainCommunities: {},
+  allCommunities: {},
 };
 
 const authSlice = createSlice({
@@ -40,6 +41,9 @@ const authSlice = createSlice({
     getUserCommunties(state, action) {
       state.userMainCommunities = { ...action.payload };
     },
+    getAllCommunities(state, action){
+      state.allCommunities = { ...action.payload };
+    }
   },
 });
 

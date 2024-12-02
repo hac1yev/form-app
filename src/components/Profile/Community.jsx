@@ -3,16 +3,40 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { Box, Button } from "@mui/material";
-import useGetAxios from "../../hooks/useGetAxios";
 import { getTimeElapsed } from "../Helpers/Utility";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { authSliceActions } from "../../store/auth-slice";
+import { useEffect } from "react";
 
 const Community = () => {
-  const communities = useGetAxios("communities");
+  const communities = useSelector(
+    (state) => state.authReducer.allCommunities.data
+  );
   const token = useSelector((state) => state.authReducer.userInfo?.token);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getAllCommunities = async () => {
+      try {
+        const response = await axios.get(
+          "http://209.38.241.78:8080/communities",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        dispatch(authSliceActions.getAllCommunities(response));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getAllCommunities();
+  }, []);
+
   const getPersonalCommunities = async () => {
     try {
       const response = await axios.get(
@@ -57,17 +81,17 @@ const Community = () => {
 
   const handleDeleteCommunity = (id) => {
     axios
-      .delete(
-        "http://209.38.241.78:8080/community",
-        { community_id: id },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .delete("http://209.38.241.78:8080/community", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        data: {
+          community_id: id,
+        },
+      })
       .then((response) => {
-        // getPersonalCommunities();
+        // getPersonalCommunities(); // Uncomment if needed
         return response;
       })
       .catch((error) => {
