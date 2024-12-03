@@ -63,7 +63,10 @@ const CreateCommunity = () => {
         }
       );
 
-      dispatch(authSliceActions.addCommunities(formObejct));
+      console.log(response);
+      
+
+      dispatch(authSliceActions.addCommunities({ ...formObejct, id: response.data.community_id }));
       setTitle("");
       setDescription("");
       setPostFormValue("");
