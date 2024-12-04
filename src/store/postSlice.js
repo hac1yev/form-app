@@ -37,7 +37,7 @@ export const fetchAllPosts = createAsyncThunk("/fetchAllPosts", async () => {
 
 export const fetchMyPosts = createAsyncThunk("/fetchMyPosts", async () => {
   try {
-    const response = await axios.get("http://209.38.241.78:8080/users/me", {
+    const response = await axios.get("https://sorblive.com:8080/users/me", {
       headers: {
         Authorization: `Bearer ${myToken.token}`,
       },

@@ -54,7 +54,7 @@ const MyPosts = ({ myPosts }) => {
   const loginedUserId = JSON.parse(localStorage.getItem("userInfo"))?.user_id;
   const handleDelete = async (postId) => {
     try {
-      await axios.delete("http://209.38.241.78:8080/post", {
+      await axios.delete("https://sorblive.com:8080/post", {
         data: { post_id: postId },
         headers: {
           Authorization: `Bearer ${token}`,
@@ -102,7 +102,7 @@ const MyPosts = ({ myPosts }) => {
             <CardHeader
               avatar={
                 <Avatar
-                  src={`http://209.38.241.78:8080/${item.picture}`}
+                  src={`https://sorblive.com:8080/${item.picture}`}
                   aria-label="recipe"
                 >
                   {item.username[0].toUpperCase()}
@@ -207,7 +207,7 @@ const MyPosts = ({ myPosts }) => {
                   <CardMedia
                     component={"img"}
                     className="post-image"
-                    image={`http://209.38.241.78:8080/${item.images}`}
+                    image={`https://sorblive.com:8080/${item.images}`}
                   />
                 ) : (
                   <Slider {...sliderSettings} className="post-slick-slider">
@@ -216,7 +216,7 @@ const MyPosts = ({ myPosts }) => {
                         component={"img"}
                         key={idx}
                         className="post-image"
-                        image={`http://209.38.241.78:8080/${image}`}
+                        image={`https://sorblive.com:8080/${image}`}
                         alt={`Post image ${idx + 1}`}
                       />
                     ))}

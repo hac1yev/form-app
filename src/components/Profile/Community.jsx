@@ -20,7 +20,7 @@ const Community = () => {
     const getAllCommunities = async () => {
       try {
         const response = await axios.get(
-          "http://209.38.241.78:8080/communities",
+          "https://sorblive.com:8080/communities",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -40,7 +40,7 @@ const Community = () => {
   // const getPersonalCommunities = async () => {
   //   try {
   //     const response = await axios.get(
-  //       "http://209.38.241.78:8080/user-communities",
+  //       "https://sorblive.com:8080/user-communities",
   //       {
   //         headers: {
   //           Authorization: `Bearer ${token}`,
@@ -57,7 +57,7 @@ const Community = () => {
   const handleJoinCommunity = (id) => {
     axios
       .post(
-        "http://209.38.241.78:8080/join-community",
+        "https://sorblive.com:8080/join-community",
         {
           community_id: id,
         },
@@ -82,7 +82,7 @@ const Community = () => {
 
   const handleDeleteCommunity = (id) => {
     axios
-      .delete("http://209.38.241.78:8080/community", {
+      .delete("https://sorblive.com:8080/community", {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -107,7 +107,7 @@ const Community = () => {
             <ListItemAvatar>
               <Avatar
                 alt="Remy Sharp"
-                src={`http://209.38.241.78:8080/${item.picture}`}
+                src={`https://sorblive.com:8080/${item.picture}`}
               />
               <Typography
                 component="span"

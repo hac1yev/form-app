@@ -20,6 +20,7 @@ const CreatePostForm = ({
   images,
   setSelectedCategory,
   selectedCategory,
+  communityModal,
 }) => {
   const handlePostFormChange = (content, delta, source, editor) => {
     setPostFormValue(content);
@@ -50,6 +51,7 @@ const CreatePostForm = ({
       </Box>
       <Box>
         <AddCategoryToPost
+          communityModal={communityModal}
           setSelectedCategory={setSelectedCategory}
           selectedCategory={selectedCategory}
         />

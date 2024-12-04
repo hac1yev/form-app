@@ -33,7 +33,7 @@ const RegisterForm = () => {
 
         try {
             const response = await axios.post(
-              "http://209.38.241.78:8080/register",
+              "https://sorblive.com:8080/register",
               formData,
               {
                 mode: "no-cors",

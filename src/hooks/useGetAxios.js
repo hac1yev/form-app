@@ -13,7 +13,7 @@ const useGetAxios = (endpoint, refresh) => {
       dispatch(loadingSliceActions.isItLoading(true));
       try {
         const response = await axios.get(
-          `http://209.38.241.78:8080/${endpoint}`,
+          `https://sorblive.com:8080/${endpoint}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
