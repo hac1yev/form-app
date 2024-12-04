@@ -58,12 +58,8 @@ const CreateCommunity = () => {
         }
       );
 
-      dispatch(
-        authSliceActions.addCommunities(
-          ...formObejct,
-          response.data.community_id
-        )
-      );
+      dispatch(authSliceActions.addCommunities({ ...formObejct, id: response.data.community_id }));
+
       setTitle("");
       setDescription("");
       setPostFormValue("");

@@ -13,7 +13,6 @@ const Community = () => {
   const communities = useSelector(
     (state) => state.authReducer.allCommunities.data
   );
-  console.log("🚀 ~ Community ~ communities:", communities);
   const token = useSelector((state) => state.authReducer.userInfo?.token);
   const dispatch = useDispatch();
 
