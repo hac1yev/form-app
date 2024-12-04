@@ -36,7 +36,7 @@ const ProfileRightbar = () => {
     const getPersonalCommunities = async () => {
       try {
         const response = await axios.get(
-          "http://209.38.241.78:8080/user-communities",
+          "https://sorblive.com:8080/user-communities",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -58,7 +58,7 @@ const ProfileRightbar = () => {
       const formData = new FormData();
       formData.append("picture", profilePicture);
       const response = await axios.post(
-        "http://209.38.241.78:8080/upload/picture",
+        "https://sorblive.com:8080/upload/picture",
         formData,
         {
           headers: {
@@ -110,7 +110,7 @@ const ProfileRightbar = () => {
               />
             ) : (
               <img
-                src={`http://209.38.241.78:8080/${userInfo?.user?.picture}`}
+                src={`https://sorblive.com:8080/${userInfo?.user?.picture}`}
                 width="100"
                 height="100"
                 style={{ borderRadius: "50%", objectFit: "cover" }}
@@ -212,7 +212,7 @@ const ProfileRightbar = () => {
                     <Box
                       component="img"
                       style={{ objectFit: "cover" }}
-                      src={`http://209.38.241.78:8080/${item.picture}`}
+                      src={`https://sorblive.com:8080/${item.picture}`}
                     />
                     <Typography
                       sx={{

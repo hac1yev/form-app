@@ -34,7 +34,7 @@ const CreatePost = () => {
     const formData = new FormData();
     formData.append("heading", heading);
     formData.append("content", textContent);
-    formData.append("community_id", 24);
+    formData.append("community_id", selectedCategory);
     
     if (images && images.length > 0) {
       images.forEach((image) => {
@@ -44,7 +44,7 @@ const CreatePost = () => {
     
     try {
       const response = await axios.post(
-        "http://209.38.241.78:8080/post",
+        "https://sorblive.com:8080/post",
         formData,
         {
           headers: {
@@ -54,7 +54,7 @@ const CreatePost = () => {
       );
       setOpen(false);
       
-      const myPostsResponse = await axios.get("http://209.38.241.78:8080/users/me", {
+      const myPostsResponse = await axios.get("https://sorblive.com:8080/users/me", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

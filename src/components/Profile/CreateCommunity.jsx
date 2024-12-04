@@ -21,12 +21,7 @@ import { authSliceActions } from "../../store/auth-slice";
 const CreateCommunity = () => {
   const token = useSelector((state) => state.authReducer.userInfo?.token);
   const [postFormValue, setPostFormValue] = useState("");
-
-  const FormGrid = styled(Grid)(() => ({
-    display: "flex",
-    flexDirection: "column",
-  }));
-
+  const [communityModal, setCommunityModal] = useState(false);
   const [open, setOpen] = useState(false);
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
@@ -53,7 +48,7 @@ const CreateCommunity = () => {
 
     try {
       const response = await axios.post(
-        "http://209.38.241.78:8080/new-community",
+        "https://sorblive.com:8080/new-community",
         formData,
         {
           headers: {
@@ -63,7 +58,12 @@ const CreateCommunity = () => {
         }
       );
 
-      dispatch(authSliceActions.addCommunities(formObejct));
+      dispatch(
+        authSliceActions.addCommunities(
+          ...formObejct,
+          response.data.community_id
+        )
+      );
       setTitle("");
       setDescription("");
       setPostFormValue("");
@@ -75,14 +75,14 @@ const CreateCommunity = () => {
     }
   };
 
-  const handlePostFormChange = (content, delta, source, editor) => {
-    setPostFormValue(content);
-    setDescription(editor.getText());
+  const handleOpenCommunity = () => {
+    setOpen(true);
+    setCommunityModal(true);
   };
 
   return (
     <>
-      <Box className="create-post-form-wrapper" onClick={() => setOpen(true)}>
+      <Box className="create-post-form-wrapper" onClick={handleOpenCommunity}>
         <Input sx={{ display: "none" }} />
         <Box className="space-between create-post-form">
           <Box sx={{ px: 3 }} className="space-between">
@@ -114,12 +114,13 @@ const CreateCommunity = () => {
             images={images}
             setSelectedCategory={setSelectedCategory}
             selectedCategory={selectedCategory}
+            communityModal={communityModal}
           />
 
           <DialogActions sx={{ mt: 2 }}>
             <Button
               type="button"
-              onClick={() => setOpen(false)}
+              onClick={() => (setCommunityModal(false), setOpen(false))}
               sx={{ bgcolor: "secondary.main", color: "rgba(0, 0, 0, 0.55)" }}
             >
               Ləğv et

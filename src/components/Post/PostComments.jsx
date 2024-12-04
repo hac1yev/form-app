@@ -37,7 +37,7 @@ const PostComments = ({ comments, setComments, getPostData }) => {
   const handleLikeComment = async (commentId) => {
     try {
       const response = await axios.post(
-        "http://209.38.241.78:8080/like/comment",
+        "https://sorblive.com:8080/like/comment",
         { comment_id: commentId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -75,7 +75,7 @@ const PostComments = ({ comments, setComments, getPostData }) => {
               <ListItemAvatar>
                 <Avatar
                   alt="User Name"
-                  src={`http://209.38.241.78:8080/${comment.picture}`}
+                  src={`https://sorblive.com:8080/${comment.picture}`}
                 />
               </ListItemAvatar>
               <Box className="comment-content">

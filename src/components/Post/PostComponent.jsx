@@ -105,7 +105,7 @@ const PostComponent = () => {
   const getPostData = async () => {
     try {
       const response = await axios.get(
-        `http://209.38.241.78:8080/post/${postId}`,
+        `https://sorblive.com:8080/post/${postId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -130,7 +130,7 @@ const PostComponent = () => {
 
     try {
       const response = await axios.post(
-        "http://209.38.241.78:8080/comment",
+        "https://sorblive.com:8080/comment",
         { post_id: postId, content: commentText },
         {
           headers: {
@@ -157,7 +157,7 @@ const PostComponent = () => {
   const handleAddLike = async () => {
     try {
       await axios.post(
-        "http://209.38.241.78:8080/like/post",
+        "https://sorblive.com:8080/like/post",
         { post_id: postId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -182,7 +182,7 @@ const PostComponent = () => {
         <CardHeader
           avatar={
             <Avatar
-              src={`http://209.38.241.78:8080/${postData.picture}`}
+              src={`https://sorblive.com:8080/${postData.picture}`}
               aria-label="recipe"
             />
           }
@@ -265,7 +265,7 @@ const PostComponent = () => {
             <CardMedia
               component={"img"}
               className="post-image"
-              image={`http://209.38.241.78:8080/${postData.images}`}
+              image={`https://sorblive.com:8080/${postData.images}`}
             />
           ) : (
             <Slider {...sliderSettings} className="post-slick-slider">
@@ -274,7 +274,7 @@ const PostComponent = () => {
                   component={"img"}
                   key={idx}
                   className="post-image"
-                  image={`http://209.38.241.78:8080/${image}`}
+                  image={`https://sorblive.com:8080/${image}`}
                   alt={`Post image ${idx + 1}`}
                 />
               ))}

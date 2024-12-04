@@ -57,7 +57,7 @@ const Posts = ({ endpoint }) => {
   const handleAddLike = async (postId) => {
     try {
       await axios.post(
-        "http://209.38.241.78:8080/like/post",
+        "https://sorblive.com:8080/like/post",
         { post_id: postId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -104,7 +104,7 @@ const Posts = ({ endpoint }) => {
               avatar={
                 <Link to={`/user/${item.user_id}`}>
                   <Avatar
-                    src={`http://209.38.241.78:8080/${item.picture}`}
+                    src={`https://sorblive.com:8080/${item.picture}`}
                     aria-label="recipe"
                   >
                     {item.username[0].toUpperCase()}
@@ -197,7 +197,7 @@ const Posts = ({ endpoint }) => {
                   <CardMedia
                     component={"img"}
                     className="post-image"
-                    image={`http://209.38.241.78:8080/${item.images}`}
+                    image={`https://sorblive.com:8080/${item.images}`}
                   />
                 ) : (
                   <Slider {...sliderSettings} className="post-slick-slider">
@@ -206,7 +206,7 @@ const Posts = ({ endpoint }) => {
                         component={"img"}
                         key={idx}
                         className="post-image"
-                        image={`http://209.38.241.78:8080/${image}`}
+                        image={`https://sorblive.com:8080/${image}`}
                         alt={`Post image ${idx + 1}`}
                       />
                     ))}
