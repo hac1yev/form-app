@@ -20,12 +20,10 @@ import { authSliceActions } from "../../store/auth-slice";
 const CreatePost = () => {
   const token = useSelector((state) => state.authReducer.userInfo?.token);
   const [postFormValue, setPostFormValue] = useState("");
-
   const [textContent, setTextContent] = useState("");
   const [heading, setHeading] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  console.log("🚀 ~ CreatePost ~ selectedCategory:", selectedCategory)
-  const [images, setImages] = useState(null); 
+  const [images, setImages] = useState(null);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const handleSubmit = async (e) => {
@@ -35,13 +33,13 @@ const CreatePost = () => {
     formData.append("heading", heading);
     formData.append("content", textContent);
     formData.append("community_id", selectedCategory);
-    
+
     if (images && images.length > 0) {
       images.forEach((image) => {
         formData.append("images", image);
       });
     }
-    
+
     try {
       const response = await axios.post(
         "https://sorblive.com:8080/post",
@@ -53,17 +51,18 @@ const CreatePost = () => {
         }
       );
       setOpen(false);
-      
-      const myPostsResponse = await axios.get("https://sorblive.com:8080/users/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const { data } = myPostsResponse;    
-      
-      dispatch(authSliceActions.addPost(data.posts[0]));
-      
 
+      const myPostsResponse = await axios.get(
+        "https://sorblive.com:8080/users/me",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const { data } = myPostsResponse;
+
+      dispatch(authSliceActions.addPost(data.posts[0]));
     } catch (error) {
       console.error("Upload error:", error);
     }

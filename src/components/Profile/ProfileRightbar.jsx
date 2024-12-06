@@ -68,7 +68,6 @@ const ProfileRightbar = () => {
         }
       );
       if (response.status === 201) {
-        console.log("Profile picture uploaded successfully");
         setProfilePicture(null);
       }
     } catch (error) {

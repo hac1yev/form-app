@@ -25,7 +25,6 @@ import { getTimeElapsed } from "../Helpers/Utility";
 import likeIcon from "../../assets/like.svg";
 
 const PostComments = ({ comments, setComments, getPostData }) => {
-  console.log("🚀 ~ PostComments ~ comments:", comments);
   const token = useSelector((state) => state.authReducer.userInfo?.token);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedPopover, setSelectedPopover] = useState("");

@@ -58,7 +58,12 @@ const CreateCommunity = () => {
         }
       );
 
-      dispatch(authSliceActions.addCommunities({ ...formObejct, id: response.data.community_id }));
+      dispatch(
+        authSliceActions.addCommunities({
+          ...formObejct,
+          id: response.data.community_id,
+        })
+      );
 
       setTitle("");
       setDescription("");
@@ -102,6 +107,7 @@ const CreateCommunity = () => {
           sx={{ width: "100%", my: 2 }}
         >
           <CreatePostForm
+            communityModal={communityModal}
             setHeading={setTitle}
             setPostFormValue={setPostFormValue}
             postFormValue={postFormValue}
@@ -110,7 +116,6 @@ const CreateCommunity = () => {
             images={images}
             setSelectedCategory={setSelectedCategory}
             selectedCategory={selectedCategory}
-            communityModal={communityModal}
           />
 
           <DialogActions sx={{ mt: 2 }}>

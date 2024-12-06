@@ -10,16 +10,10 @@ const AddCategoryToPost = ({
 }) => {
   let categoryNames;
   const [open, setOpen] = useState(false);
-  if (communityModal === false) {
-    categoryNames = useGetAxios("communities");
-  } else if (communityModal === undefined) {
-    categoryNames = useGetAxios("categories");
-  }
 
-  console.log("🚀 ~ AddCategoryToPost ~ categoryNames:", communityModal);
+  categoryNames = useGetAxios(communityModal ? "category" : "communities");
 
   const handleChange = (event) => {
-    console.log("🚀 ~ handleChange ~ event:", event.target);
     setSelectedCategory(event.target.value);
     setOpen(false);
   };
@@ -28,7 +22,7 @@ const AddCategoryToPost = ({
     <div>
       <FormControl sx={{ width: "100%", margin: "40px 0 10px 0" }}>
         <InputLabel id="demo-controlled-open-select-label">
-          Category Name
+          {communityModal ? "Category Name" : "Community Name"}
         </InputLabel>
         <Select
           labelId="demo-controlled-open-select-label"
@@ -38,11 +32,11 @@ const AddCategoryToPost = ({
           onOpen={() => setOpen(true)}
           value={selectedCategory}
           onChange={handleChange}
-          label="Category Name"
+          label={communityModal ? "Category Name" : "Community Name"}
         >
           {categoryNames?.map((nameObj) => (
             <MenuItem key={nameObj?.id} value={nameObj?.id}>
-              {nameObj?.title}
+              {communityModal ? nameObj?.name : nameObj?.title}
             </MenuItem>
           ))}
         </Select>
@@ -54,6 +48,7 @@ const AddCategoryToPost = ({
 AddCategoryToPost.propTypes = {
   setSelectedCategory: PropTypes.func.isRequired,
   selectedCategory: PropTypes.string.isRequired,
+  communityModal: PropTypes.bool.isRequired,
 };
 
 export default AddCategoryToPost;
