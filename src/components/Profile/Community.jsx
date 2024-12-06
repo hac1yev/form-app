@@ -37,23 +37,6 @@ const Community = () => {
     getAllCommunities();
   }, []);
 
-  // const getPersonalCommunities = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       "https://sorblive.com:8080/user-communities",
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     dispatch(authSliceActions.getUserCommunties(response));
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const handleJoinCommunity = (id) => {
     axios
       .post(

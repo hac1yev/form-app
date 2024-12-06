@@ -14,7 +14,6 @@ const AddCategoryToPost = ({
   categoryNames = useGetAxios(communityModal ? "category" : "communities");
 
   const handleChange = (event) => {
-    console.log("🚀 ~ handleChange ~ event:", event.target);
     setSelectedCategory(event.target.value);
     setOpen(false);
   };

@@ -27,7 +27,6 @@ const CreatePostForm = ({
     setTextContent(editor.getText());
   };
 
-  console.log("🚀 ~ CreatePostForm ~ communityModal", communityModal);
 
   return (
     <>
