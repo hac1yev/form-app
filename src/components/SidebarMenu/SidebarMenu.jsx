@@ -46,11 +46,11 @@ const SidebarMenu = ({ setOpen }) => {
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link to="/posts/popular">
+        <Link to="/special">
           <ListItem
             disablePadding
             className={
-              pathname === "/posts/popular"
+              pathname === "/special"
                 ? "sidebar-list-item active"
                 : "sidebar-list-item"
             }
@@ -59,7 +59,7 @@ const SidebarMenu = ({ setOpen }) => {
               <ListItemIcon sx={{ minWidth: "40px" }}>
                 <StarIcon />
               </ListItemIcon>
-              <ListItemText primary="Populyar" />
+              <ListItemText primary="Sizə Özəl" />
             </ListItemButton>
           </ListItem>
         </Link>

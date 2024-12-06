@@ -3,7 +3,6 @@ import './Home.scss';
 
 
 const Home = () => {
-
   return (
     <Posts endpoint={"post"} />
   )

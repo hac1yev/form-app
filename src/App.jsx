@@ -66,9 +66,9 @@ function App() {
           <Dashboard />
           <Routes>
             <Route element={<PostsWrapper />}>
-              <Route path="" element={<Home />} />
+              <Route path="" element={<Popular />} />
               <Route path="search" element={<Search />} />
-              <Route path="posts/popular" element={<Popular />} />
+              <Route path="/special" element={<Home />} />
               <Route path="community/:category_id" element={<CategoryPosts />} />
             </Route>
             <Route path="/posts/:postId" element={<Post />} />
