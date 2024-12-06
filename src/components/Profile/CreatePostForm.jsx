@@ -27,6 +27,8 @@ const CreatePostForm = ({
     setTextContent(editor.getText());
   };
 
+  console.log("🚀 ~ CreatePostForm ~ communityModal", communityModal);
+
   return (
     <>
       <Box>
@@ -51,9 +53,9 @@ const CreatePostForm = ({
       </Box>
       <Box>
         <AddCategoryToPost
-          communityModal={communityModal}
           setSelectedCategory={setSelectedCategory}
           selectedCategory={selectedCategory}
+          communityModal={communityModal}
         />
       </Box>
       <Box>
@@ -68,6 +70,7 @@ CreatePostForm.propTypes = {
   setTextContent: PropTypes.func.isRequired,
   setHeading: PropTypes.func.isRequired,
   postFormValue: PropTypes.string.isRequired,
+  communityModal: PropTypes.bool.isRequired,
 };
 
 export default CreatePostForm;
