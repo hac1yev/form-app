@@ -122,6 +122,7 @@ const Community = () => {
                 display="flex"
                 justifyContent="space-between"
                 alignItems="center"
+                gap='5px'
               >
                 <b style={{ flexGrow: "1", textWrap: "wrap" }}>
                   Title: {item.title}
