@@ -62,7 +62,7 @@ function App() {
           <Route element={<PostsWrapper />}>
             <Route path="" element={<Popular />} />
             <Route path="search" element={<Search />} />
-            <Route path="/special" element={<Home />} />
+            {token && <Route path="/special" element={<Home />} />}
             <Route path="community/:category_id" element={<CategoryPosts />} />
           </Route>
           <Route path="/posts/:postId" element={<Post />} />

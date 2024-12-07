@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadingSliceActions } from "../store/loading-slice";
 import axios from "axios";
 
-const useGetAxios = (endpoint, refresh) => { 
+const useGetAxios = (endpoint, refresh) => {
   const token = useSelector((state) => state.authReducer.userInfo?.token);
   const [data, setData] = useState();
   const dispatch = useDispatch();
@@ -12,22 +12,26 @@ const useGetAxios = (endpoint, refresh) => {
     (async function fetchData() {
       dispatch(loadingSliceActions.isItLoading(true));
       try {
+        const headers = {
+          "Content-Type": "application/json",
+        };
+
+        if (token) {
+          headers.Authorization = `Bearer ${token}`;
+        }
+
         const response = await axios.get(
           `https://sorblive.com:8080/${endpoint}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          }
+          { headers }
         );
+
         setData(response.data);
       } catch (error) {
         console.log(error);
       }
       dispatch(loadingSliceActions.isItLoading(false));
     })();
-  }, [dispatch, endpoint, token, refresh]); // Add refresh to dependencies
+  }, [dispatch, endpoint, token, refresh]);
 
   return data;
 };

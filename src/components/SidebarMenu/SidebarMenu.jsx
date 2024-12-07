@@ -60,23 +60,25 @@ const SidebarMenu = ({ setOpen }) => {
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link to="/special">
-          <ListItem
-            disablePadding
-            className={
-              pathname === "/special"
-                ? "sidebar-list-item active"
-                : "sidebar-list-item"
-            }
-          >
-            <ListItemButton>
-              <ListItemIcon sx={{ minWidth: "40px" }}>
-                <StarIcon />
-              </ListItemIcon>
-              <ListItemText primary="Sizə Özəl" />
-            </ListItemButton>
-          </ListItem>
-        </Link>
+        {token && (
+          <Link to="/special">
+            <ListItem
+              disablePadding
+              className={
+                pathname === "/special"
+                  ? "sidebar-list-item active"
+                  : "sidebar-list-item"
+              }
+            >
+              <ListItemButton>
+                <ListItemIcon sx={{ minWidth: "40px" }}>
+                  <StarIcon />
+                </ListItemIcon>
+                <ListItemText primary="Sizə Özəl" />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+        )}
       </List>
 
       <Divider />
