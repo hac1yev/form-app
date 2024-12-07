@@ -15,19 +15,27 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
+import loginPic from "../../assets/user-interface.png"
 import dipnot_logo from "../../assets/dipnote-logo.svg";
 import SidebarMenu from "../SidebarMenu/SidebarMenu";
 import "./Dashboard.scss";
 import { Link, useNavigate } from "react-router-dom";
-import { AppBar, Drawer, Search, SearchIconWrapper, StyledInputBase } from "../CustomMaterialComponents/CustomMaterialComponents";
+import {
+  AppBar,
+  Drawer,
+  Search,
+  SearchIconWrapper,
+  StyledInputBase,
+} from "../CustomMaterialComponents/CustomMaterialComponents";
 import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
 
-export default function Dashboard() {
+export default function Dashboard({ token }) {
   const [open, setOpen] = React.useState(false);
   const matches = useMediaQuery("(min-width:769px)");
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.authReducer.userInfo);
-    
+
   React.useEffect(() => {
     if (window.innerWidth <= 768) {
       setOpen(false);
@@ -132,12 +140,13 @@ export default function Dashboard() {
             <IconButton color="#000" sx={{ bgcolor: "rgba(231, 231, 231, 1)" }}>
               <NotificationsNoneIcon />
             </IconButton>
-            <Link to="/profile" style={{ textDecoration: 'none' }}>
-              <Avatar
-                alt={`${userInfo.username}`}
-                src={userInfo.image}
-              >
-                {userInfo.first_name[0]?.toUpperCase()}{userInfo.last_name[0].toUpperCase()}
+            <Link
+              to={token ? "/profile" : "/login"}
+              style={{ textDecoration: "none" }}
+            >
+              <Avatar alt={`${userInfo.username}`} src={token ? userInfo.picture : loginPic}>
+                {userInfo?.first_name?.[0]?.toUpperCase()}
+                {userInfo?.last_name?.[0].toUpperCase()}
               </Avatar>
             </Link>
           </Stack>
@@ -155,11 +164,7 @@ export default function Dashboard() {
         >
           <Link to={"/"}>
             <Box>
-              <Box 
-                component={"img"}
-                src={dipnot_logo}
-                alt="dipnot-logo"
-              />
+              <Box component={"img"} src={dipnot_logo} alt="dipnot-logo" />
             </Box>
           </Link>
           <IconButton
@@ -187,3 +192,7 @@ export default function Dashboard() {
     </>
   );
 }
+
+Dashboard.propTypes = {
+  token: PropTypes.string.isRequired,
+};

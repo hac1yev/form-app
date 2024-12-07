@@ -1,5 +1,17 @@
 import { Link, useLocation } from "react-router-dom";
-import { Avatar, Box, Button, Divider, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Divider,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import StarIcon from "@mui/icons-material/Star";
 import ImageIcon from "@mui/icons-material/Image";
@@ -10,14 +22,16 @@ import "./SidebarMenu.scss";
 import useGetAxios from "../../hooks/useGetAxios";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
 const SidebarMenu = ({ setOpen }) => {
   const { pathname } = useLocation();
   const categories = useGetAxios() || [];
+  const token = useSelector((state) => state.authReducer.userInfo?.token);
 
   const handleLogout = () => {
     localStorage.removeItem("userInfo");
-    window.location.reload()
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -177,16 +191,18 @@ const SidebarMenu = ({ setOpen }) => {
             </ListItemButton>
           </ListItem>
         </Link> */}
-        <Link  onClick={handleLogout}>
-          <ListItem disablePadding className="sidebar-list-item">
-            <ListItemButton>
-              <ListItemIcon sx={{ minWidth: "40px" }}>
-                <LogoutIcon />
-              </ListItemIcon>
-              <ListItemText primary="Profildən Çıx" />
-            </ListItemButton>
-          </ListItem>
-        </Link>
+        {token && (
+          <Link onClick={handleLogout}>
+            <ListItem disablePadding className="sidebar-list-item">
+              <ListItemButton>
+                <ListItemIcon sx={{ minWidth: "40px" }}>
+                  <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText primary="Profildən Çıx" />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+        )}
       </List>
     </Box>
   );

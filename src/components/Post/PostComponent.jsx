@@ -30,7 +30,7 @@ import IosShareIcon from "@mui/icons-material/IosShare";
 import SendIcon from "@mui/icons-material/Send";
 import "../../pages/Post/Post.scss";
 import PostComments from "./PostComments";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Slider from "react-slick";
@@ -101,8 +101,10 @@ const PostComponent = () => {
   const [postData, setPostData] = useState();
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
+  const [isLoading,setIsLoading] = useState(true);
 
-  const getPostData = async () => {
+  const getPostData = useCallback(async () => {
+    setIsLoading(true);
     try {
       const response = await axios.get(
         `https://sorblive.com:8080/post/${postId}`,
@@ -119,13 +121,14 @@ const PostComponent = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+    setIsLoading(false);
+  }, [postId,token]);
 
   useEffect(() => {
     getPostData();
-  }, [postId]);
+  }, [postId,getPostData]);
 
-  const handleAddComment = async (e) => {
+  const handleAddComment = useCallback(async (e) => {
     e.preventDefault();
 
     try {
@@ -152,9 +155,9 @@ const PostComponent = () => {
     }
 
     setCommentText("");
-  };
+  }, [commentText,comments,getPostData,postId,token]);
 
-  const handleAddLike = async () => {
+  const handleAddLike = useCallback(async () => {
     try {
       await axios.post(
         "https://sorblive.com:8080/like/post",
@@ -165,10 +168,14 @@ const PostComponent = () => {
     } catch (error) {
       console.error("Error adding like:", error);
     }
-  };
+  }, [getPostData,token,postId]);
 
-  if (!postData) {
+  if (!postData && isLoading) {
     return <Typography className="flex-column">Loading...</Typography>;
+  }
+
+  if(!postData && !isLoading) {
+    return <Typography className="flex-column">There is no post data!</Typography>;
   }
 
   return (
