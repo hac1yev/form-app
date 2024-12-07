@@ -32,7 +32,7 @@ import "../../pages/Post/Post.scss";
 import PostComments from "./PostComments";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Slider from "react-slick";
 import { useSelector } from "react-redux";
 
@@ -95,7 +95,7 @@ const PostComponent = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
-
+  const navigate = useNavigate();
   const token = useSelector((state) => state.authReducer.userInfo?.token);
   const { postId } = useParams();
   const [postData, setPostData] = useState();
@@ -110,7 +110,7 @@ const PostComponent = () => {
         `https://sorblive.com:8080/post/${postId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         }
@@ -129,6 +129,9 @@ const PostComponent = () => {
   }, [postId,getPostData]);
 
   const handleAddComment = useCallback(async (e) => {
+    if(!token) {
+      navigate('/login');
+    }
     e.preventDefault();
 
     try {
