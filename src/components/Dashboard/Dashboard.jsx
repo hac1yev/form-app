@@ -28,6 +28,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.authReducer.userInfo);
     
+
   React.useEffect(() => {
     if (window.innerWidth <= 768) {
       setOpen(false);
@@ -133,12 +134,19 @@ export default function Dashboard() {
               <NotificationsNoneIcon />
             </IconButton>
             <Link to="/profile" style={{ textDecoration: 'none' }}>
-              <Avatar
-                alt={`${userInfo.username}`}
-                src={userInfo.image}
-              >
-                {userInfo.first_name[0]?.toUpperCase()}{userInfo.last_name[0].toUpperCase()}
-              </Avatar>
+              {userInfo.username ? (
+                <Avatar
+                  alt={`${userInfo.username}`}
+                  src={userInfo.image}
+                >
+                  {userInfo?.first_name[0]?.toUpperCase()}{userInfo.last_name[0].toUpperCase()}
+                </Avatar>
+              ) : (
+                <Avatar
+                  alt="avatar"
+                >
+                </Avatar>
+              )}
             </Link>
           </Stack>
         </Toolbar>

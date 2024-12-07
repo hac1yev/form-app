@@ -55,31 +55,23 @@ function App() {
 
   return (
     <>
-      {!token ? (
+      <Box sx={{ display: "flex" }}>
+        <Dashboard />
         <Routes>
-          <Route path="*" element={<Navigate to="/login" />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route element={<PostsWrapper />}>
+            <Route path="" element={<Popular />} />
+            <Route path="search" element={<Search />} />
+            <Route path="/special" element={<Home />} />
+            <Route path="community/:category_id" element={<CategoryPosts />} />
+          </Route>
+          <Route path="/posts/:postId" element={<Post />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={token ? <Navigate to="/" /> : <Login />} />
+          <Route path="/register" element={token ? <Navigate to="/" /> : <Register />} />
+          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="/user/:user_id" element={<Profile />} />
         </Routes>
-      ) : (
-        <Box sx={{ display: "flex" }}>
-          <Dashboard />
-          <Routes>
-            <Route element={<PostsWrapper />}>
-              <Route path="" element={<Popular />} />
-              <Route path="search" element={<Search />} />
-              <Route path="/special" element={<Home />} />
-              <Route path="community/:category_id" element={<CategoryPosts />} />
-            </Route>
-            <Route path="/posts/:postId" element={<Post />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/login" element={<Navigate to="/" />} />
-            <Route path="/register" element={<Navigate to="/" />} />
-            <Route path="*" element={<Navigate to="/" />} />
-            <Route path="/user/:user_id" element={<Profile />} />
-          </Routes>
-        </Box>
-      )}
+      </Box>
     </>
   );
 }
