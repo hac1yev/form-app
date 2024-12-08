@@ -35,6 +35,7 @@ export default function Dashboard({ token }) {
   const matches = useMediaQuery("(min-width:769px)");
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.authReducer.userInfo);
+ 
 
   React.useEffect(() => {
     if (window.innerWidth <= 768) {
@@ -144,7 +145,7 @@ export default function Dashboard({ token }) {
               to={token ? "/profile" : "/login"}
               style={{ textDecoration: "none" }}
             >
-              <Avatar alt={`${userInfo.username}`} src={token ? userInfo.picture : loginPic}>
+              <Avatar alt={`${userInfo.username}`} src={token ? `https://sorblive.com:8080/${userInfo.picture}` : loginPic}>
                 {userInfo?.first_name?.[0]?.toUpperCase()}
                 {userInfo?.last_name?.[0].toUpperCase()}
               </Avatar>
