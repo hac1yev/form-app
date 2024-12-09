@@ -24,7 +24,7 @@ const Community = () => {
               <Box key={index}>
                 <Grid key={item.id}>
                   <Link
-                    to="/"
+                    to={`community/${item.id}`}
                     style={{ textDecoration: "none", color: "#000" }}
                   >
                     <Box>

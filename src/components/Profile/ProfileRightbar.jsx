@@ -204,7 +204,7 @@ const ProfileRightbar = () => {
               {communities?.data?.map((item) => (
                 <Grid item key={item.id} sm={6} sx={{ mt: 2 }}>
                   <Link
-                    to="/"
+                    to={`/community/${item.id}`}
                     style={{ textDecoration: "none", color: "#000" }}
                   >
                     <Box
