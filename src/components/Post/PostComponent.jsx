@@ -266,7 +266,9 @@ const PostComponent = () => {
                 <span>{postData.username}</span>
               </Link>
               {`>`}
-              <span style={{ color: "#999" }}>{postData.community_name}</span>
+              <Link to={`/community/${postData.community_id}`}>
+                <span>{postData.community_name}</span>{" "}
+              </Link>
             </div>
           }
           subheader="01.04.2024"

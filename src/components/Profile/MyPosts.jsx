@@ -184,11 +184,16 @@ const MyPosts = ({ myPosts }) => {
               }
               title={
                 <div style={{ display: "flex", gap: "5px" }}>
-                  <Link to={`/user/${item.user_id}`}>
+                  <Link  className="post-link" to={`/user/${item.user_id}`}>
                     <span>{item.username}</span>
                   </Link>
                   {`>`}
-                  <span style={{ color: "#999" }}>{item.community_name}</span>
+                  <Link
+                    to={`/community/${item.community_id}`}
+                    className="post-link"
+                  >
+                    <span>{item.community_name}</span>{" "}
+                  </Link>
                 </div>
               }
               subheader={`${item.cdate.slice(0, 10)}`}
