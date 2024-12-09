@@ -33,7 +33,7 @@ const SidebarMenu = ({ setOpen }) => {
   const handleLogout = () => {
     localStorage.removeItem("userInfo");
     navigate('/')
-    
+    window.location.reload();
   };
 
   useEffect(() => {
