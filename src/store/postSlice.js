@@ -27,7 +27,7 @@ export const fetchAllPosts = createAsyncThunk("/fetchAllPosts", async () => {
         Authorization: `Bearer ${myToken.token}`,
       },
     });
-    const { data } = response;    
+    const { data } = response;
     return data;
   } catch (error) {
     console.log(error);
@@ -42,7 +42,7 @@ export const fetchMyPosts = createAsyncThunk("/fetchMyPosts", async () => {
         Authorization: `Bearer ${myToken.token}`,
       },
     });
-    const { data } = response;    
+    const { data } = response;
     return data;
   } catch (error) {
     console.log(error);
@@ -117,7 +117,7 @@ export const {
   singlePostSuccess,
   addCommentNot,
   addLikeNot,
-  removedPost
+  removedPost,
 } = postSlice.actions;
 
 export default postSlice.reducer;

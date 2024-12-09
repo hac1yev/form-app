@@ -1,62 +1,62 @@
 .login-register-left {
-    position: relative;
-    height: 100%;
-    width: 100%;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 75, 159, 1);
+
+  .log-reg-middle {
+    width: 70%;
+    height: 70%;
+    background-color: rgba(205, 229, 255, 0.06);
+    padding: 0 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0, 75, 159, 1);
 
-    .log-reg-middle {
-        width: 70%;
-        height: 70%;
-        background-color: rgba(205, 229, 255, 0.06);
-        padding: 0 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        .logreg-text {
-            font-weight: 400;
-            font-size: 40px;
-            line-height: 53px;
-            letter-spacing: 4%;
-            color: #fff;
-        }
+    .logreg-text {
+      font-weight: 400;
+      font-size: 40px;
+      line-height: 53px;
+      letter-spacing: 4%;
+      color: #fff;
     }
+  }
 
-    .logregimg1 {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-    }
+  .logregimg1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
 
-    .logregimg2 {
-        max-width: 203px;
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
+  .logregimg2 {
+    max-width: 203px;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }
 
 .login-button,
 .register-button {
-    text-transform: inherit!important; 
-    background-color: rgba(5, 104, 214, 1)!important;
+  text-transform: inherit !important;
+  background-color: rgba(5, 104, 214, 1) !important;
 }
 
 @media screen and (max-width: 1200px) {
-    .logreg-text{
-        font-size: 30px!important;
-        line-height: 40px!important;
-        letter-spacing: 3%!important;
-    }
+  .logreg-text {
+    font-size: 30px !important;
+    line-height: 40px !important;
+    letter-spacing: 3% !important;
+  }
 }
 
 @media screen and (max-width: 1000px) {
-    .logreg-text{
-        font-size: 25px!important;
-        line-height: 35px!important;
-        letter-spacing: 3%!important;
-    }
+  .logreg-text {
+    font-size: 25px !important;
+    line-height: 35px !important;
+    letter-spacing: 3% !important;
+  }
 }

@@ -69,7 +69,7 @@ const MyPosts = ({ myPosts }) => {
 
   // THIS IS ONE IS USELESS BUT I WILL KEEP IT FOR NOW AND THIS ONE CAUSE USELESS RERENDER
   useEffect(() => {
-    dispatch(fetchMyPosts());
+    token && dispatch(fetchMyPosts());
   }, [dispatch]);
 
   if (isLoading) {
@@ -184,7 +184,9 @@ const MyPosts = ({ myPosts }) => {
               }
               title={
                 <div style={{ display: "flex", gap: "5px" }}>
-                  <span>{item.username}</span>
+                  <Link to={`/user/${item.user_id}`}>
+                    <span>{item.username}</span>
+                  </Link>
                   {`>`}
                   <span style={{ color: "#999" }}>{item.community_name}</span>
                 </div>
@@ -230,10 +232,16 @@ const MyPosts = ({ myPosts }) => {
               sx={{ mt: 3 }}
             >
               <Box>
-                <IconButton aria-label="add to favorites">
+                <IconButton disabled aria-label="add to favorites">
+                  <Typography style={{ marginRight: "3px" }} variant="h6">
+                    {item?.likes}
+                  </Typography>
                   <FavoriteBorderIcon />
                 </IconButton>
-                <IconButton aria-label="share">
+                <IconButton disabled aria-label="share">
+                  <Typography style={{ marginRight: "3px" }} variant="h6">
+                    {item?.comment_count}
+                  </Typography>
                   <ChatBubbleOutlineIcon />
                 </IconButton>
               </Box>

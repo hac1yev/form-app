@@ -23,6 +23,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { getTimeElapsed } from "../Helpers/Utility";
 import likeIcon from "../../assets/like.svg";
+import { Link } from "react-router-dom";
 
 const PostComments = ({ comments, setComments, getPostData }) => {
   const token = useSelector((state) => state.authReducer.userInfo?.token);
@@ -80,10 +81,17 @@ const PostComments = ({ comments, setComments, getPostData }) => {
               <Box className="comment-content">
                 <ListItemText
                   secondary={getTimeElapsed(comment.cdate)}
-                  primary={`${comment.username}`}
                   className="comment-header-text"
                   sx={{ mb: 0 }}
-                />
+                >
+                  <Link
+                    to={`/user/${comment.user_id}`}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    {comment.username}
+                  </Link>
+                </ListItemText>
+
                 <Typography variant="subtitle1">{comment.content}</Typography>
                 <Box
                   sx={{
@@ -105,7 +113,7 @@ const PostComments = ({ comments, setComments, getPostData }) => {
                     <Typography
                       variant="subtitle2"
                       display={"flex"}
-                      gap={'3px'}
+                      gap={"3px"}
                       sx={{
                         cursor: "pointer",
                         position: "absolute",
@@ -179,7 +187,7 @@ const PostComments = ({ comments, setComments, getPostData }) => {
                 </List>
               </Popover>
             </Paper>
-            {response > 0 && expand && (
+            {/* {response > 0 && expand && (
               <Paper className="reply-paper">
                 <ListItemAvatar>
                   <Avatar
@@ -255,7 +263,7 @@ const PostComments = ({ comments, setComments, getPostData }) => {
                   </List>
                 </Popover>
               </Paper>
-            )}
+            )} */}
           </ListItem>
         ))}
     </List>

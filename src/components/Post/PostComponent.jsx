@@ -32,7 +32,7 @@ import "../../pages/Post/Post.scss";
 import PostComments from "./PostComments";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Slider from "react-slick";
 import { useSelector } from "react-redux";
 
@@ -101,64 +101,69 @@ const PostComponent = () => {
   const [postData, setPostData] = useState();
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
-  const [isLoading,setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getPostData = useCallback(async () => {
     setIsLoading(true);
     try {
+      const headers = {
+        "Content-Type": "application/json",
+        ...(token && { Authorization: `Bearer ${token}` }),
+      };
+
       const response = await axios.get(
         `https://sorblive.com:8080/post/${postId}`,
         {
-          headers: {
-            // Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
+          headers,
         }
       );
 
       setPostData(response.data.post);
       setComments(response.data.comments);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
     setIsLoading(false);
-  }, [postId,token]);
+  }, [postId, token]);
 
   useEffect(() => {
     getPostData();
-  }, [postId,getPostData]);
+  }, [postId, getPostData]);
 
-  const handleAddComment = useCallback(async (e) => {
-    if(!token) {
-      navigate('/login');
-    }
-    e.preventDefault();
+  const handleAddComment = useCallback(
+    async (e) => {
+      if (!token) {
+        navigate("/login");
+      }
+      e.preventDefault();
 
-    try {
-      const response = await axios.post(
-        "https://sorblive.com:8080/comment",
-        { post_id: postId, content: commentText },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      try {
+        const response = await axios.post(
+          "https://sorblive.com:8080/comment",
+          { post_id: postId, content: commentText },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-      const comment = { ...response.data };
+        const comment = { ...response.data };
 
-      const allComments = [comment, ...comments].toSorted(
-        (a, b) => new Date(b.cdate).getTime() - new Date(a.cdate).getTime()
-      );
+        const allComments = [comment, ...comments].toSorted(
+          (a, b) => new Date(b.cdate).getTime() - new Date(a.cdate).getTime()
+        );
 
-      setComments(allComments);
-      getPostData();
-    } catch (error) {
-      console.log(error);
-    }
+        setComments(allComments);
+        getPostData();
+      } catch (error) {
+        console.log(error);
+      }
 
-    setCommentText("");
-  }, [commentText,comments,getPostData,postId,token]);
+      setCommentText("");
+    },
+    [commentText, comments, getPostData, postId, token]
+  );
 
   const handleAddLike = useCallback(async () => {
     try {
@@ -171,14 +176,16 @@ const PostComponent = () => {
     } catch (error) {
       console.error("Error adding like:", error);
     }
-  }, [getPostData,token,postId]);
+  }, [getPostData, token, postId]);
 
   if (!postData && isLoading) {
     return <Typography className="flex-column">Loading...</Typography>;
   }
 
-  if(!postData && !isLoading) {
-    return <Typography className="flex-column">There is no post data!</Typography>;
+  if (!postData && !isLoading) {
+    return (
+      <Typography className="flex-column">There is no post data!</Typography>
+    );
   }
 
   return (
@@ -255,7 +262,9 @@ const PostComponent = () => {
           }
           title={
             <div style={{ display: "flex", gap: "5px" }}>
-              <span>{postData.username}</span>
+              <Link to={`/user/${postData.user_id}`}>
+                <span>{postData.username}</span>
+              </Link>
               {`>`}
               <span style={{ color: "#999" }}>{postData.community_name}</span>
             </div>

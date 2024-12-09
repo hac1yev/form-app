@@ -15,7 +15,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
-import loginPic from "../../assets/user-interface.png"
+import loginPic from "../../assets/user-interface.png";
 import dipnot_logo from "../../assets/dipnote-logo.svg";
 import SidebarMenu from "../SidebarMenu/SidebarMenu";
 import "./Dashboard.scss";
@@ -35,7 +35,6 @@ export default function Dashboard({ token }) {
   const matches = useMediaQuery("(min-width:769px)");
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.authReducer.userInfo);
- 
 
   React.useEffect(() => {
     if (window.innerWidth <= 768) {
@@ -145,7 +144,14 @@ export default function Dashboard({ token }) {
               to={token ? "/profile" : "/login"}
               style={{ textDecoration: "none" }}
             >
-              <Avatar alt={`${userInfo.username}`} src={token ? `https://sorblive.com:8080/${userInfo.picture}` : loginPic}>
+              <Avatar
+                alt={`${userInfo.username}`}
+                src={
+                  token
+                    ? `https://sorblive.com:8080/${userInfo.picture}`
+                    : loginPic
+                }
+              >
                 {userInfo?.first_name?.[0]?.toUpperCase()}
                 {userInfo?.last_name?.[0].toUpperCase()}
               </Avatar>

@@ -23,7 +23,7 @@ const Post = () => {
         </Grid>
         <Grid item lg={4} sx={{ px: 1 }} className="post-grid">
           {/* <PostRightbar /> */}
-          <Box p={2}> 
+          <Box p={2}>
             <h1>Burada sizin də reklamınız ola bilər</h1>
           </Box>
         </Grid>
