@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Avatar,
   Box,
@@ -28,10 +28,12 @@ const SidebarMenu = ({ setOpen }) => {
   const { pathname } = useLocation();
   const categories = useGetAxios("category") || [];
   const token = useSelector((state) => state.authReducer.userInfo?.token);
+  const navigate = useNavigate()
 
   const handleLogout = () => {
     localStorage.removeItem("userInfo");
-    window.location.reload();
+    navigate('/')
+    
   };
 
   useEffect(() => {
