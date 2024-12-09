@@ -1,6 +1,6 @@
 import axios from "axios";
 
- const GetAxios = async (baseUrl, token) => {
+const GetAxios = async (baseUrl, token) => {
   try {
     const response = await axios.get(`${baseUrl}`, {
       headers: {

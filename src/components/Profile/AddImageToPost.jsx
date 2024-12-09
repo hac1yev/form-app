@@ -62,8 +62,8 @@ const AddImageToPost = ({ setImages, images, community }) => {
 
 AddImageToPost.propTypes = {
   setImages: PropTypes.func.isRequired,
-  images: PropTypes.array.isRequired, 
-  community: PropTypes
+  images: PropTypes.array.isRequired,
+  community: PropTypes,
 };
 
 export default AddImageToPost;

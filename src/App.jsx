@@ -44,8 +44,10 @@ function App() {
           const response = await getUserInfo(`users/${postId}`);
           dispatch(authSliceActions.getUserMainInfos(response.data));
         } else {
-          const response = await getUserInfo("users/me");
-          dispatch(authSliceActions.getUserMainInfos(response.data));
+          if (token) {
+            const response = await getUserInfo("users/me");
+            dispatch(authSliceActions.getUserMainInfos(response.data));
+          }
         }
       } catch (error) {
         console.log(error);
@@ -76,8 +78,14 @@ function App() {
             element={token ? <Navigate to="/" /> : <Register />}
           />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/login" element={token ? <Navigate to="/" /> : <Login />} />
-          <Route path="/register" element={token ? <Navigate to="/" /> : <Register />} />
+          <Route
+            path="/login"
+            element={token ? <Navigate to="/" /> : <Login />}
+          />
+          <Route
+            path="/register"
+            element={token ? <Navigate to="/" /> : <Register />}
+          />
 
           <Route path="*" element={<Navigate to="/" />} />
           <Route path="/user/:user_id" element={<Profile />} />

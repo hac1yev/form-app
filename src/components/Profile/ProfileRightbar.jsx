@@ -35,14 +35,13 @@ const ProfileRightbar = () => {
   useEffect(() => {
     const getPersonalCommunities = async () => {
       try {
+        const headers = {
+          "Content-Type": "application/json",
+          ...(token && { Authorization: `Bearer ${token}` }),
+        };
         const response = await axios.get(
           "https://sorblive.com:8080/user-communities",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          }
+          { headers }
         );
         dispatch(authSliceActions.getUserCommunties(response));
       } catch (error) {

@@ -52,7 +52,6 @@ const Posts = ({ endpoint }) => {
   const [refresh, setRefresh] = useState(false);
   const isLoading = useSelector((state) => state.loadingReducer.isLoading);
   const data = useGetAxios(endpoint, refresh);
-  
 
   const handleAddLike = async (postId) => {
     try {
@@ -225,12 +224,16 @@ const Posts = ({ endpoint }) => {
                     onClick={() => handleAddLike(item.id)}
                     aria-label="add to favorites"
                   >
-                    <Typography style={{marginRight: '3px'}} variant="h6">{item?.likes}</Typography>
+                    <Typography style={{ marginRight: "3px" }} variant="h6">
+                      {item?.likes}
+                    </Typography>
                     <FavoriteBorderIcon />
                   </IconButton>
                 ) : (
                   <Box display="flex" alignItems="center">
-                    <Typography style={{marginRight: '3px'}} variant="h6">{item?.likes}</Typography>
+                    <Typography style={{ marginRight: "3px" }} variant="h6">
+                      {item?.likes}
+                    </Typography>
                     <FavoriteBorderIcon />
                   </Box>
                 )}
@@ -240,7 +243,9 @@ const Posts = ({ endpoint }) => {
                   display="flex"
                   alignItems="center"
                 >
-                  <Typography style={{marginRight: '3px'}} variant="h6">{item?.comment_count}</Typography>
+                  <Typography style={{ marginRight: "3px" }} variant="h6">
+                    {item?.comment_count}
+                  </Typography>
                   <ChatBubbleOutlineIcon />
                 </IconButton>
               </Box>

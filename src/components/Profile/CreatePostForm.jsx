@@ -27,7 +27,6 @@ const CreatePostForm = ({
     setTextContent(editor.getText());
   };
 
-
   return (
     <>
       <Box>

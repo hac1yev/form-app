@@ -47,7 +47,7 @@ const ProfileComponent = () => {
   return (
     <>
       {myPosts?.user?.id === loginedUserId && (
-        <Box className='prof-create' display="flex" gap="10px">
+        <Box className="prof-create" display="flex" gap="10px">
           <CreatePost />
           <CreateCommunity />
         </Box>

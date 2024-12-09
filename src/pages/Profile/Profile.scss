@@ -1,187 +1,186 @@
 .create-post-form-wrapper {
-    width: 100%; 
-    height: 50px; 
-    cursor: pointer;
+  width: 100%;
+  height: 50px;
+  cursor: pointer;
 
-    .create-post-form {
-        width: 100%; 
-        height: 100%; 
-        gap: 10px;
+  .create-post-form {
+    width: 100%;
+    height: 100%;
+    gap: 10px;
 
-        > div {
-            background-color: #fff; 
-            width: 100%; 
-            height: 100%; 
-        }
-
-        .create-post-button {
-            text-wrap: nowrap; 
-            width: 130px; 
-            height: 50px;
-        }
+    > div {
+      background-color: #fff;
+      width: 100%;
+      height: 100%;
     }
+
+    .create-post-button {
+      text-wrap: nowrap;
+      width: 130px;
+      height: 50px;
+    }
+  }
 }
 
 .tabs-ul > div > div {
-    overflow: hidden;
-    overflow-x: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    display: flex;
+  overflow: hidden;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  display: flex;
 
-    .tab-li {
-        color: rgba(51, 51, 51, 1);
-        text-transform: capitalize;
-        font-size: 16px;
-        line-height: 22px;
-        font-weight: 400;
-    }
+  .tab-li {
+    color: rgba(51, 51, 51, 1);
+    text-transform: capitalize;
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 400;
+  }
 
-    .tab-li.active {
-        color: rgba(5, 104, 214, 1);
-    }
+  .tab-li.active {
+    color: rgba(5, 104, 214, 1);
+  }
 }
 
 .tabs-ul > div > div::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .dialog-ul {
-    .tab-li {
-        font-size: 16px;
-        text-transform: capitalize;
-        font-weight: 400;
-        line-height: 19px;
-        color: rgba(0, 0, 0, 1);
-    }
+  .tab-li {
+    font-size: 16px;
+    text-transform: capitalize;
+    font-weight: 400;
+    line-height: 19px;
+    color: rgba(0, 0, 0, 1);
+  }
 }
 
 .tabs-ul div > span {
-    display: none!important;
-} 
+  display: none !important;
+}
 
 .dialog-wrapper {
-    .MuiDialog-container > div {
-        max-width: 700px!important;
-        width: 100%!important;
-        padding: 15px;
-        margin: 0;
-    }
+  .MuiDialog-container > div {
+    max-width: 700px !important;
+    width: 100% !important;
+    padding: 15px;
+    margin: 0;
+  }
 
-    div > form {
-        margin: 0;
-    }
+  div > form {
+    margin: 0;
+  }
 }
 
 .profile-posts-tabpanel > div {
-    padding: 20px 0;
+  padding: 20px 0;
 }
 
 .profile-list {
-    width: 23%;
-    position: fixed;
-    top: 112px;
-    bottom: 0;
+  width: 23%;
+  position: fixed;
+  top: 112px;
+  bottom: 0;
 }
 
 .profile-grid {
-    width: 100%;
+  width: 100%;
 }
 
 .profile-list > div {
-    overflow: hidden;
-    overflow-y: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    height: calc(100vh - 112px);
+  overflow: hidden;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  height: calc(100vh - 112px);
 }
 
 .profile-list > div::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .profile-img-wrap {
-    position: relative;
-    width: 95px;
-    height: 95px;
-    cursor: pointer;
-    flex-shrink: 0;
-  
-    .profile-img {
-      position: relative;
-      width: 100%!important;
-      height: 100%;   
-    }
-  
-    &:hover::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      border-radius: 50%;
-      z-index: 10;
-      background-color: rgba(0, 0, 0, 0.2); 
-    }
-  
-    .profile-img-icon {
-      background-color: #ddd;
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      position: absolute;
-      bottom: 0;    
-      right: 0;
-      z-index: 20;
+  position: relative;
+  width: 95px;
+  height: 95px;
+  cursor: pointer;
+  flex-shrink: 0;
 
-      >svg {
-        width: 17px;
-        height: 17px;
-      }
+  .profile-img {
+    position: relative;
+    width: 100% !important;
+    height: 100%;
+  }
+
+  &:hover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 50%;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .profile-img-icon {
+    background-color: #ddd;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 20;
+
+    > svg {
+      width: 17px;
+      height: 17px;
     }
+  }
 }
-  
+
 .profile-interests-stack {
-    div span {
-        padding: 0 20px;
-    }
+  div span {
+    padding: 0 20px;
+  }
 }
 
 .profile-interest-add-button {
-    width: 100%;
-    text-transform: inherit!important;
-    font-size: 16px!important;
-    border-radius: 24px!important;
-    box-shadow: none!important;    
+  width: 100%;
+  text-transform: inherit !important;
+  font-size: 16px !important;
+  border-radius: 24px !important;
+  box-shadow: none !important;
 }
 
 @media screen and (max-width: 1199.5px) {
-    .profile-list {
-        width: 100%;
-        position: static;
-        margin-top: 15px;
-        margin-top: 15px;
-    }
+  .profile-list {
+    width: 100%;
+    position: static;
+    margin-top: 15px;
+    margin-top: 15px;
+  }
 
-    .profile-list > div {
-        width: 100%;
-        overflow: initial;
-        overflow-y: initial;
-        height: auto;
-    }
+  .profile-list > div {
+    width: 100%;
+    overflow: initial;
+    overflow-y: initial;
+    height: auto;
+  }
 
-    .profile-grid {
-        margin-top: 15px;
-    }
+  .profile-grid {
+    margin-top: 15px;
+  }
 }
 
-
 @media screen and (max-width: 599.5px) {
-    .create-post-form-wrapper {
-        margin-top: 15px;
-    }
+  .create-post-form-wrapper {
+    margin-top: 15px;
+  }
 }

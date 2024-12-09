@@ -26,7 +26,7 @@ import { useSelector } from "react-redux";
 
 const SidebarMenu = ({ setOpen }) => {
   const { pathname } = useLocation();
-  const categories = useGetAxios() || [];
+  const categories = useGetAxios("category") || [];
   const token = useSelector((state) => state.authReducer.userInfo?.token);
 
   const handleLogout = () => {
@@ -161,7 +161,9 @@ const SidebarMenu = ({ setOpen }) => {
             to={`/category-posts?category_id=${category?.id}`}
             key={category?.id}
           >
-            <Typography variant="subtitle1">{category?.name}</Typography>
+            <Typography className="category-name" variant="subtitle1">
+              {category?.name}
+            </Typography>
           </Link>
         ))}
       </Box>

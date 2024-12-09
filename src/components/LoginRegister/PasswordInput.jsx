@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 
 const PasswordInput = ({ password, handlePassword }) => {
-  const [showPassword, setShowPassword] = useState(false);  
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -40,9 +40,9 @@ const PasswordInput = ({ password, handlePassword }) => {
 };
 
 PasswordInput.propTypes = {
-    password: PropTypes.string.isRequired,
-    handlePassword: PropTypes.func.isRequired,
-    placeholder: PropTypes.string,
+  password: PropTypes.string.isRequired,
+  handlePassword: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
 };
 
 export default PasswordInput;

@@ -13,6 +13,10 @@
   justify-content: space-between;
 }
 
+.category-name {
+  text-transform: capitalize;
+}
+
 .flex-column {
   display: flex;
   flex-direction: column;
