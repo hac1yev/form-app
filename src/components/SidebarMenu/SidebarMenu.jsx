@@ -1,12 +1,12 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
-  Avatar,
+  // Avatar,
   Box,
   Button,
   Divider,
   List,
   ListItem,
-  ListItemAvatar,
+  // ListItemAvatar,
   ListItemButton,
   ListItemIcon,
   ListItemText,
@@ -14,9 +14,9 @@ import {
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import StarIcon from "@mui/icons-material/Star";
-import ImageIcon from "@mui/icons-material/Image";
-import WorkIcon from "@mui/icons-material/Work";
-import BeachAccessIcon from "@mui/icons-material/BeachAccess";
+// import ImageIcon from "@mui/icons-material/Image";
+// import WorkIcon from "@mui/icons-material/Work";
+// import BeachAccessIcon from "@mui/icons-material/BeachAccess";
 import LogoutIcon from "@mui/icons-material/Logout";
 import "./SidebarMenu.scss";
 import useGetAxios from "../../hooks/useGetAxios";
@@ -93,7 +93,7 @@ const SidebarMenu = ({ setOpen }) => {
           alignItems: "center",
         }}
       >
-        <Typography variant="h4">Qruplar</Typography>
+        {/* <Typography variant="h4">Qruplar</Typography>
         <Box
           component={"span"}
           sx={{
@@ -104,10 +104,10 @@ const SidebarMenu = ({ setOpen }) => {
           }}
         >
           19
-        </Box>
+        </Box> */}
       </Box>
 
-      <List
+      {/* <List
         className="sidebar-menu-groups"
         sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
       >
@@ -139,7 +139,7 @@ const SidebarMenu = ({ setOpen }) => {
 
       <Link to="/">
         <Button variant="outlined">Hamısına bax</Button>
-      </Link>
+      </Link> */}
 
       <Divider sx={{ py: 1 }} />
 
