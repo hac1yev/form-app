@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import {
   Box,
   Button,
-  Chip,
+  // Chip,
   Divider,
   Grid,
   Input,
-  Stack,
+  // Stack,
   Typography,
 } from "@mui/material";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
@@ -134,14 +134,14 @@ const ProfileRightbar = () => {
         </Box>
 
         <Typography variant="subtitle1" sx={{ my: 2 }}>
-          React development. Open source is great for many things.
+          {/* React development. Open source is great for many things. */}
         </Typography>
 
         <Box sx={{ display: "flex", gap: "40px" }}>
           <Box className="flex-column" gap="7px">
-            <Typography variant="h4">49</Typography>
+            <Typography variant="h4">0</Typography>
             <Typography variant="subtitle2" sx={{ color: "#000" }}>
-              Üzv
+              Takipçi
             </Typography>
           </Box>
           <Box className="flex-column" gap="7px">
@@ -155,7 +155,7 @@ const ProfileRightbar = () => {
         <Divider sx={{ my: 3 }} />
 
         <Box>
-          <Typography variant="h4" sx={{ my: 1 }}>
+          {/* <Typography variant="h4" sx={{ my: 1 }}>
             Maraqlarım
           </Typography>
           <Stack
@@ -167,8 +167,8 @@ const ProfileRightbar = () => {
             <Chip label="#Texnologiya" sx={{ fontSize: "16px", mt: 1 }} />
             <Chip label="#Proqramlaşdırma" sx={{ fontSize: "16px", mt: 1 }} />
             <Chip label="#3D" sx={{ fontSize: "16px", mt: 1 }} />
-          </Stack>
-
+          </Stack> */}
+{/* 
           {userInfo?.user?.id === loginedUserId && (
             <Button
               variant="contained"
@@ -178,7 +178,7 @@ const ProfileRightbar = () => {
             >
               Əlavə et
             </Button>
-          )}
+          )} */}
         </Box>
 
         <Divider sx={{ mt: 2 }} />

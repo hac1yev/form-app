@@ -34,13 +34,13 @@ const PostRightbar = () => {
           </Button>
         </Box>
         <Typography variant="subtitle1" sx={{ my: 2 }}>
-          React development. Open source is great for many things.
+          {/* React development. Open source is great for many things. */}
         </Typography>
         <Box sx={{ display: "flex", gap: "20px" }}>
           <Box className="flex-column">
-            <Typography variant="h6">4940</Typography>
+            <Typography variant="h6">0</Typography>
             <Typography variant="subtitle2" sx={{ color: "#000" }}>
-              Üzv
+              Takipçi
             </Typography>
           </Box>
           <Box className="flex-column">

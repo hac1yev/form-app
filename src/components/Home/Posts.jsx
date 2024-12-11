@@ -52,7 +52,7 @@ const Posts = ({ endpoint }) => {
   const [refresh, setRefresh] = useState(false);
   const isLoading = useSelector((state) => state.loadingReducer.isLoading);
   const data = useGetAxios(endpoint, refresh);
-
+  const loginedUserId = JSON.parse(localStorage.getItem("userInfo"))?.user_id;
   const handleAddLike = async (postId) => {
     try {
       await axios.post(
@@ -119,52 +119,66 @@ const Posts = ({ endpoint }) => {
                   >
                     <MoreVertIcon />
                   </IconButton>
-                  <Popover
-                    className="comment-popover"
-                    id={id}
-                    open={open}
-                    anchorEl={anchorEl}
-                    onClose={() => setAnchorEl(null)}
-                    anchorOrigin={{
-                      vertical: "bottom",
-                      horizontal: "left",
-                    }}
-                  >
-                    <List sx={{ pb: "10px", width: "130px" }}>
-                      <ListItem disablePadding className="sidebar-list-item">
-                        <ListItemButton sx={{ py: 0 }}>
-                          <ListItemIcon sx={{ minWidth: "40px" }}>
-                            <LoopIcon />
-                          </ListItemIcon>
-                          <ListItemText primary="Paylaş" />
-                        </ListItemButton>
-                      </ListItem>
-                      <ListItem disablePadding className="sidebar-list-item">
-                        <ListItemButton sx={{ py: 0 }}>
-                          <ListItemIcon sx={{ minWidth: "40px" }}>
-                            <IosShareIcon />
-                          </ListItemIcon>
-                          <ListItemText primary="Göndər" />
-                        </ListItemButton>
-                      </ListItem>
-                      <ListItem disablePadding className="sidebar-list-item">
-                        <ListItemButton sx={{ py: 0 }}>
-                          <ListItemIcon sx={{ minWidth: "40px" }}>
-                            <VisibilityOffOutlinedIcon />
-                          </ListItemIcon>
-                          <ListItemText primary="Gizlət" />
-                        </ListItemButton>
-                      </ListItem>
-                      <ListItem disablePadding className="sidebar-list-item">
-                        <ListItemButton sx={{ py: 0 }}>
-                          <ListItemIcon sx={{ minWidth: "40px" }}>
-                            <DeleteIcon />
-                          </ListItemIcon>
-                          <ListItemText primary="Sil" />
-                        </ListItemButton>
-                      </ListItem>
-                    </List>
-                  </Popover>
+                  {
+                      token &&     <Popover
+                      className="comment-popover"
+                      id={id}
+                      open={open}
+                      anchorEl={anchorEl}
+                      onClose={() => setAnchorEl(null)}
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "left",
+                      }}
+                    >
+           
+                      <List sx={{ pb: "10px", width: "130px" }}>
+                        <ListItem disablePadding className="sidebar-list-item">
+                          <ListItemButton sx={{ py: 0 }}>
+                            <ListItemIcon sx={{ minWidth: "40px" }}>
+                              <LoopIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Paylaş" />
+                          </ListItemButton>
+                        </ListItem>
+                        <ListItem disablePadding className="sidebar-list-item">
+                          <ListItemButton sx={{ py: 0 }}>
+                            <ListItemIcon sx={{ minWidth: "40px" }}>
+                              <IosShareIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Göndər" />
+                          </ListItemButton>
+                        </ListItem>
+                        {item.user_id === loginedUserId && 
+                          <>
+                            <ListItem
+                              disablePadding
+                              className="sidebar-list-item"
+                            >
+                              <ListItemButton sx={{ py: 0 }}>
+                                <ListItemIcon sx={{ minWidth: "40px" }}>
+                                  <VisibilityOffOutlinedIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Gizlət" />
+                              </ListItemButton>
+                            </ListItem>
+                            <ListItem
+                              disablePadding
+                              className="sidebar-list-item"
+                            >
+                              <ListItemButton sx={{ py: 0 }}>
+                                <ListItemIcon sx={{ minWidth: "40px" }}>
+                                  <DeleteIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Sil" />
+                              </ListItemButton>
+                            </ListItem>
+                          </>
+                        }
+                      </List>
+                    </Popover>
+                    }
+              
                 </>
               }
               title={
