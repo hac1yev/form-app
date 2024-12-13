@@ -10,11 +10,9 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
-import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
 import CreatePostForm from "./CreatePostForm";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMyPosts } from "../../store/postSlice";
 import { authSliceActions } from "../../store/auth-slice";
 
 const CreatePost = () => {
@@ -77,7 +75,6 @@ const CreatePost = () => {
             <Typography variant="subtitle1">Post yarat</Typography>
             <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
               <CameraAltOutlinedIcon sx={{ color: "rgba(0, 0, 0, 0.55)" }} />
-              <LinkOutlinedIcon sx={{ color: "rgba(0, 0, 0, 0.55)" }} />
             </Box>
           </Box>
         </Box>
