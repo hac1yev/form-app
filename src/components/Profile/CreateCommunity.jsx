@@ -12,11 +12,9 @@ import {
 import { useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { styled } from "@mui/material";
 import "react-quill/dist/quill.snow.css";
 import CreatePostForm from "./CreatePostForm";
-import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
-import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
+import ForumIcon from '@mui/icons-material/Forum';
 import { authSliceActions } from "../../store/auth-slice";
 const CreateCommunity = () => {
   const token = useSelector((state) => state.authReducer.userInfo?.token);
@@ -89,8 +87,7 @@ const CreateCommunity = () => {
           <Box sx={{ px: 3 }} className="space-between">
             <Typography variant="subtitle1">Community yarat</Typography>
             <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <CameraAltOutlinedIcon sx={{ color: "rgba(0, 0, 0, 0.55)" }} />
-              <LinkOutlinedIcon sx={{ color: "rgba(0, 0, 0, 0.55)" }} />
+              <ForumIcon sx={{ color: "rgba(0, 0, 0, 0.55)" }} />
             </Box>
           </Box>
         </Box>

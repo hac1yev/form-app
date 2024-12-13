@@ -6,6 +6,7 @@ import { useState } from "react";
 import MyPosts from "./MyPosts";
 import { useSelector } from "react-redux";
 import CreateCommunity from "./CreateCommunity";
+import LikedPosts from "./LikedPosts";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -47,74 +48,76 @@ const ProfileComponent = () => {
   return (
     <>
       {myPosts?.user?.id === loginedUserId && (
-        <Box className="prof-create" display="flex" gap="10px">
-          <CreatePost />
-          <CreateCommunity />
-        </Box>
+        <>
+          <Box className="prof-create" display="flex" gap="10px">
+            <CreatePost />
+            <CreateCommunity />
+          </Box>
+          <Box sx={{ width: "100%", my: 2 }}>
+            <Box>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                className="tabs-ul"
+                aria-label="basic tabs example"
+              >
+                <Tab
+                  label="Postlar"
+                  {...a11yProps(0)}
+                  className={value === 0 ? "active tab-li" : "tab-li"}
+                />
+                <Tab
+                  label="Bəyənilənlər"
+                  {...a11yProps(1)}
+                  className={value === 1 ? "active tab-li" : "tab-li"}
+                />
+                <Tab
+                  label="Communitilər"
+                  {...a11yProps(2)}
+                  className={value === 2 ? "active tab-li" : "tab-li"}
+                />
+                <Tab
+                  label="Linklər"
+                  {...a11yProps(3)}
+                  className={value === 3 ? "active tab-li" : "tab-li"}
+                />
+                <Tab
+                  label="Mesajlar"
+                  {...a11yProps(4)}
+                  className={value === 4 ? "active tab-li" : "tab-li"}
+                />
+                <Tab
+                  label="Saxlanılanlar"
+                  {...a11yProps(5)}
+                  className={value === 5 ? "active tab-li" : "tab-li"}
+                />
+              </Tabs>
+            </Box>
+          </Box>
+        </>
       )}
-      <Box sx={{ width: "100%", my: 2 }}>
-        <Box>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            className="tabs-ul"
-            aria-label="basic tabs example"
-          >
-            <Tab
-              label="Postlar"
-              {...a11yProps(0)}
-              className={value === 0 ? "active tab-li" : "tab-li"}
-            />
-            <Tab
-              label="Bəyənilənlər"
-              {...a11yProps(1)}
-              className={value === 1 ? "active tab-li" : "tab-li"}
-            />
-            <Tab
-              label="Communitilər"
-              {...a11yProps(2)}
-              className={value === 2 ? "active tab-li" : "tab-li"}
-            />
-            <Tab
-              label="Linklər"
-              {...a11yProps(3)}
-              className={value === 3 ? "active tab-li" : "tab-li"}
-            />
-            <Tab
-              label="Mesajlar"
-              {...a11yProps(4)}
-              className={value === 4 ? "active tab-li" : "tab-li"}
-            />
-            <Tab
-              label="Saxlanılanlar"
-              {...a11yProps(5)}
-              className={value === 5 ? "active tab-li" : "tab-li"}
-            />
-          </Tabs>
-        </Box>
-        <CustomTabPanel
-          value={value}
-          index={0}
-          className="profile-posts-tabpanel"
-        >
-          <MyPosts myPosts={myPosts} />
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
-          Item Two
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={2}>
-          <Community />
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={3}>
-          Item One
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={4}>
-          Item Two
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={5}>
-          Item Three
-        </CustomTabPanel>
-      </Box>
+      <CustomTabPanel
+        value={value}
+        index={0}
+        className="profile-posts-tabpanel"
+      >
+        <MyPosts myPosts={myPosts} />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={1}>
+        <LikedPosts />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={2}>
+        <Community />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={3}>
+        Item One
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={4}>
+        Item Two
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={5}>
+        Item Three
+      </CustomTabPanel>
     </>
   );
 };
