@@ -316,6 +316,7 @@ const PostComponent = () => {
         >
           <Box>
             <IconButton
+              onClick={handleAddLike}
               aria-label="add to favorites"
               sx={{
                 bgcolor: "rgba(51, 51, 51, 0.08)",
@@ -328,7 +329,6 @@ const PostComponent = () => {
                 {postData.likes}
               </Typography>
               <FavoriteBorderIcon
-                onClick={handleAddLike}
                 sx={{ fontSize: "20px", color: "rgba(2, 66, 137, 1)" }}
               />
             </IconButton>

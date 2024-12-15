@@ -7,6 +7,7 @@ import MyPosts from "./MyPosts";
 import { useSelector } from "react-redux";
 import CreateCommunity from "./CreateCommunity";
 import LikedPosts from "./LikedPosts";
+import SavedPosts from "./SavedPosts";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -72,23 +73,23 @@ const ProfileComponent = () => {
                   className={value === 1 ? "active tab-li" : "tab-li"}
                 />
                 <Tab
+                  label="Saxlanılanlar"
+                  {...a11yProps(5)}
+                  className={value === 2 ? "active tab-li" : "tab-li"}
+                />
+                <Tab
                   label="Communitilər"
                   {...a11yProps(2)}
-                  className={value === 2 ? "active tab-li" : "tab-li"}
+                  className={value === 3 ? "active tab-li" : "tab-li"}
                 />
                 <Tab
                   label="Linklər"
                   {...a11yProps(3)}
-                  className={value === 3 ? "active tab-li" : "tab-li"}
+                  className={value === 4 ? "active tab-li" : "tab-li"}
                 />
                 <Tab
                   label="Mesajlar"
                   {...a11yProps(4)}
-                  className={value === 4 ? "active tab-li" : "tab-li"}
-                />
-                <Tab
-                  label="Saxlanılanlar"
-                  {...a11yProps(5)}
                   className={value === 5 ? "active tab-li" : "tab-li"}
                 />
               </Tabs>
@@ -107,16 +108,16 @@ const ProfileComponent = () => {
         <LikedPosts />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <Community />
+        <SavedPosts />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        Item One
+        <Community />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={4}>
         Item Two
       </CustomTabPanel>
       <CustomTabPanel value={value} index={5}>
-        Item Three
+        Item 5
       </CustomTabPanel>
     </>
   );

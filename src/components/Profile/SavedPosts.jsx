@@ -44,10 +44,10 @@ const sliderSettings = {
   center: true,
 };
 
-const LikedPosts = () => {
+const SavedPosts = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openPopoverId, setOpenPopoverId] = useState("");
-  const [likedPosts, setLikedPosts] = useState([]);
+  const [savedPosts, setSavedPosts] = useState([]);
   const isLoading = useSelector((state) => state.loadingReducer.isLoading);
   const token = useSelector((state) => state.authReducer.userInfo?.token);
   const dispatch = useDispatch();
@@ -67,23 +67,23 @@ const LikedPosts = () => {
     }
   };
   useEffect(() => {
-    const getLikedPosts = async () => {
+    const getSavedPosts = async () => {
       try {
         const response = await axios.get(
-          "https://sorblive.com:8080/liked-post",
+          "https://sorblive.com:8080/saved-post",
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-        setLikedPosts(response.data);
+        setSavedPosts(response.data);
       } catch (error) {
         console.log(error);
       }
     };
 
-    getLikedPosts();
+    getSavedPosts();
   }, []);
 
   if (isLoading) {
@@ -94,7 +94,7 @@ const LikedPosts = () => {
     );
   }
 
-  if (!isLoading && likedPosts.length === 0) {
+  if (!isLoading && savedPosts.length === 0) {
     return (
       <Box className="flex-column">
         <Typography>There is no post!</Typography>
@@ -104,7 +104,7 @@ const LikedPosts = () => {
 
   return (
     <Box sx={{ gap: "20px", display: "flex", flexDirection: "column" }}>
-      {likedPosts?.map((item) => (
+      {savedPosts?.map((item) => (
         <Grid item key={item.id} sx={{ width: "100%" }} className="asdasa">
           <Card
             sx={{
@@ -165,7 +165,7 @@ const LikedPosts = () => {
                           <ListItemText primary="Göndər" />
                         </ListItemButton>
                       </ListItem>
-                      {likedPosts.id === loginedUserId && (
+                      {savedPosts.id === loginedUserId && (
                         <>
                           <ListItem
                             disablePadding
@@ -275,8 +275,8 @@ const LikedPosts = () => {
   );
 };
 
-LikedPosts.propTypes = {
-  likedPosts: PropTypes.array.isRequired,
+SavedPosts.propTypes = {
+  savedPosts: PropTypes.array.isRequired,
 };
 
-export default LikedPosts;
+export default SavedPosts;
