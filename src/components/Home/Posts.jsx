@@ -66,6 +66,20 @@ const Posts = ({ endpoint }) => {
     }
   };
 
+
+  const handleAddSave = async (id) => {
+    try {
+      await axios.post(
+        "https://sorblive.com:8080/save/post",
+        { post_id: id },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      // setRefresh((prev) => !prev);
+    } catch (error) {
+      console.error("Error adding like:", error);
+    }
+  }
+
   if (isLoading) {
     return (
       <Box className="flex-column">
@@ -263,7 +277,7 @@ const Posts = ({ endpoint }) => {
                   <ChatBubbleOutlineIcon />
                 </IconButton>
               </Box>
-              <IconButton aria-label="share">
+              <IconButton onClick={() => handleAddSave(item.id)} aria-label="share">
                 <BookmarkBorderIcon />
               </IconButton>
             </CardActions>
