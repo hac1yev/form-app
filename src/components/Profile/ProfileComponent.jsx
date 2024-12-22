@@ -48,7 +48,7 @@ const ProfileComponent = () => {
 
   return (
     <>
-      {myPosts?.user?.id === loginedUserId && (
+      {myPosts?.user?.id === loginedUserId ? (
         <>
           <Box className="prof-create" display="flex" gap="10px">
             <CreatePost />
@@ -95,30 +95,33 @@ const ProfileComponent = () => {
               </Tabs>
             </Box>
           </Box>
+          <CustomTabPanel
+            value={value}
+            index={0}
+            className="profile-posts-tabpanel"
+            >
+            <MyPosts myPosts={myPosts} />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={1}>
+            <LikedPosts />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={2}>
+            <SavedPosts />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={3}>
+            <Community />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={4}>
+            Item Two
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={5}>
+            Item 5
+          </CustomTabPanel>
         </>
-      )}
-      <CustomTabPanel
-        value={value}
-        index={0}
-        className="profile-posts-tabpanel"
-      >
+      ) : (
+      <>
         <MyPosts myPosts={myPosts} />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <LikedPosts />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        <SavedPosts />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={3}>
-        <Community />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={4}>
-        Item Two
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={5}>
-        Item 5
-      </CustomTabPanel>
+      </>)}
     </>
   );
 };

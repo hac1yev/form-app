@@ -25,12 +25,12 @@ import IosShareIcon from "@mui/icons-material/IosShare";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import Slider from "react-slick";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { fetchMyPosts } from "../../store/postSlice";
+// import { fetchMyPosts } from "../../store/postSlice";
 import { authSliceActions } from "../../store/auth-slice";
 
 const sliderSettings = {
@@ -68,9 +68,9 @@ const MyPosts = ({ myPosts }) => {
   };
 
   // THIS IS ONE IS USELESS BUT I WILL KEEP IT FOR NOW AND THIS ONE CAUSE USELESS RERENDER
-  useEffect(() => {
-    token && dispatch(fetchMyPosts());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   token && dispatch(fetchMyPosts());
+  // }, [dispatch]);
 
   if (isLoading) {
     return (
