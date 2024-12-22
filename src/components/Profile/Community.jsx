@@ -28,7 +28,10 @@ const Community = () => {
             },
           }
         );
-        dispatch(authSliceActions.getAllCommunities(response));
+
+        console.log(response);
+        
+        dispatch(authSliceActions.getAllCommunities(response.data));
       } catch (error) {
         console.log(error);
       }
