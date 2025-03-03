@@ -42,6 +42,7 @@ function App() {
         if (pathname.includes("/user")) {
           let userId = pathname.split("/").at(-1);
           const response = await getUserInfo(`users/${userId}`);
+
           dispatch(authSliceActions.getUserMainInfos(response.data));
         } else {
           if (token) {
@@ -59,7 +60,7 @@ function App() {
   return (
     <>
       <Box sx={{ display: "flex" }}>
-        <Dashboard token={token} />
+        {token && <Dashboard token={token} />}
         <Routes>
           <Route element={<PostsWrapper />}>
             <Route path="" element={<Popular />} />

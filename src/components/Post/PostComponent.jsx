@@ -163,7 +163,7 @@ const PostComponent = () => {
 
       setCommentText("");
     },
-    [commentText, comments, getPostData, postId, token]
+    [commentText, comments, getPostData, postId, token, navigate]
   );
 
   const handleAddLike = useCallback(async () => {

@@ -42,8 +42,9 @@ const ProfileRightbar = () => {
         const response = await axios.get(
           "https://sorblive.com:8080/user-communities",
           { headers }
-        );
-        dispatch(authSliceActions.getUserCommunties(response));
+        );        
+
+        dispatch(authSliceActions.getUserCommunties(response.data));
       } catch (error) {
         console.log(error);
       }

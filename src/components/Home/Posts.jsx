@@ -19,6 +19,7 @@ import {
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 // import BookmarkIcon from "@mui/icons-material/Bookmark";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
@@ -264,7 +265,7 @@ const Posts = ({ endpoint }) => {
                     <Typography style={{ marginRight: "3px" }} variant="h6">
                       {item?.likes}
                     </Typography>
-                    <FavoriteBorderIcon />
+                    <FavoriteIcon sx={{ color: 'red' }} />
                   </Box>
                 )}
 
