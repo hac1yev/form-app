@@ -20,6 +20,7 @@ import {
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+// import BookmarkIcon from "@mui/icons-material/Bookmark";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import LoopIcon from "@mui/icons-material/Loop";
 import IosShareIcon from "@mui/icons-material/IosShare";
@@ -66,7 +67,6 @@ const Posts = ({ endpoint }) => {
     }
   };
 
-
   const handleAddSave = async (id) => {
     try {
       await axios.post(
@@ -74,11 +74,15 @@ const Posts = ({ endpoint }) => {
         { post_id: id },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+      // console.log("🚀 ~ handleAddSave ~ response:", response.data.msg);
+      // if (data.map((item) => item.id === id) && response.data.msg === "saved") {
+
+      // }
       // setRefresh((prev) => !prev);
     } catch (error) {
       console.error("Error adding like:", error);
     }
-  }
+  };
 
   if (isLoading) {
     return (
@@ -133,8 +137,8 @@ const Posts = ({ endpoint }) => {
                   >
                     <MoreVertIcon />
                   </IconButton>
-                  {
-                      token &&     <Popover
+                  {token && (
+                    <Popover
                       className="comment-popover"
                       id={id}
                       open={open}
@@ -145,7 +149,6 @@ const Posts = ({ endpoint }) => {
                         horizontal: "left",
                       }}
                     >
-           
                       <List sx={{ pb: "10px", width: "130px" }}>
                         <ListItem disablePadding className="sidebar-list-item">
                           <ListItemButton sx={{ py: 0 }}>
@@ -163,7 +166,7 @@ const Posts = ({ endpoint }) => {
                             <ListItemText primary="Göndər" />
                           </ListItemButton>
                         </ListItem>
-                        {item.user_id === loginedUserId && 
+                        {item.user_id === loginedUserId && (
                           <>
                             <ListItem
                               disablePadding
@@ -188,11 +191,10 @@ const Posts = ({ endpoint }) => {
                               </ListItemButton>
                             </ListItem>
                           </>
-                        }
+                        )}
                       </List>
                     </Popover>
-                    }
-              
+                  )}
                 </>
               }
               title={
@@ -277,7 +279,10 @@ const Posts = ({ endpoint }) => {
                   <ChatBubbleOutlineIcon />
                 </IconButton>
               </Box>
-              <IconButton onClick={() => handleAddSave(item.id)} aria-label="share">
+              <IconButton
+                onClick={() => handleAddSave(item.id)}
+                aria-label="share"
+              >
                 <BookmarkBorderIcon />
               </IconButton>
             </CardActions>
