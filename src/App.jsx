@@ -40,8 +40,9 @@ function App() {
       dispatch(loadingSliceActions.isItLoading(true));
       try {
         if (pathname.includes("/user")) {
-          let postId = pathname.split("/").at(-1);
-          const response = await getUserInfo(`users/${postId}`);          
+          let userId = pathname.split("/").at(-1);
+          const response = await getUserInfo(`users/${userId}`);
+
           dispatch(authSliceActions.getUserMainInfos(response.data));
         } else {
           if (token) {
