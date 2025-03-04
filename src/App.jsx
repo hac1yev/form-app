@@ -62,34 +62,41 @@ function App() {
       <Box sx={{ display: "flex" }}>
         {token && <Dashboard token={token} />}
         <Routes>
+          {token && <>
           <Route element={<PostsWrapper />}>
             <Route path="" element={<Popular />} />
             <Route path="search" element={<Search />} />
-            {token && <Route path="/special" element={<Home />} />}
+            <Route path="/special" element={<Home />} />
             <Route path="community/:category_id" element={<CategoryPosts />} />
           </Route>
           <Route path="/posts/:postId" element={<Post />} />
-          {token && <Route path="/profile" element={<Profile />} />}
-          <Route
-            path="/login"
-            element={token ? <Navigate to="/" /> : <Login />}
-          />
-          <Route
-            path="/register"
-            element={token ? <Navigate to="/" /> : <Register />}
-          />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/profile" element={<Profile />} />
           <Route
             path="/login"
-            element={token ? <Navigate to="/" /> : <Login />}
+            element={<Navigate to="/" />}
           />
           <Route
             path="/register"
-            element={token ? <Navigate to="/" /> : <Register />}
+            element={<Navigate to="/" />}
           />
 
           <Route path="*" element={<Navigate to="/" />} />
           <Route path="/user/:user_id" element={<Profile />} />
+        </>}
+          {!token && (
+            <>
+              <Route path="/" element={<Navigate to="/login"/> }/>
+              <Route
+                path="/login"
+                element={<Login />}
+              />
+              <Route
+                path="/register"
+                element={<Register />}
+              />
+            </>
+          )}
         </Routes>
       </Box>
     </>
